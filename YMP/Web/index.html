@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Youtube Music Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style type="text/css">
+        html, body {
+            width : 100%;
+            height: 99%;
+            margin: 0;
+
+        }
+
+        #player{
+            width : 100%;
+            height : 100%;
+        }
+
+        @media screen and (min-height : 800px) {
+            body{
+                width : 100%;
+                height : 100%;
+            }
+        }
+    </style>
+
+  </head>
+
+<body bgcolor="#212121">
+    <div id="player"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: document.getElementById('player').clientHeight,
+                width: document.getElementById('player').clientWidth,
+                videoId: 'xUV9pnioyt4',
+                playerVars: {
+                    'disablekb': 1,
+                    'enablejsapi': 1,
+                    'fs': 0,
+                    'hl' : 'ko',
+                    'modestbranding' : 1,
+                    'iv_load_policy' : 3,
+                    'playsinline' : 0,
+                    'rel' : 0
+                }
+            });
+
+            (async function() {
+                await CefSharp.BindObjectAsync("youtubeJSBound");
+                player.addEventListener('onReady', async function(event) {
+                    youtubeJSBound.onReady();
+                });
+                player.addEventListener('onStateChange', async function(event) {
+                    youtubeJSBound.onStateChange(event.data);
+                });
+                player.addEventListener('onPlaybackQualityChange', async function(event) {
+                    youtubeJSBound.onPlaybackQualityChange(event.data);
+                });
+                player.addEventListener('onError', async function(event) {
+                    youtubeJSBound.onError(event.data);
+                });
+            })();
+        }
+
+        function getQuality() {
+            var arr = player.getAvailableQualityLevels();
+            var str = arr.join(",");
+            return str;
+        }
+
+        function onPlayerStateChange(event) {
+
+        }
+    </script>
+</body>
+</html>

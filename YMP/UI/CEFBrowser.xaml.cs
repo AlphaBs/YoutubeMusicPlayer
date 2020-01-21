@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CefSharp;
 using CefSharp.Wpf;
 
 namespace YMP.UI
@@ -24,6 +25,12 @@ namespace YMP.UI
         public CEFBrowser()
         {
             InitializeComponent();
+
+            browser.BrowserSettings = new BrowserSettings()
+            {
+                FileAccessFromFileUrls = CefState.Enabled,
+                UniversalAccessFromFileUrls = CefState.Enabled
+            };
         }
 
         public ChromiumWebBrowser Browser

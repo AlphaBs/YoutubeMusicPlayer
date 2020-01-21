@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CefSharp;
+using YMP.Core;
 
 namespace YMP.UI
 {
@@ -24,6 +26,13 @@ namespace YMP.UI
             InitializeComponent();
 
             browser.Browser.LoadingStateChanged += Browser_LoadingStateChanged;
+            browser.Browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
+            {
+                var repo = e.ObjectRepository;
+                if (e.ObjectName == "youtubeJSBound")
+                    repo.Register("youtubeJSBound", new YoutubeJSBound(), isAsync: true);
+            };
+            browser.Browser.Address = System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html");
         }
 
         private void Browser_LoadingStateChanged(object sender, CefSharp.LoadingStateChangedEventArgs e)
