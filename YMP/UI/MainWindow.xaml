@@ -1,0 +1,169 @@
+﻿<Window x:Class="YMP.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YMP.UI"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        WindowStartupLocation="CenterScreen"
+        Title="Youtube Music Player" Width="800" Height="500">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        
+        <materialDesign:ColorZone
+            Grid.Row="0"
+            Mode="PrimaryMid"
+            Padding="16">
+            
+            <DockPanel>
+                <materialDesign:PopupBox
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Right">
+
+                    <Grid>
+                        <TextBlock Text="asdfadf"/>
+                    </Grid>
+                    
+                </materialDesign:PopupBox>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    materialDesign:RippleAssist.IsCentered="True">
+
+                    <Image Source="/YMP;component/Resource/logo.png"/>
+
+                    <materialDesign:ColorZone
+                        Mode="Standard"
+                        Padding="8 4 8 4"
+                        CornerRadius="2"
+                        Panel.ZIndex="1"
+                        Margin="16 0 0 0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                    Style="{DynamicResource MaterialDesignToolButton}">
+
+                                <materialDesign:PackIcon
+                                        Kind="Magnify"
+                                        Opacity=".56" />
+                            </Button>
+
+                            <TextBox
+                                x:Name="tbSearch"
+                                KeyDown="tbSearch_KeyDown"
+                                Grid.Column="1"
+                                Margin="8 0 0 0"
+                                materialDesign:HintAssist.Hint="유튜브 검색"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                BorderThickness="0"
+                                MinWidth="300"
+                                VerticalAlignment="Center" />
+                        </Grid>
+                    </materialDesign:ColorZone>
+                    
+                    <Button
+                        x:Name="btnSearch"
+                        Click="btnSearch_Click"
+                        Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                        Margin="8 0 0 0"
+                        Panel.ZIndex="0">
+                        
+                            <materialDesign:PackIcon
+                                Kind="Send" />
+                    </Button>
+                    
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <Frame
+            x:Name="frmContent"
+            Grid.Row="1"
+            NavigationUIVisibility="Hidden"/>
+
+        <materialDesign:ColorZone
+            Grid.Row="2"
+            Mode="Accent"
+            Height="70"
+            Padding="8">
+
+            <DockPanel>
+                <StackPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        x:Name="lbProgress"
+                        Text="1:32 / 13:56"
+                        VerticalAlignment="Center"
+                        Margin="3"
+                        Foreground="Gray"/>
+
+                    <Button
+                        x:Name="btnPrevious"
+                        Click="btnPrevious_Click"
+                        Style="{StaticResource MaterialDesignIconButton}">
+
+                        <materialDesign:PackIcon Foreground="White" Kind="SkipPrevious"/>
+                    </Button>
+
+                    <Button
+                        x:Name="btnPlayPause"
+                        Click="btnPlayPause_Click"
+                        Style="{StaticResource MaterialDesignIconButton}">
+
+                        <materialDesign:PackIcon Foreground="White" Kind="PlayArrow"/>
+                    </Button>
+
+                    <Button
+                        x:Name="btnNext"
+                        Click="btnNext_Click"
+                        Style="{StaticResource MaterialDesignIconButton}">
+
+                        <materialDesign:PackIcon Foreground="White" Kind="SkipNext"/>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <Image
+                        x:Name="imgThumbnail" 
+                        Source="/YMP;component/Resource/sample_thumbnail.png"/>
+
+                    <StackPanel 
+                        Orientation="Vertical">
+                        
+                        <TextBlock
+                            x:Name="tbTitle"
+                            Margin="7 2 5 2"
+                            Text="A long and long title but good song wow amzing"/>
+
+                        <TextBlock
+                            x:Name="tbArtist"
+                            Margin="7 2 5 2"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="I'm composer!"/>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+            
+        </materialDesign:ColorZone>
+    </Grid>
+</Window>

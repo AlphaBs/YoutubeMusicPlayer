@@ -62,6 +62,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.2.2.920, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.0.1.920, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.3.0.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -92,6 +98,21 @@
     </Compile>
     <Compile Include="UI\CEFTestWindow.xaml.cs">
       <DependentUpon>CEFTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Page\MusicListPage.xaml.cs">
+      <DependentUpon>MusicListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Page\PlayerPage.xaml.cs">
+      <DependentUpon>PlayerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Page\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -130,12 +151,33 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Page\MusicListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Page\PlayerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Page\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resource\" />
     <Folder Include="Youtube\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resource\sample_thumbnail.png" />
+    <Resource Include="Resource\logo.png" />
     <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -150,7 +192,9 @@
     <Error Condition="!Exists('..\packages\CefSharp.Common.75.1.140\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.75.1.140\build\CefSharp.Common.targets'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.targets'))" />
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.75.1.140\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.75.1.140\build\CefSharp.Common.targets')" />
   <Import Project="..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.targets" Condition="Exists('..\packages\CefSharp.Wpf.75.1.140\build\CefSharp.Wpf.targets')" />
+  <Import Project="..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.0.1\build\MaterialDesignThemes.targets')" />
 </Project>
