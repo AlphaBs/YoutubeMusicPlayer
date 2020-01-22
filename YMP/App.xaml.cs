@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using YMP.Core;
 using YMP.UI;
 
 namespace YMP
@@ -16,6 +17,8 @@ namespace YMP
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            YMPCore.Initialize();
+
             new MainWindow().Show();
             new CEFTestWindow().Show();
         }

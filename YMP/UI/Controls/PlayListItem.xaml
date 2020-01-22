@@ -12,9 +12,12 @@
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="{materialDesign:MaterialDesignFont}"
+             Height="50"
              d:DesignWidth="700" d:DesignHeight="50">
 
-    <Grid Background="White">
+    <Grid
+        MouseDown="Grid_MouseDown">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"/>
             <ColumnDefinition Width="*"/>
@@ -47,6 +50,8 @@
             <TextBlock
                 x:Name="lbTitle"
                 Grid.Row="0"
+                Cursor="Hand"
+                MouseDown="Grid_MouseDown"
                 Text="IZ*ONE - Violeta"/>
 
             <TextBlock
@@ -54,6 +59,8 @@
                 Grid.Row="1"
                 FontSize="12"
                 Foreground="Gray"
+                Cursor="Hand"
+                MouseDown="Grid_MouseDown"
                 Text="WIZ*ONE"/>
             <TextBlock/>
         </Grid>

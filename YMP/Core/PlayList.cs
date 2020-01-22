@@ -8,18 +8,18 @@ namespace YMP.Core
 {
     public class PlayList
     {
-        public PlayList(string name, Music[] musics)
+        public PlayList(string name, string type, Music[] musics)
         {
             this.Name = name;
             this.Musics = musics;
-            CurrentMusicIndex = 0;
-            Lenght = musics.Length;
+            this.Type = type;
         }
 
         public string Name { get; private set; }
+        public string Type { get; private set; }
 
-        public int Lenght { get; private set; }
-        public int CurrentMusicIndex { get; private set; }
+        public int Lenght { get => Musics.Length; }
+        public int CurrentMusicIndex { get; private set; } = 0;
         public Music[] Musics { get; private set; }
 
         public Music GetCurrentusic()
@@ -48,3 +48,4 @@ namespace YMP.Core
         }
     }
 }
+ 

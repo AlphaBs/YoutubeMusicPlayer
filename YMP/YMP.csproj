@@ -68,6 +68,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=3.0.1.920, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.3.0.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -94,6 +97,8 @@
     </Compile>
     <Compile Include="Core\Music.cs" />
     <Compile Include="Core\PlayList.cs" />
+    <Compile Include="Core\PlayListManager.cs" />
+    <Compile Include="Core\YMPCore.cs" />
     <Compile Include="Core\YoutubeJSBound.cs" />
     <Compile Include="UI\CEFBrowser.xaml.cs">
       <DependentUpon>CEFBrowser.xaml</DependentUpon>
@@ -119,6 +124,9 @@
     <Compile Include="UI\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Base64Image.cs" />
+    <Compile Include="Util\StringFormat.cs" />
+    <Compile Include="YMPInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -187,6 +195,7 @@
   <ItemGroup>
     <Resource Include="Resource\sample_thumbnail.png" />
     <Resource Include="Resource\logo.png" />
+    <Resource Include="Resource\folder.jpg" />
     <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
