@@ -20,7 +20,7 @@ namespace YMP
             YMPCore.Initialize();
 
             new MainWindow().Show();
-            new CEFTestWindow().Show();
+            //new CEFTestWindow().Show();
         }
     }
 }

@@ -35,6 +35,8 @@ namespace YMP.UI.Pages
         private void ShowAllPlayLists()
         {
             stkList.Children.Clear();
+            lbListNameContent.Text = "플레이리스트";
+            btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.PlaylistNote;
 
             var list = YMPCore.PlayList.PlayLists;
             for (int i = 0; i < list.Count; i++)
@@ -48,6 +50,7 @@ namespace YMP.UI.Pages
             stkList.Children.Clear();
             CurrentPlayList = pl;
             lbListNameContent.Text = pl.Name;
+            btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.KeyboardBackspace;
 
             for (int i = 0; i<pl.Lenght; i++)
             {
@@ -91,6 +94,12 @@ namespace YMP.UI.Pages
             };
 
             stkList.Children.Add(item);
+        }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentPlayList != null)
+                ShowAllPlayLists();
         }
     }
 }

@@ -25,10 +25,27 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Button
+            x:Name="btnReturn"
+            Grid.Row="0"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Padding="0"
+            Width="30" Height="30"
+            Click="btnReturn_Click"
+            HorizontalAlignment="Left">
+            
+            <materialDesign:PackIcon
+                x:Name="btnReturnIcon"
+                Kind="PlaylistNote"
+                Width="25" Height="25"
+                Foreground="Black"/>
+        </Button>
+        
         <TextBlock
             x:Name="lbListName"
             Style="{StaticResource MaterialDesignBody2TextBlock}"
-            Margin="7">
+            Grid.Row="0"
+            Margin="30,7,7,7">
             
             <Hyperlink
                 IsEnabled="False">
