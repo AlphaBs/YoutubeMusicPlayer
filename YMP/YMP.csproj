@@ -92,6 +92,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\Music.cs" />
+    <Compile Include="Core\PlayList.cs" />
     <Compile Include="Core\YoutubeJSBound.cs" />
     <Compile Include="UI\CEFBrowser.xaml.cs">
       <DependentUpon>CEFBrowser.xaml</DependentUpon>
