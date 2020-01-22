@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace YMP.UI.Page
+namespace YMP.UI.Pages
 {
     /// <summary>
-    /// MusicListPage.xaml에 대한 상호 작용 논리
+    /// PlayerPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MusicListPage : Page
+    public partial class PlayerPage : Page
     {
-        public MusicListPage()
+        public PlayerPage()
         {
             InitializeComponent();
         }

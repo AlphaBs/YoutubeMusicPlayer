@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using YMP.UI.Pages;
 
 namespace YMP.UI
 {
@@ -22,6 +23,8 @@ namespace YMP.UI
         public MainWindow()
         {
             InitializeComponent();
+
+            frmContent.Content = new MusicListPage();
         }
 
         private void ColorZone_MouseDown(object sender, MouseButtonEventArgs e)

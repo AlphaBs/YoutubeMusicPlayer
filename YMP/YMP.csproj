@@ -99,16 +99,19 @@
     <Compile Include="UI\CEFTestWindow.xaml.cs">
       <DependentUpon>CEFTestWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\PlayListItem.xaml.cs">
+      <DependentUpon>PlayListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Page\MusicListPage.xaml.cs">
+    <Compile Include="UI\Pages\MusicListPage.xaml.cs">
       <DependentUpon>MusicListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Page\PlayerPage.xaml.cs">
+    <Compile Include="UI\Pages\PlayerPage.xaml.cs">
       <DependentUpon>PlayerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Page\SearchPage.xaml.cs">
+    <Compile Include="UI\Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SplashWindow.xaml.cs">
@@ -151,19 +154,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Controls\PlayListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Page\MusicListPage.xaml">
+    <Page Include="UI\Pages\MusicListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Page\PlayerPage.xaml">
+    <Page Include="UI\Pages\PlayerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Page\SearchPage.xaml">
+    <Page Include="UI\Pages\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
