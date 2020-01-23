@@ -67,9 +67,8 @@ namespace YMP.Core
             }), IntPtr.Zero);
 
             var formHandle = f.Handle;
-            WinApi.SetParent(formHandle, workerw);
-
-            f.Show();
+            WinApi.ShowWindow(workerw, 0);
+            WinApi.SetParent(formHandle, progman);
 
             return true;
         }
