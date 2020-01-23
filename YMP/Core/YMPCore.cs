@@ -28,15 +28,28 @@ namespace YMP.Core
         public static bool Running = true;
 
         public static MainWindow MainUI { get; private set; }
+        public static System.Windows.Forms.Form DesktopForm { get; private set; }
 
         public static PlayListManager PlayList { get; private set; }
         public static YoutubeBrowser Browser { get; private set; }
+
+        public static void DisposeDesktopForm()
+        {
+            if (DesktopForm != null)
+            {
+                DesktopForm.Close();
+                DesktopForm = null;
+            }
+        }
 
         public static void Stop()
         {
             Running = false;
             PlayList.SaveAllPlayLists();
             Browser.Dispose();
+            DisposeDesktopForm();
+
+            Cef.Shutdown();
         }
     }
 }

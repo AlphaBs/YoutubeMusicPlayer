@@ -12,7 +12,7 @@ namespace YMP.Core
 {
     public class DesktopManager
     {
-        public Form CreateDesktopForm(Control child, int scrInx)
+        public static Form CreateDesktopForm(Control child, int scrInx)
         {
             var scr = Screen.AllScreens[scrInx].Bounds;
 
@@ -33,7 +33,7 @@ namespace YMP.Core
             return f;
         }
 
-        public bool SetDesktopChildForm(Form f)
+        public static bool SetDesktopChildForm(Form f)
         {
             var handle = f.Handle;
             var progman = WinApi.FindWindow("Progman", null);
