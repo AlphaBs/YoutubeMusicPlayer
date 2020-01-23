@@ -35,7 +35,7 @@ namespace YMP.UI.Pages
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-
+            YMPCore.MainUI.SetPreviousContent();
         }
 
         private void btnRepeat_Click(object sender, RoutedEventArgs e)

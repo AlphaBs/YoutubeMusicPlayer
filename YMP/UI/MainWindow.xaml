@@ -142,7 +142,10 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="8">
+                <StackPanel Orientation="Horizontal" Margin="8"
+                            Background="Transparent"
+                            Cursor="Hand"
+                            MouseDown="ColorZone_MouseDown">
                     <Image
                         x:Name="imgThumbnail" 
                         Source="/YMP;component/Resource/sample_thumbnail.png"/>
@@ -153,6 +156,8 @@
                         <TextBlock
                             x:Name="tbTitle"
                             Margin="7 2 5 2"
+                            Cursor="Hand"
+                            MouseDown="ColorZone_MouseDown"
                             Text="A long and long title but good song wow amzing"/>
 
                         <TextBlock
@@ -160,6 +165,8 @@
                             Margin="7 2 5 2"
                             FontSize="12"
                             Foreground="Gray"
+                            Cursor="Hand"
+                            MouseDown="ColorZone_MouseDown"
                             Text="I'm composer!"/>
                     </StackPanel>
                 </StackPanel>

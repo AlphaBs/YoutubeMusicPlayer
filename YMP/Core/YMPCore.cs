@@ -12,17 +12,16 @@ namespace YMP.Core
     {
         public static void Initialize()
         {
-            MainUI = new MainWindow();
-
             PlayList = new PlayListManager();
             PlayList.LoadAllPlayLists();
 
             Browser = new YoutubeBrowser();
 
+            MainUI = new MainWindow();
             MainUI.Show();
         }
 
-        public static Window MainUI { get; private set; }
+        public static MainWindow MainUI { get; private set; }
 
         public static PlayListManager PlayList { get; private set; }
         public static YoutubeBrowser Browser { get; private set; }
