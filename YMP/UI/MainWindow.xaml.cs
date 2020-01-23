@@ -17,6 +17,7 @@ namespace YMP.UI
 {
     public enum FrameContent
     {
+        Blank,
         MusicListPage,
         SearchPage,
         PlayerPage
@@ -31,8 +32,8 @@ namespace YMP.UI
         PlayerPage playerPage;
         SearchPage searchPage;
 
-        FrameContent CurrentContent;
-        FrameContent PreviousContent;
+        FrameContent CurrentContent = FrameContent.Blank;
+        FrameContent PreviousContent = FrameContent.Blank;
 
         public MainWindow()
         {
@@ -48,6 +49,9 @@ namespace YMP.UI
 
         public void SetFrameContent(FrameContent c)
         {
+            if (c == CurrentContent)
+                return;
+
             PreviousContent = CurrentContent;
             CurrentContent = c;
 
