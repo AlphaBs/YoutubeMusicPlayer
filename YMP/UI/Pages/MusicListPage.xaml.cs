@@ -109,7 +109,13 @@ namespace YMP.UI.Pages
         {
             if (CurrentPlayList != null)
             {
-                var list = (IEnumerable<PlayListItem>)stkList.Children.GetEnumerator();
+                var list = new List<PlayListItem>(stkList.Children.Count);
+                foreach (var item in stkList.Children)
+                {
+                    if (item is FrameworkElement)
+                        list.Add((PlayListItem)item);
+                }
+
                 IEnumerable<PlayListItem> result;
 
                 switch (PlayListSortMode)
