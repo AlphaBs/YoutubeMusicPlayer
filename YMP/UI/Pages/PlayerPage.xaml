@@ -42,6 +42,18 @@
             Orientation="Horizontal">
 
             <Button
+                x:Name="btnDesktop"
+                Width="30" Height="30"
+                Padding="0"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Click="btnDesktop_Click">
+
+                <materialDesign:PackIcon
+                    Width="20" Height="20"
+                    Foreground="Black" Kind="Monitor"/>
+            </Button>
+
+            <Button
                 x:Name="btnRepeat"
                 Width="30" Height="30"
                 Padding="0"

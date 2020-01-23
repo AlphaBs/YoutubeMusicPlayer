@@ -26,12 +26,15 @@ namespace YMP.UI.Pages
         {
             InitializeComponent();
             YMPCore.Browser.InitializeChromiumBrowser(this.Browser);
+            desktop = new DesktopManager();
         }
 
         public ChromiumWebBrowser Browser
         {
             get => this.cefBrowser.Browser;
         }
+
+        DesktopManager desktop;
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
@@ -46,6 +49,22 @@ namespace YMP.UI.Pages
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        System.Windows.Forms.Form desktopForm = null;
+        private void btnDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            if (desktopForm == null)
+            {
+                desktopForm = desktop.CreateDesktopForm(YMPCore.Browser.Browser, 0);
+                desktop.SetDesktopChildForm(desktopForm);
+            }
+            else
+            {
+                this.cefBrowser.ReAttachChild();
+                desktopForm.Close();
+                desktopForm = null;
+            }
         }
     }
 }

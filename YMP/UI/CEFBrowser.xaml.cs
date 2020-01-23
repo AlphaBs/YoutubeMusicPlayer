@@ -26,17 +26,28 @@ namespace YMP.UI
         {
             InitializeComponent();
 
-            var host = new System.Windows.Forms.Integration.WindowsFormsHost();
+            host = new System.Windows.Forms.Integration.WindowsFormsHost();
             browser = new ChromiumWebBrowser("about:blank");
             host.Child = browser;
             this.grd.Children.Add(host);
         }
 
+        System.Windows.Forms.Integration.WindowsFormsHost host;
         ChromiumWebBrowser browser;
 
         public ChromiumWebBrowser Browser
         {
             get => browser;
+            set
+            {
+                host.Child = browser;
+                browser = value;
+            }
+        }
+
+        public void ReAttachChild()
+        {
+            host.Child = browser;
         }
     }
 }

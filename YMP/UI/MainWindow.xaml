@@ -152,7 +152,7 @@
 
                     <StackPanel 
                         Orientation="Vertical">
-                        
+
                         <TextBlock
                             x:Name="tbTitle"
                             Margin="7 2 5 2"
@@ -171,7 +171,7 @@
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
-            
+
         </materialDesign:ColorZone>
     </Grid>
 </Window>

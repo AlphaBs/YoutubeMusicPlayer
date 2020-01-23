@@ -73,6 +73,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\DesktopManager.cs" />
     <Compile Include="Core\YoutubeBrowser.cs" />
     <Compile Include="Core\Music.cs" />
     <Compile Include="Core\PlayList.cs" />
@@ -128,6 +130,7 @@
     </Compile>
     <Compile Include="Util\Base64Image.cs" />
     <Compile Include="Util\StringFormat.cs" />
+    <Compile Include="Util\WinApi.cs" />
     <Compile Include="YMPInfo.cs" />
   </ItemGroup>
   <ItemGroup>
