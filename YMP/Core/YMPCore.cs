@@ -21,9 +21,18 @@ namespace YMP.Core
             MainUI.Show();
         }
 
+        public static bool Running = true;
+
         public static MainWindow MainUI { get; private set; }
 
         public static PlayListManager PlayList { get; private set; }
         public static YoutubeBrowser Browser { get; private set; }
+
+        public static void Stop()
+        {
+            Running = false;
+            PlayList.SaveAllPlayLists();
+            Browser.Dispose();
+        }
     }
 }

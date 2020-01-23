@@ -100,7 +100,6 @@
     <Compile Include="Core\PlayList.cs" />
     <Compile Include="Core\PlayListManager.cs" />
     <Compile Include="Core\YMPCore.cs" />
-    <Compile Include="Core\YoutubeBrowserBinder.cs" />
     <Compile Include="UI\CEFBrowser.xaml.cs">
       <DependentUpon>CEFBrowser.xaml</DependentUpon>
     </Compile>

@@ -49,32 +49,30 @@
                     'rel' : 0
                 }
             });
-
-            (async function() {
-                await CefSharp.BindObjectAsync("youtubeJSBound");
-                player.addEventListener('onReady', async function(event) {
-                    youtubeJSBound.onReady();
-                });
-                player.addEventListener('onStateChange', async function(event) {
-                    youtubeJSBound.onStateChange(event.data);
-                });
-                player.addEventListener('onPlaybackQualityChange', async function(event) {
-                    youtubeJSBound.onPlaybackQualityChange(event.data);
-                });
-                player.addEventListener('onError', async function(event) {
-                    youtubeJSBound.onError(event.data);
-                });
-            })();
         }
 
-        function getQuality() {
-            var arr = player.getAvailableQualityLevels();
-            var str = arr.join(",");
-            return str;
-        }
+        (async function() {
+            await CefSharp.BindObjectAsync("youtubeJSBound");
+            player.addEventListener('onReady', async function(event) {
+                youtubeJSBound.onReady();
+            });
+            player.addEventListener('onStateChange', async function(event) {
+                youtubeJSBound.onStateChange(event.data);
+            });
+            player.addEventListener('onPlaybackQualityChange', async function(event) {
+                youtubeJSBound.onPlaybackQualityChange(event.data);
+            });
+            player.addEventListener('onError', async function(event) {
+                youtubeJSBound.onError(event.data);
+            });
+        })();
 
-        function onPlayerStateChange(event) {
-
+        function getPlayerData()
+        {
+            return JSON.stringfy({
+                'duration': player.getDuration(),
+                'current': player.getCurrentTime()
+            });
         }
     </script>
 </body>
