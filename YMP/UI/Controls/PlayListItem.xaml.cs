@@ -52,8 +52,6 @@ namespace YMP.UI.Controls
             set => lbDuration.Content = value;
         }
 
-        public int IndexNumber { get; set; }
-
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Click?.Invoke(this, new EventArgs());

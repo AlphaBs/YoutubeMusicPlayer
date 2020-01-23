@@ -52,7 +52,9 @@
                 Grid.Row="0"
                 Cursor="Hand"
                 MouseDown="Grid_MouseDown"
-                Text="IZ*ONE - Violeta"/>
+                HorizontalAlignment="Stretch"
+                TextWrapping="WrapWithOverflow"
+                Text="IZ*ONE Violeta"/>
 
             <TextBlock
                 x:Name="lbArtist"

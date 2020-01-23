@@ -20,12 +20,18 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
-        
+
+        <Frame
+            x:Name="frmContent"
+            Grid.Row="1"
+            NavigationUIVisibility="Hidden"/>
+
         <materialDesign:ColorZone
             Grid.Row="0"
             Mode="PrimaryMid"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
             Padding="16">
-            
+
             <DockPanel>
                 <materialDesign:PopupBox
                     VerticalAlignment="Center"
@@ -34,7 +40,7 @@
                     <Grid>
                         <TextBlock Text="asdfadf"/>
                     </Grid>
-                    
+
                 </materialDesign:PopupBox>
 
                 <StackPanel
@@ -50,7 +56,7 @@
                         Panel.ZIndex="1"
                         Margin="16 0 0 0"
                         materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                        
+
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -77,26 +83,21 @@
                                 VerticalAlignment="Center" />
                         </Grid>
                     </materialDesign:ColorZone>
-                    
+
                     <Button
                         x:Name="btnSearch"
                         Click="btnSearch_Click"
                         Style="{DynamicResource MaterialDesignToolForegroundButton}"
                         Margin="8 0 0 0"
                         Panel.ZIndex="0">
-                        
-                            <materialDesign:PackIcon
+
+                        <materialDesign:PackIcon
                                 Kind="Send" />
                     </Button>
-                    
+
                 </StackPanel>
             </DockPanel>
         </materialDesign:ColorZone>
-
-        <Frame
-            x:Name="frmContent"
-            Grid.Row="1"
-            NavigationUIVisibility="Hidden"/>
 
         <materialDesign:ColorZone
             Grid.Row="2"

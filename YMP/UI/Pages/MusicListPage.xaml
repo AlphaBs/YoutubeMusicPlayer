@@ -16,7 +16,14 @@
       Title="MusicListPage">
 
     <Page.Resources>
+
         <BitmapImage x:Key="folder" UriSource="/YMP;component/Resource/folder.jpg"/>
+
+        <ResourceDictionary x:Key="-">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
     
     <Grid>
@@ -68,18 +75,22 @@
             <StackPanel>
                 <Button
                     x:Name="btnSortByName"
+                    Click="btnSortByName_Click"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Content="이름순"/>
                 <Button
                     x:Name="btnSortByTime"
+                    Click="btnSortByTime_Click"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Content="날짜순"/>
                 <Button
                     x:Name="btnSortByCustom"
+                    Click="btnSortByCustom_Click"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Content="사용자 설정"/>
                 <Button
                     x:Name="btnChangeSort"
+                    Click="btnChangeSort_Click"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Content="정렬 바꾸기"/>
             </StackPanel>
@@ -97,5 +108,64 @@
 
             </StackPanel>
         </ScrollViewer>
+
+        <materialDesign:DialogHost
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            DialogClosing="DialogHost_DialogClosing"
+            DialogMargin="8">
+
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock Text="이름을 입력해 주세요."/>
+                    <TextBox
+                        x:Name="tbNewName"
+                        HorizontalAlignment="Stretch"/>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                        <Button
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            IsDefault="True"
+                            Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                    True
+                                </system:Boolean>
+                            </Button.CommandParameter>
+
+                            OK
+                        </Button>
+
+                        <Button
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            IsDefault="True"
+                            Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                    False
+                                </system:Boolean>
+                            </Button.CommandParameter>
+                            Cancle
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+            
+            <Button
+                x:Name="btnAddPlayList"
+                Grid.Row="1"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="20"
+                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+
+                <materialDesign:PackIcon
+                    Kind="Add" Width="30" Height="30"/>
+            </Button>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>

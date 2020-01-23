@@ -18,6 +18,13 @@ using YMP.Util;
 
 namespace YMP.UI.Pages
 {
+    enum SortMode
+    {
+        Time,
+        Name,
+        Custom
+    }
+
     /// <summary>
     /// MusicListPage.xaml에 대한 상호 작용 논리
     /// </summary>
@@ -30,6 +37,7 @@ namespace YMP.UI.Pages
             ShowAllPlayLists();
         }
 
+        SortMode PlayListSortMode = SortMode.Custom;
         PlayList CurrentPlayList = null;
 
         private void ShowAllPlayLists()
@@ -37,11 +45,11 @@ namespace YMP.UI.Pages
             stkList.Children.Clear();
             lbListNameContent.Text = "플레이리스트";
             btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.PlaylistNote;
+            EnableCreate(true);
 
-            var list = YMPCore.PlayList.PlayLists;
-            for (int i = 0; i < list.Count; i++)
+            foreach (var item in YMPCore.PlayList.PlayLists)
             {
-                AddPlaylistItem(list[i], i);
+                AddPlaylistItem(item);
             }
         }
 
@@ -51,14 +59,15 @@ namespace YMP.UI.Pages
             CurrentPlayList = pl;
             lbListNameContent.Text = pl.Name;
             btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.KeyboardBackspace;
+            EnableCreate(false);
 
-            for (int i = 0; i<pl.Lenght; i++)
+            foreach (var item in pl.Musics)
             {
-                AddMusicItem(pl.Musics[i], i);
+                AddMusicItem(item);
             }
         }
 
-        private void AddMusicItem(Music music, int index)
+        private void AddMusicItem(Music music)
         {
             var item = new PlayListItem();
 
@@ -66,7 +75,7 @@ namespace YMP.UI.Pages
             item.SubTitle = music.Artists;
             item.Thumbnail = Base64Image.GetImage(music.Thumbnail);
             item.Length = music.Duration;
-            item.IndexNumber = index;
+            item.Tag = music;
 
             item.Click += (sender, e) =>
             {
@@ -77,7 +86,7 @@ namespace YMP.UI.Pages
             stkList.Children.Add(item);
         }
 
-        private void AddPlaylistItem(PlayList list, int index)
+        private void AddPlaylistItem(PlayList list)
         {
             var item = new PlayListItem();
 
@@ -85,21 +94,99 @@ namespace YMP.UI.Pages
             item.SubTitle = $"곡 {list.Lenght}개";
             item.Thumbnail = (BitmapImage)FindResource("folder");
             item.Length = "";
-            item.IndexNumber = index;
+            item.Tag = list;
 
             item.Click += (sender, e) =>
             {
                 var pli = (PlayListItem)sender;
-                ShowPlayListMusic(YMPCore.PlayList.GetPlayList(pli.IndexNumber));
+                ShowPlayListMusic((PlayList)pli.Tag);
             };
 
             stkList.Children.Add(item);
+        }
+
+        private void UpdateList()
+        {
+            if (CurrentPlayList != null)
+            {
+                var list = (IEnumerable<PlayListItem>)stkList.Children.GetEnumerator();
+                IEnumerable<PlayListItem> result;
+
+                switch (PlayListSortMode)
+                {
+                    case SortMode.Time:
+                        result = list.OrderBy(x => ((Music)x.Tag).AddDate);
+                        break;
+                    case SortMode.Name:
+                        result = list.OrderBy(x => ((Music)x.Tag).Title);
+                        break;
+                    case SortMode.Custom:
+                    default:
+                        result = list;
+                        break;
+                }
+
+                stkList.Children.Clear();
+                foreach (var item in result)
+                {
+                    stkList.Children.Add(item);
+                }
+            }
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentPlayList != null)
                 ShowAllPlayLists();
+        }
+
+        private void DialogHost_DialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        {
+            var input = tbNewName.Text;
+            tbNewName.Clear();
+
+            if (string.IsNullOrWhiteSpace(input))
+                return;
+
+            if (!(bool)eventArgs.Parameter)
+                return;
+
+            YMPCore.PlayList.CreateNewPlaylist(input);
+            ShowAllPlayLists();
+        }
+
+        private void EnableCreate(bool value)
+        {
+            btnAddPlayList.IsEnabled = value;
+            btnAddPlayList.Visibility = v(value);
+        }
+
+        private void btnSortByName_Click(object sender, RoutedEventArgs e)
+        {
+            PlayListSortMode = SortMode.Name;
+            UpdateList();
+        }
+
+        private void btnSortByTime_Click(object sender, RoutedEventArgs e)
+        {
+            PlayListSortMode = SortMode.Time;
+            UpdateList();
+        }
+
+        private void btnSortByCustom_Click(object sender, RoutedEventArgs e)
+        {
+            PlayListSortMode = SortMode.Custom;
+            UpdateList();
+        }
+
+        private void btnChangeSort_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO : change list order by user
+        }
+
+        private Visibility v(bool value)
+        {
+            return value ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
