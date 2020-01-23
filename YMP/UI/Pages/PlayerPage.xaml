@@ -4,11 +4,81 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:YMP.UI.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:controls="clr-namespace:YMP.UI.Controls"
+      xmlns:ui="clr-namespace:YMP.UI"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="{materialDesign:MaterialDesignFont}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="329" d:DesignWidth="792"
       Title="PlayerPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Button
+            x:Name="btnReturn"
+            HorizontalAlignment="Left"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Padding="0"
+            Grid.Row="0"
+            Width="30" Height="30"
+            Click="btnReturn_Click">
+
+            <materialDesign:PackIcon
+                Width="20" Height="20"
+                Kind="KeyboardBackspace" Foreground="Black"/>
+        </Button>
+
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+
+            <Button
+                x:Name="btnRepeat"
+                Width="30" Height="30"
+                Padding="0"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Click="btnRepeat_Click">
+
+                <materialDesign:PackIcon
+                    Width="20" Height="20"
+                    Foreground="Black" Kind="Repeat"/>
+            </Button>
+
+            <Button
+                x:Name="btnDownload"
+                Width="30" Height="30"
+                Padding="0"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Click="btnDownload_Click">
+
+                <materialDesign:PackIcon
+                    Width="20" Height="20"
+                    Foreground="Black" Kind="Download"/>
+            </Button>
+            
+            <materialDesign:PopupBox>
+                <StackPanel>
+                    
+                </StackPanel>
+            </materialDesign:PopupBox>
+            
+        </StackPanel>
+
+        <Rectangle
+            Grid.Row="1"
+            Fill="#2C2C2C"/>
+
+        <ui:CEFBrowser
+            x:Name="cefBrowser"
+            Grid.Row="1"/>
     </Grid>
 </Page>

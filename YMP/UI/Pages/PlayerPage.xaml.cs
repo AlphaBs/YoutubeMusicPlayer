@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CefSharp.Wpf;
+using YMP.Core;
 
 namespace YMP.UI.Pages
 {
@@ -23,6 +25,27 @@ namespace YMP.UI.Pages
         public PlayerPage()
         {
             InitializeComponent();
+            YMPCore.Browser.InitializeChromiumBrowser(this.Browser);
+        }
+
+        public ChromiumWebBrowser Browser
+        {
+            get => this.cefBrowser.Browser;
+        }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRepeat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

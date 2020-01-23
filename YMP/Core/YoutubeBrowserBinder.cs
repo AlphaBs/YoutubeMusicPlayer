@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YMP.Core
 {
-    public class YoutubeJSBound
+    public class YoutubeBrowserBinder
     {
         public void OnReady()
         {

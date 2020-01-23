@@ -30,7 +30,7 @@ namespace YMP.UI
             {
                 var repo = e.ObjectRepository;
                 if (e.ObjectName == "youtubeJSBound")
-                    repo.Register("youtubeJSBound", new YoutubeJSBound(), isAsync: true);
+                    repo.Register("youtubeJSBound", new YoutubeBrowserBinder(), isAsync: true);
             };
             browser.Browser.Address = System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html");
         }

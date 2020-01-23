@@ -25,12 +25,6 @@ namespace YMP.UI
         public CEFBrowser()
         {
             InitializeComponent();
-
-            browser.BrowserSettings = new BrowserSettings()
-            {
-                FileAccessFromFileUrls = CefState.Enabled,
-                UniversalAccessFromFileUrls = CefState.Enabled
-            };
         }
 
         public ChromiumWebBrowser Browser
