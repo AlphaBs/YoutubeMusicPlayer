@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CefSharp.Wpf;
+using CefSharp.WinForms;
 using YMP.Core;
 
 namespace YMP.UI.Pages

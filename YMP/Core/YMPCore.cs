@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,8 @@ namespace YMP.Core
     {
         public static void Initialize()
         {
+            Cef.Initialize(new CefSettings());
+
             PlayList = new PlayListManager();
             PlayList.LoadAllPlayLists();
 

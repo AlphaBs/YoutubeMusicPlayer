@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CefSharp;
-using CefSharp.Wpf;
+using CefSharp.WinForms;
 
 namespace YMP.UI
 {
@@ -25,7 +25,14 @@ namespace YMP.UI
         public CEFBrowser()
         {
             InitializeComponent();
+
+            var host = new System.Windows.Forms.Integration.WindowsFormsHost();
+            browser = new ChromiumWebBrowser("about:blank");
+            host.Child = browser;
+            this.grd.Children.Add(host);
         }
+
+        ChromiumWebBrowser browser;
 
         public ChromiumWebBrowser Browser
         {

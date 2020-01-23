@@ -24,18 +24,9 @@ namespace YMP.UI
         public CEFTestWindow()
         {
             InitializeComponent();
-
-            browser.Browser.LoadingStateChanged += Browser_LoadingStateChanged;
-            browser.Browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
-            {
-                var repo = e.ObjectRepository;
-                if (e.ObjectName == "youtubeJSBound")
-                    repo.Register("youtubeJSBound", new YoutubeBrowserBinder(), isAsync: true);
-            };
-            browser.Browser.Address = System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html");
         }
 
-        private void Browser_LoadingStateChanged(object sender, CefSharp.LoadingStateChangedEventArgs e)
+        private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -45,7 +36,7 @@ namespace YMP.UI
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-            browser.Browser.Address = tbUrl.Text;
+            browser.Browser.Load(tbUrl.Text);
         }
     }
 }

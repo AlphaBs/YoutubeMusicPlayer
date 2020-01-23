@@ -37,7 +37,8 @@
             player = new YT.Player('player', {
                 height: document.getElementById('player').clientHeight,
                 width: document.getElementById('player').clientWidth,
-                videoId: 'xUV9pnioyt4',
+                videoId: 'yj8e58JcHSw',
+                //videoId: 'xUV9pnioyt4',
                 playerVars: {
                     'disablekb': 1,
                     'enablejsapi': 1,
@@ -49,27 +50,27 @@
                     'rel' : 0
                 }
             });
-        }
 
-        (async function() {
-            await CefSharp.BindObjectAsync("youtubeJSBound");
-            player.addEventListener('onReady', async function(event) {
-                youtubeJSBound.onReady();
-            });
-            player.addEventListener('onStateChange', async function(event) {
-                youtubeJSBound.onStateChange(event.data);
-            });
-            player.addEventListener('onPlaybackQualityChange', async function(event) {
-                youtubeJSBound.onPlaybackQualityChange(event.data);
-            });
-            player.addEventListener('onError', async function(event) {
-                youtubeJSBound.onError(event.data);
+            (async function() {
+                await CefSharp.BindObjectAsync("youtubeJSBound");
+                player.addEventListener('onReady', async function(event) {
+                    youtubeJSBound.onReady();
+                });
+                player.addEventListener('onStateChange', async function(event) {
+                    youtubeJSBound.onStateChange(event.data);
+                });
+                player.addEventListener('onPlaybackQualityChange', async function(event) {
+                    youtubeJSBound.onPlaybackQualityChange(event.data);
+                });
+                player.addEventListener('onError', async function(event) {
+                    youtubeJSBound.onError(event.data);
             });
         })();
+        }
 
         function getPlayerData()
         {
-            return JSON.stringfy({
+            return JSON.stringify({
                 'duration': player.getDuration(),
                 'current': player.getCurrentTime()
             });

@@ -1,5 +1,5 @@
 ﻿using CefSharp;
-using CefSharp.Wpf;
+using CefSharp.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +48,7 @@ namespace YMP.Core
                 if (e.IsLoading == false)
                 {
                     MainFrame = browser.GetMainFrame();
+                    browser.ShowDevTools();
                 }
             };
 
@@ -63,15 +64,20 @@ namespace YMP.Core
                 if (e.ObjectName == "youtubeJSBound")
                     repo.Register("youtubeJSBound", this, isAsync: true);
             };
-            browser.Address = System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html");
+            browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
 
             loopThread = new Thread(getPlayerDataLooper);
             loopThread.Start();
         }
 
+        bool jsAvailable()
+        {
+            return IsBrowserLoadingDone && MainFrame != null && MainFrame.IsValid;
+        }
+
         void js(string script)
         {
-            if (!IsBrowserLoadingDone)
+            if (!jsAvailable())
                 return;
 
             try
@@ -161,8 +167,8 @@ namespace YMP.Core
                 if (string.IsNullOrWhiteSpace(s))
                     return TimeSpan.Zero;
 
-                int sec = 0;
-                if (int.TryParse(s, out sec))
+                float sec = 0;
+                if (float.TryParse(s, out sec))
                     return TimeSpan.FromSeconds(sec);
                 else
                     return TimeSpan.Zero;
@@ -170,6 +176,9 @@ namespace YMP.Core
 
             while (YMPCore.Running)
             {
+                if (!jsAvailable())
+                    continue;
+
                 MainFrame.EvaluateScriptAsync("getPlayerData()")
                     .ContinueWith(t =>
                     {
