@@ -5,8 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using YMP.Core;
-using YMP.UI;
+using YMP.Model;
+using YMP.View;
 
 namespace YMP
 {

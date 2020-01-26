@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace YMP.Core
+namespace YMP.Model
 {
     public class Music
     {

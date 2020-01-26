@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace YMP.Core
+namespace YMP.Model
 {
     public class PlayListManager
     {

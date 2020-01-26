@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YMP.Core
+namespace YMP.Model
 {
     public class PlayList
     {

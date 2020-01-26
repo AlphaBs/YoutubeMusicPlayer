@@ -98,34 +98,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\DesktopManager.cs" />
-    <Compile Include="Core\YoutubeBrowser.cs" />
-    <Compile Include="Core\Music.cs" />
-    <Compile Include="Core\PlayList.cs" />
-    <Compile Include="Core\PlayListManager.cs" />
-    <Compile Include="Core\YMPCore.cs" />
-    <Compile Include="UI\CEFBrowser.xaml.cs">
+    <Compile Include="Model\DesktopManager.cs" />
+    <Compile Include="Model\YoutubeBrowser.cs" />
+    <Compile Include="Model\Music.cs" />
+    <Compile Include="Model\PlayList.cs" />
+    <Compile Include="Model\PlayListManager.cs" />
+    <Compile Include="Model\YMPCore.cs" />
+    <Compile Include="View\CEFBrowser.xaml.cs">
       <DependentUpon>CEFBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\CEFTestWindow.xaml.cs">
-      <DependentUpon>CEFTestWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PlayListItem.xaml.cs">
+    <Compile Include="View\Controls\PlayListItem.xaml.cs">
       <DependentUpon>PlayListItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\MusicListPage.xaml.cs">
+    <Compile Include="View\Pages\MusicListPage.xaml.cs">
       <DependentUpon>MusicListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\PlayerPage.xaml.cs">
+    <Compile Include="View\Pages\PlayerPage.xaml.cs">
       <DependentUpon>PlayerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SearchPage.xaml.cs">
+    <Compile Include="View\Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SplashWindow.xaml.cs">
+    <Compile Include="View\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\Base64Image.cs" />
@@ -161,40 +158,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\CEFBrowser.xaml">
+    <Page Include="View\CEFBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\CEFTestWindow.xaml">
+    <Page Include="View\Controls\PlayListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Controls\PlayListItem.xaml">
+    <Page Include="View\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\MainWindow.xaml">
+    <Page Include="View\Pages\MusicListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\MusicListPage.xaml">
+    <Page Include="View\Pages\PlayerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\PlayerPage.xaml">
+    <Page Include="View\Pages\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\SearchPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\SplashWindow.xaml">
+    <Page Include="View\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModel\" />
     <Folder Include="Youtube\" />
   </ItemGroup>
   <ItemGroup>

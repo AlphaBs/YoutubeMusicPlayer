@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YMP.Util;
 
-namespace YMP.Core
+namespace YMP.Model
 {
     public class DesktopManager
     {

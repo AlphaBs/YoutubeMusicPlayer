@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace YMP.UI.Pages
+namespace YMP.View
 {
     /// <summary>
-    /// SearchPage.xaml에 대한 상호 작용 논리
+    /// SplashWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SearchPage : Page
+    public partial class SplashWindow : Window
     {
-        public SearchPage()
+        public SplashWindow()
         {
             InitializeComponent();
         }

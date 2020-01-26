@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using YMP.UI;
+using YMP.View;
 
-namespace YMP.Core
+namespace YMP.Model
 {
     public static class YMPCore
     {

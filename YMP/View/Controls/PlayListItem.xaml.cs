@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using YMP.Core;
+using YMP.Model;
 
-namespace YMP.UI.Controls
+namespace YMP.View.Controls
 {
     /// <summary>
     /// PlayListItem.xaml에 대한 상호 작용 논리

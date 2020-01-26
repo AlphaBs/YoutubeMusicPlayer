@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CefSharp.WinForms;
-using YMP.Core;
+using YMP.Model;
 
-namespace YMP.UI.Pages
+namespace YMP.View.Pages
 {
     /// <summary>
     /// PlayerPage.xaml에 대한 상호 작용 논리

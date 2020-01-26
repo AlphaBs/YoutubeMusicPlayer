@@ -11,10 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using YMP.Core;
-using YMP.UI.Pages;
+using YMP.Model;
+using YMP.View.Pages;
 
-namespace YMP.UI
+namespace YMP.View
 {
     public enum FrameContent
     {

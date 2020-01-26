@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using CefSharp;
 using CefSharp.WinForms;
 
-namespace YMP.UI
+namespace YMP.View
 {
     /// <summary>
     /// CEFBrowser.xaml에 대한 상호 작용 논리

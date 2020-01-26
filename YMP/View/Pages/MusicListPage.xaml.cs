@@ -12,11 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using YMP.Core;
-using YMP.UI.Controls;
+using YMP.Model;
+using YMP.View.Controls;
 using YMP.Util;
 
-namespace YMP.UI.Pages
+namespace YMP.View.Pages
 {
     enum SortMode
     {
