@@ -12,7 +12,8 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
-        Title="Youtube Music Player" Width="800" Height="500">
+        Title="Youtube Music Player" Width="800" Height="500"
+        Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>

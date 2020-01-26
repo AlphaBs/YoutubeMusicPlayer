@@ -17,6 +17,7 @@ namespace YMP
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             YMPCore.Initialize();
         }
     }

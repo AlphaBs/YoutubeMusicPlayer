@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using YMP.Core;
 using YMP.UI.Pages;
 
 namespace YMP.UI
@@ -104,6 +105,11 @@ namespace YMP.UI
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            YMPCore.Stop();
         }
     }
 }

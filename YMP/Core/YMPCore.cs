@@ -50,6 +50,7 @@ namespace YMP.Core
             DisposeDesktopForm();
 
             Cef.Shutdown();
+            Environment.Exit(0);
         }
     }
 }
