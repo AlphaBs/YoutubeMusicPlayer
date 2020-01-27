@@ -64,6 +64,7 @@
                 });
                 player.addEventListener('onError', async function(event) {
                     youtubeJSBound.onError(event.data);
+                });
 
                 var duration = 0;
                 var curr = 0;
@@ -80,7 +81,6 @@
                         youtubeJSBound.updateTime(j);
                     }
                 }, 500);
-            });
         })();
         }
 
