@@ -147,6 +147,8 @@ namespace YMP.Model
         {
             LoadVideo(m.YoutubeID);
             Play();
+            Title = m.Title;
+            Subtitle = m.Artists;
         }
 
         public void LoadVideo(string id)

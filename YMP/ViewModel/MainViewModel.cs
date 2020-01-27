@@ -255,6 +255,8 @@ namespace YMP.ViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            Title = YMPCore.Browser.Title;
+            Subtitle = YMPCore.Browser.Subtitle;
             CurrentTime = YMPCore.Browser.CurrentTime;
             Duration = YMPCore.Browser.Duration;
         }
