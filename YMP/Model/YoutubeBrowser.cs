@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 
 namespace YMP.Model
 {
@@ -35,7 +36,6 @@ namespace YMP.Model
     {
         private bool IsBrowserLoadingDone = false;
         private IFrame MainFrame;
-        private Thread loopThread;
 
         public ChromiumWebBrowser Browser { get; private set; }
 
@@ -65,9 +65,6 @@ namespace YMP.Model
                     repo.Register("youtubeJSBound", this, isAsync: true);
             };
             browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
-
-            loopThread = new Thread(getPlayerDataLooper);
-            loopThread.Start();
         }
 
         bool jsAvailable()
@@ -90,6 +87,15 @@ namespace YMP.Model
             }
         }
 
+        // YOUTUBE DATA
+
+        public string Title { get; private set; }
+        public string Subtitle { get; private set; }
+        public PlayerState State { get; private set; }
+        public VideoQuality Quality { get; private set; }
+        public TimeSpan CurrentTime { get; private set; }
+        public TimeSpan Duration { get; private set; }
+
         // YOUTUBE EVENT
 
         public void OnReady()
@@ -111,12 +117,24 @@ namespace YMP.Model
             Console.WriteLine("err {0}", data);
         }
 
-        // YOUTUBE DATA
+        public void UpdateTime(string d)
+        {
+            var job = JObject.Parse(d);
+            Duration = tParse(job["duration"]?.ToString());
+            CurrentTime = tParse(job["current"]?.ToString());
+        }
 
-        public PlayerState State { get; private set; }
-        public VideoQuality Quality { get; private set; }
-        public TimeSpan CurrentTime { get; private set; }
-        public TimeSpan Duration { get; private set; }
+        private TimeSpan tParse(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return TimeSpan.Zero;
+
+            int sec = 0;
+            if (int.TryParse(s, out sec))
+                return TimeSpan.FromSeconds(sec);
+            else
+                return TimeSpan.Zero;
+        }
 
         public string GetQualityString()
         {
@@ -124,6 +142,12 @@ namespace YMP.Model
         }
 
         // YOUTUBE FUNCTION
+
+        public void PlayMusic(Music m)
+        {
+            LoadVideo(m.YoutubeID);
+            Play();
+        }
 
         public void LoadVideo(string id)
         {
@@ -158,42 +182,6 @@ namespace YMP.Model
         public void Unmute()
         {
             js("player.unMute()");
-        }
-
-        private void getPlayerDataLooper()
-        {
-            TimeSpan strSecToTime(string s)
-            {
-                if (string.IsNullOrWhiteSpace(s))
-                    return TimeSpan.Zero;
-
-                float sec = 0;
-                if (float.TryParse(s, out sec))
-                    return TimeSpan.FromSeconds(sec);
-                else
-                    return TimeSpan.Zero;
-            }
-
-            while (YMPCore.Running)
-            {
-                if (!jsAvailable())
-                    continue;
-
-                MainFrame.EvaluateScriptAsync("getPlayerData()")
-                    .ContinueWith(t =>
-                    {
-                        if (t.Result.Success)
-                        {
-                            var r = t.Result.Result.ToString();
-                            var job = JObject.Parse(r);
-
-                            Duration = strSecToTime(job["duration"]?.ToString());
-                            CurrentTime = strSecToTime(job["current"]?.ToString());
-                        }
-                    });
-
-                Thread.Sleep(500);
-            }
         }
 
         private VideoQuality strToQuality(string s)
@@ -239,13 +227,6 @@ namespace YMP.Model
                 default:
                     return "default";
             }
-        }
-
-        public void Dispose()
-        {
-            // STOP CEF
-
-            loopThread.Abort();
         }
     }
 }
