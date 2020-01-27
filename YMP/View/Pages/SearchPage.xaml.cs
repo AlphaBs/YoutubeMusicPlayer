@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YMP.Model;
+using YMP.View.Controls;
 
 namespace YMP.View.Pages
 {
@@ -23,6 +25,15 @@ namespace YMP.View.Pages
         public SearchPage()
         {
             InitializeComponent();
+
+            var r = YMPCore.Youtube.Search("IZONE", "");
+            foreach (var item in r.Items)
+            {
+                var i = new SearchListItem();
+                i.Title = item.Snippet.Title;
+                i.Subtitle = item.Snippet.ChannelTitle;
+                stkList.Children.Add(i);
+            }
         }
     }
 }

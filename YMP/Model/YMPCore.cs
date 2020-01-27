@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using YMP.View;
+using YMP.Youtube;
 
 namespace YMP.Model
 {
@@ -15,6 +16,8 @@ namespace YMP.Model
         public static void Initialize()
         {
             Cef.Initialize(new CefSettings());
+
+            Youtube = new YoutubeAPI();
 
             PlayList = new PlayListManager();
             PlayList.LoadAllPlayLists();
@@ -30,6 +33,7 @@ namespace YMP.Model
         public static MainWindow MainUI { get; private set; }
         public static System.Windows.Forms.Form DesktopForm { get; private set; }
 
+        public static YoutubeAPI Youtube { get; private set; }
         public static PlayListManager PlayList { get; private set; }
         public static YoutubeBrowser Browser { get; private set; }
 

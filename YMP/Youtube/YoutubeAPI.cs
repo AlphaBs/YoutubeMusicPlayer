@@ -35,5 +35,19 @@ namespace YMP.Youtube
             var res = q.Execute();
             return res;
         }
+
+        void test()
+        {
+            var r = Search("asdf", "");
+            var list = r.Items;
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.Id.Kind);
+                Console.WriteLine(item.Id.VideoId);
+                Console.WriteLine(item.Snippet.Title);
+                Console.WriteLine(item.Snippet.Thumbnails.Default__.Url);
+                Console.WriteLine(item.Snippet.ChannelTitle);
+            }
+        }
     }
 }

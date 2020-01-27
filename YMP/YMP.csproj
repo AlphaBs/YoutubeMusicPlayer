@@ -133,6 +133,9 @@
     <Compile Include="View\Controls\PlayListItem.xaml.cs">
       <DependentUpon>PlayListItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\SearchListItem.xaml.cs">
+      <DependentUpon>SearchListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\SearchListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -217,6 +224,7 @@
     <Resource Include="Resource\sample_thumbnail.png" />
     <Resource Include="Resource\logo.png" />
     <Resource Include="Resource\folder.jpg" />
+    <Resource Include="Resource\sample_vt.png" />
     <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

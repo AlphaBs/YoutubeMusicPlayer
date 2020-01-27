@@ -47,7 +47,7 @@ namespace YMP.View
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
+            viewModel.CurrentContent = FrameContent.SearchPage;
         }
 
         private void ColorZone_MouseDown(object sender, MouseButtonEventArgs e)
