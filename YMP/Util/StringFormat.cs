@@ -10,7 +10,7 @@ namespace YMP.Util
     {
         public static string ToDurationString(TimeSpan time)
         {
-            var front = time.ToString("mm:ss");
+            var front = time.ToString(@"mm\:ss");
 
             if (time.Hours > 0)
                 return $"{time.Hours}:{front}";

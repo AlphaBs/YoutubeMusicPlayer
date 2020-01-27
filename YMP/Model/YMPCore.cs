@@ -46,7 +46,6 @@ namespace YMP.Model
         {
             Running = false;
             PlayList.SaveAllPlayLists();
-            Browser.Dispose();
             DisposeDesktopForm();
 
             Cef.Shutdown();

@@ -1,0 +1,240 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using YMP.Command;
+using YMP.Model;
+using YMP.Util;
+using YMP.View;
+using YMP.View.Pages;
+
+namespace YMP.ViewModel
+{
+    public class MainViewModel : INotifyPropertyChanged
+    {
+        public MainViewModel()
+        {
+            musicList = new MusicListPage();
+            playerPage = new PlayerPage();
+            searchPage = new SearchPage();
+            timer = new DispatcherTimer();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        MusicListPage musicList;
+        PlayerPage playerPage;
+        SearchPage searchPage;
+
+        DispatcherTimer timer;
+
+        FrameContent _frameContent = FrameContent.Blank;
+        FrameContent PreviousContent = FrameContent.Blank;
+        public FrameContent CurrentContent
+        {
+            get => _frameContent;
+            set
+            {
+                if (_frameContent != value)
+                {
+                    PreviousContent = _frameContent;
+                    _frameContent = value;
+
+                    switch (value)
+                    {
+                        case FrameContent.MusicListPage:
+                            DisplayPage = musicList;
+                            break;
+                        case FrameContent.SearchPage:
+                            DisplayPage = searchPage;
+                            break;
+                        case FrameContent.PlayerPage:
+                            DisplayPage = playerPage;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        public void SetPreviousPage()
+        {
+            CurrentContent = PreviousContent;
+        }
+
+        Page _displayPage;
+        public Page DisplayPage
+        {
+            get => _displayPage;
+            set
+            {
+                if (!Equals(_displayPage, value))
+                {
+                    _displayPage = value;
+                    RaiseChanged(nameof(DisplayPage));
+                }
+            }
+        }
+
+        string _currentTime;
+        string _duration;
+        public string CurrentTime
+        {
+            get => CurrentTime;
+            set
+            {
+                if (_currentTime != value)
+                {
+                    _currentTime = value;
+                    Position = $"{_currentTime} / {_duration}";
+                }
+            }
+        }
+        public string Duration
+        {
+            get => _duration;
+            set
+            {
+                if (_duration != value)
+                {
+                    _duration = value;
+                    Position = $"{_currentTime} / {_duration}";
+                }
+            }
+        }
+
+        string _position;
+        public string Position
+        {
+            get => _position;
+            set
+            {
+                if (_position != value)
+                {
+                    _position = value;
+                    RaiseChanged(nameof(Position));
+                }
+            }
+        }
+
+        BitmapImage _thumbnail;
+        public BitmapImage Thumbnail
+        {
+            get => _thumbnail;
+            set
+            {
+                if (_thumbnail != value)
+                {
+                    _thumbnail = value;
+                    RaiseChanged(nameof(Thumbnail));
+                }
+            }
+        }
+
+        string _title;
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                if (_title != value)
+                {
+                    _title = value;
+                    RaiseChanged(nameof(Title));
+                }
+            }
+        }
+
+        string _subtitle;
+        public string Subtitle
+        {
+            get => _subtitle;
+            set
+            {
+                if (_subtitle != value)
+                {
+                    _subtitle = value;
+                    RaiseChanged(nameof(Subtitle));
+                }
+            }
+        }
+
+        private void RaiseChanged(string pn)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pn));
+        }
+
+        public void OnClickBrowser()
+        {
+            CurrentContent = FrameContent.PlayerPage;
+        }
+
+        ICommand prevCommand;
+        public ICommand PrevCommand
+        {
+            get => prevCommand ?? (prevCommand = new RelayCommand(PrevMusic));
+        }
+
+        private void PrevMusic(object o)
+        {
+            var p = YMPCore.PlayList.CurrentPlayList.GetPreviousMusic();
+            YMPCore.Browser.PlayMusic(p);
+        }
+
+        ICommand nextCommand;
+        public ICommand NextCommand
+        {
+            get => nextCommand ?? (nextCommand = new RelayCommand(NextMusic));
+        }
+
+        private void NextMusic(object o)
+        {
+            var p = YMPCore.PlayList.CurrentPlayList.GetNextMusic();
+            YMPCore.Browser.PlayMusic(p);
+        }
+
+        ICommand playpauseCommand;
+        public ICommand PlayPauseCommand
+        {
+            get => playpauseCommand ?? (playpauseCommand = new RelayCommand(PlayPauseMusic));
+        }
+
+        private void PlayPauseMusic(object o)
+        {
+            var state = YMPCore.Browser.State;
+            if (state == PlayerState.Playing)
+                YMPCore.Browser.Pause();
+            else
+                YMPCore.Browser.Play();
+        }
+
+        ICommand loadedCommand;
+        public ICommand LoadedCommand
+        {
+            get => loadedCommand ?? (loadedCommand = new RelayCommand(LoadedWindow));
+        }
+
+        private void LoadedWindow(object o)
+        {
+            CurrentContent = FrameContent.MusicListPage;
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine(YMPCore.Browser.CurrentTime);
+
+            CurrentTime = StringFormat.ToDurationString(YMPCore.Browser.CurrentTime);
+            Duration = StringFormat.ToDurationString(YMPCore.Browser.Duration);
+        }
+    }
+}

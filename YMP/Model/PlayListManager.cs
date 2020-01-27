@@ -10,6 +10,7 @@ namespace YMP.Model
 {
     public class PlayListManager
     {
+        public PlayList CurrentPlayList { get; private set; }
         public PlayList RecentPlayList { get; private set; }
         public List<PlayList> PlayLists { get; private set; }
 

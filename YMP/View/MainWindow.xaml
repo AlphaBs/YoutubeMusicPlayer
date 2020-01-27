@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:YMP.View"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,7 +14,13 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         Title="Youtube Music Player" Width="800" Height="500"
-        Closing="Window_Closing" >
+        Closing="Window_Closing">
+
+    <intr:Interaction.Triggers>
+        <intr:EventTrigger EventName="Loaded">
+            <intr:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </intr:EventTrigger>
+    </intr:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +32,8 @@
         <Frame
             x:Name="frmContent"
             Grid.Row="1"
-            NavigationUIVisibility="Hidden"/>
+            NavigationUIVisibility="Hidden"
+            Content="{Binding DisplayPage}"/>
 
         <materialDesign:ColorZone
             Grid.Row="0"
@@ -113,31 +121,31 @@
 
                     <TextBlock
                         x:Name="lbProgress"
-                        Text="1:32 / 13:56"
+                        Text="{Binding Position}"
                         VerticalAlignment="Center"
                         Margin="3"
                         Foreground="Gray"/>
 
                     <Button
                         x:Name="btnPrevious"
-                        Click="btnPrevious_Click"
-                        Style="{StaticResource MaterialDesignIconButton}">
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        Command="{Binding PrevCommand}">
 
                         <materialDesign:PackIcon Foreground="White" Kind="SkipPrevious"/>
                     </Button>
 
                     <Button
                         x:Name="btnPlayPause"
-                        Click="btnPlayPause_Click"
-                        Style="{StaticResource MaterialDesignIconButton}">
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        Command="{Binding PlayPauseCommand}">
 
                         <materialDesign:PackIcon Foreground="White" Kind="PlayArrow"/>
                     </Button>
 
                     <Button
                         x:Name="btnNext"
-                        Click="btnNext_Click"
-                        Style="{StaticResource MaterialDesignIconButton}">
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        Command="{Binding NextCommand}">
 
                         <materialDesign:PackIcon Foreground="White" Kind="SkipNext"/>
                     </Button>
@@ -149,7 +157,7 @@
                             MouseDown="ColorZone_MouseDown">
                     <Image
                         x:Name="imgThumbnail" 
-                        Source="/YMP;component/Resource/sample_thumbnail.png"/>
+                        Source="{Binding Thumbnail}"/>
 
                     <StackPanel 
                         Orientation="Vertical">
@@ -159,7 +167,7 @@
                             Margin="7 2 5 2"
                             Cursor="Hand"
                             MouseDown="ColorZone_MouseDown"
-                            Text="A long and long title but good song wow amzing"/>
+                            Text="{Binding Title}"/>
 
                         <TextBlock
                             x:Name="tbArtist"
@@ -168,7 +176,7 @@
                             Foreground="Gray"
                             Cursor="Hand"
                             MouseDown="ColorZone_MouseDown"
-                            Text="I'm composer!"/>
+                            Text="{Binding Subtitle}"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
