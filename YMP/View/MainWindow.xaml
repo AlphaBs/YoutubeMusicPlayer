@@ -26,6 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
@@ -109,7 +110,7 @@
         </materialDesign:ColorZone>
 
         <materialDesign:ColorZone
-            Grid.Row="2"
+            Grid.Row="3"
             Mode="Accent"
             Height="70"
             Padding="8">
@@ -182,5 +183,16 @@
             </DockPanel>
 
         </materialDesign:ColorZone>
+
+        <Slider
+            x:Name="slSeeker"
+            Grid.Row="2"
+            Orientation="Horizontal"
+            Grid.RowSpan="2"
+            Maximum="{Binding DurationInt, Mode=OneWay}"
+            Value="{Binding CurrentTimeInt, Mode=OneWay}"
+            Thumb.DragStarted="slSeeker_DragStarted"
+            Thumb.DragCompleted="slSeeker_DragCompleted">
+        </Slider>
     </Grid>
 </Window>

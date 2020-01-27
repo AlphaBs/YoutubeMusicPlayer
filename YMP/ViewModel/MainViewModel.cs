@@ -83,21 +83,28 @@ namespace YMP.ViewModel
             }
         }
 
-        string _currentTime;
-        string _duration;
-        public string CurrentTime
+        bool isUserSliding = false;
+
+        TimeSpan _currentTime;
+        TimeSpan _duration;
+        public TimeSpan CurrentTime
         {
-            get => CurrentTime;
+            get => _currentTime;
             set
             {
                 if (_currentTime != value)
                 {
                     _currentTime = value;
-                    Position = $"{_currentTime} / {_duration}";
+
+                    if (!isUserSliding)
+                    {
+                        RaiseChanged(nameof(CurrentTimeInt));
+                        RaiseChanged(nameof(Position));
+                    }
                 }
             }
         }
-        public string Duration
+        public TimeSpan Duration
         {
             get => _duration;
             set
@@ -105,23 +112,29 @@ namespace YMP.ViewModel
                 if (_duration != value)
                 {
                     _duration = value;
-                    Position = $"{_currentTime} / {_duration}";
+
+                    if (!isUserSliding)
+                    {
+                        RaiseChanged(nameof(DurationInt));
+                        RaiseChanged(nameof(Position));
+                    }
                 }
             }
         }
 
-        string _position;
         public string Position
         {
-            get => _position;
-            set
-            {
-                if (_position != value)
-                {
-                    _position = value;
-                    RaiseChanged(nameof(Position));
-                }
-            }
+            get => $"{StringFormat.ToDurationString(_currentTime)} / {StringFormat.ToDurationString(_duration)}";
+        }
+
+        public int CurrentTimeInt
+        {
+            get => (int)_currentTime.TotalSeconds;
+        }
+
+        public int DurationInt
+        {
+            get => (int)_duration.TotalSeconds;
         }
 
         BitmapImage _thumbnail;
@@ -215,6 +228,17 @@ namespace YMP.ViewModel
                 YMPCore.Browser.Play();
         }
 
+        public void SliderDragStarted(object o)
+        {
+            isUserSliding = true;
+        }
+
+        public void SliderDragCompleted(int o)
+        {
+            YMPCore.Browser.SeekTo(o);
+            isUserSliding = false;
+        }
+
         ICommand loadedCommand;
         public ICommand LoadedCommand
         {
@@ -231,10 +255,8 @@ namespace YMP.ViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine(YMPCore.Browser.CurrentTime);
-
-            CurrentTime = StringFormat.ToDurationString(YMPCore.Browser.CurrentTime);
-            Duration = StringFormat.ToDurationString(YMPCore.Browser.Duration);
+            CurrentTime = YMPCore.Browser.CurrentTime;
+            Duration = YMPCore.Browser.Duration;
         }
     }
 }

@@ -59,5 +59,15 @@ namespace YMP.View
         {
             YMPCore.Stop();
         }
+
+        private void slSeeker_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            viewModel.SliderDragStarted(null);
+        }
+
+        private void slSeeker_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            viewModel.SliderDragCompleted((int)slSeeker.Value);
+        }
     }
 }
