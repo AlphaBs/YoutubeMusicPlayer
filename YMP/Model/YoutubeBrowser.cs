@@ -64,7 +64,9 @@ namespace YMP.Model
                 if (e.ObjectName == "youtubeJSBound")
                     repo.Register("youtubeJSBound", this, isAsync: true);
             };
+
             browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
+            Console.WriteLine(browser.Handle);
         }
 
         bool jsAvailable()
