@@ -33,7 +33,7 @@
         <TextBlock
             x:Name="lbDuration"
             Margin="20"
-            Background="#7F000000"
+            Background="#B2000000"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             Foreground="White"
