@@ -30,7 +30,9 @@ namespace YMP
             WebFrontendPath = p("Web\\index.html"),
             PlaylistPath    = p("playlist", isdir: true),
             LicensePath     = p("LICENSE.txt"),
-            SettingPath     = p("setting.json")
+            SettingPath     = p("setting.json"),
+            
+            VC2015Url       = "https://www.microsoft.com/ko-kr/download/confirmation.aspx?id=48145"
             ;
     }
 }

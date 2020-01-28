@@ -127,6 +127,8 @@
     <Compile Include="Model\PlayList.cs" />
     <Compile Include="Model\PlayListManager.cs" />
     <Compile Include="Model\YMPCore.cs" />
+    <Compile Include="Util\MsiQuery.cs" />
+    <Compile Include="Util\Utils.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\CEFBrowser.xaml.cs">
       <DependentUpon>CEFBrowser.xaml</DependentUpon>
