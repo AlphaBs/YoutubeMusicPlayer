@@ -190,7 +190,7 @@
             Orientation="Horizontal"
             Grid.RowSpan="2"
             Maximum="{Binding DurationInt, Mode=OneWay}"
-            Value="{Binding CurrentTimeInt, Mode=OneWay}"
+            Value="{Binding CurrentTimeInt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Thumb.DragStarted="slSeeker_DragStarted"
             Thumb.DragCompleted="slSeeker_DragCompleted">
         </Slider>

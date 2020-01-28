@@ -84,6 +84,7 @@ namespace YMP.ViewModel
         }
 
         bool isUserSliding = false;
+        bool isTimeUpdated = false;
 
         TimeSpan _currentTime;
         TimeSpan _duration;
@@ -130,6 +131,7 @@ namespace YMP.ViewModel
         public int CurrentTimeInt
         {
             get => (int)_currentTime.TotalSeconds;
+            set => CurrentTime = TimeSpan.FromSeconds(value);
         }
 
         public int DurationInt
@@ -228,14 +230,27 @@ namespace YMP.ViewModel
                 YMPCore.Browser.Play();
         }
 
+        ICommand dragStartedCommand;
+        public ICommand DragStartedCommand
+        {
+            get => dragStartedCommand ?? (dragStartedCommand = new RelayCommand(SliderDragStarted));
+        }
+
         public void SliderDragStarted(object o)
         {
             isUserSliding = true;
         }
 
-        public void SliderDragCompleted(int o)
+        ICommand dragCompletedCommand;
+        public ICommand DragCompletedCommand
         {
-            YMPCore.Browser.SeekTo(o);
+            get => dragCompletedCommand ?? (dragCompletedCommand = new RelayCommand(SliderDragCompleted));
+        }
+
+        public void SliderDragCompleted(object o)
+        {
+            YMPCore.Browser.SeekTo(CurrentTimeInt);
+            isTimeUpdated = true;
             isUserSliding = false;
         }
 
@@ -257,8 +272,17 @@ namespace YMP.ViewModel
         {
             Title = YMPCore.Browser.Title;
             Subtitle = YMPCore.Browser.Subtitle;
-            CurrentTime = YMPCore.Browser.CurrentTime;
-            Duration = YMPCore.Browser.Duration;
+
+            if (!isTimeUpdated)
+            {
+                if (!isUserSliding)
+                {
+                    CurrentTime = YMPCore.Browser.CurrentTime;
+                    Duration = YMPCore.Browser.Duration;
+                }
+            }
+            else
+                isTimeUpdated = false;
         }
     }
 }
