@@ -63,10 +63,21 @@ namespace YMP.View.Pages
         void ytSearch(string q, string pagetoken)
         {
             var r = YMPCore.Youtube.Search(q, pagetoken);
+            var videoIds = YMPCore.Youtube.Videos(r.Item1);
+            var playlistIds = YMPCore.Youtube.Playlists(r.Item2);
 
             Dispatcher.Invoke(() =>
             {
-                foreach (var item in r)
+                foreach (var item in playlistIds)
+                {
+                    var c = new SearchListItem();
+                    c.Playlist = item;
+
+                    c.ClickEvent += C_ClickEvent1;
+                    stkList.Children.Add(c);
+                }
+
+                foreach (var item in videoIds)
                 {
                     var c = new SearchListItem();
                     c.Music = item;
@@ -79,8 +90,15 @@ namespace YMP.View.Pages
             });
         }
 
+        private void C_ClickEvent1(object sender, EventArgs e)
+        {
+            // playlist
+        }
+
         private void C_ClickEvent(object sender, EventArgs e)
         {
+            // music
+
             var ctr = sender as SearchListItem;
             if (ctr == null)
                 return;

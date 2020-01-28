@@ -14,6 +14,8 @@ namespace YMP.Youtube
     {
         // Please input your YouTube Data API KEY
         private static readonly string Key = YoutubeDataAPI.KEY;
+        public const string YoutubeVideoKind = "youtube#video";
+        public const string YoutubePlayListKind = "youtube#playlist";
 
         public YoutubeAPI()
         {
@@ -25,10 +27,9 @@ namespace YMP.Youtube
 
         public YouTubeService Service { get; private set; }
 
-        public Music[] Search(string query, string pagetoken)
+        public Tuple<string[], string[]> Search(string query, string pagetoken)
         {
             var count = 10;
-            var list = new List<Music>(count);
 
             var q = Service.Search.List("id");
             q.MaxResults = count;
@@ -36,19 +37,31 @@ namespace YMP.Youtube
             q.Q = query;
             q.Type = "video,playlist";
 
-            var searchVideos = new List<string>(count);
-            var searchPlaylist = new List<string>(count);
-            foreach (var item in q.Execute().Items)
+            var r = q.Execute();
+            var v = new List<string>(count);
+            var p = new List<string>(count);
+
+            foreach (var item in r.Items)
             {
-                if (item.Id.Kind == "youtube#video")
-                    searchVideos.Add(item.Id.VideoId);
-                else if (item.Id.Kind == "youtube#playlist")
-                    searchPlaylist.Add(item.Id.PlaylistId);
+                if (item.Id.Kind == YoutubeVideoKind)
+                    v.Add(item.Id.VideoId);
+                else if (item.Id.Kind == YoutubePlayListKind)
+                    p.Add(item.Id.PlaylistId);
             }
 
+            return new Tuple<string[], string[]>(v.ToArray(), p.ToArray());
+        }
+
+        public Music[] Videos(string[] ids)
+        {
+            if (ids.Length == 0)
+                return new Music[0];
+
+            var list = new List<Music>(10);
+
             var r = Service.Videos.List("id,snippet,contentDetails,statistics");
-            r.MaxResults = count;
-            r.Id = string.Join(",", searchVideos);
+            r.MaxResults = 10;
+            r.Id = string.Join(",", ids);
 
             var videos = r.Execute();
             foreach (var item in videos.Items)
@@ -62,7 +75,34 @@ namespace YMP.Youtube
                     Duration = item.ContentDetails.Duration,
                     Thumbnail = item.Snippet.Thumbnails.Medium.Url,
                     Views = item.Statistics.ViewCount ?? 0
-                }) ;
+                });
+            }
+
+            return list.ToArray();
+        }
+
+        public PlayListMetadata[] Playlists(string[] ids)
+        {
+            if (ids.Length == 0)
+                return new PlayListMetadata[0];
+
+            var list = new List<PlayListMetadata>(10);
+
+            var l = Service.Playlists.List("id,snippet,contentDetails");
+            l.MaxResults = 10;
+            l.Id = string.Join(",", ids);
+
+            var playlists = l.Execute();
+            foreach (var item in playlists.Items)
+            {
+                list.Add(new PlayListMetadata()
+                {
+                    ID = item.Id,
+                    Title = item.Snippet.Title,
+                    Count = item.ContentDetails.ItemCount ?? 0,
+                    Thumbnail = item.Snippet.Thumbnails.Medium.Url,
+                    Creator = item.Snippet.ChannelTitle
+                });
             }
 
             return list.ToArray();

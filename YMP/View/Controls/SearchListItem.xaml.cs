@@ -50,6 +50,23 @@ namespace YMP.View.Controls
             }
         }
 
+        PlayListMetadata pl;
+        public PlayListMetadata Playlist
+        {
+            get => pl;
+            set
+            {
+                if (pl != value)
+                {
+                    pl = value;
+                    Title = pl.Title;
+                    Channel = pl.Creator;
+                    Info = "재생목록";
+                    ThumbnailUrl = pl.Thumbnail;
+                }
+            }
+        }
+
         public string Title
         {
             get => lbTitle.Text;

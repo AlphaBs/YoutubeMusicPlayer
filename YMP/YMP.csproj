@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Model\DesktopManager.cs" />
+    <Compile Include="Model\PlayListMetadata.cs" />
     <Compile Include="Model\YoutubeBrowser.cs" />
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\PlayList.cs" />
