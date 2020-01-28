@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,15 +26,45 @@ namespace YMP.View.Pages
         public SearchPage()
         {
             InitializeComponent();
+        }
 
-            var r = YMPCore.Youtube.Search("IZONE", "");
-            foreach (var item in r.Items)
+        public event EventHandler BackEvent;
+        bool searching = false;
+
+        public void Search(string q)
+        {
+            if (searching)
+                return;
+
+            stkList.Children.Clear();
+            var th = new Thread(() =>
             {
-                var i = new SearchListItem();
-                i.Title = item.Snippet.Title;
-                i.Subtitle = item.Snippet.ChannelTitle;
-                stkList.Children.Add(i);
-            }
+                searching = true;
+                ytSearch(q, "");
+                searching = false;
+            });
+            th.Start();
+        }
+
+        void ytSearch(string q, string pagetoken)
+        {
+            var r = YMPCore.Youtube.Search(q, pagetoken);
+
+            Dispatcher.Invoke(() =>
+            {
+                foreach (var item in r.Items)
+                {
+                    var c = new SearchListItem();
+                    c.Title = item.Snippet.Title;
+                    c.Subtitle = item.Snippet.ChannelTitle;
+                    stkList.Children.Add(c);
+                }
+            });
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            BackEvent?.Invoke(this, new EventArgs());
         }
     }
 }

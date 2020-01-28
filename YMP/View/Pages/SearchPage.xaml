@@ -16,12 +16,41 @@
       Title="SearchPage">
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button
+            x:Name="btnBack"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Padding="0"
+            Width="30" Height="30"
+            HorizontalAlignment="Left"
+            Click="btnBack_Click">
+
+            <materialDesign:PackIcon 
+                Width="25" Height="25"
+                Kind="KeyboardBackspace" Foreground="Black"/>
+        </Button>
+
+        <Button
+            x:Name="btnAdd"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Padding="0"
+            Width="30" Height="30"
+            HorizontalAlignment="Right">
+
+            <materialDesign:PackIcon 
+                Width="25" Height="25"
+                Kind="Add" Foreground="Black"/>
+        </Button>
+
+        <ScrollViewer 
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+            
             <StackPanel x:Name="stkList">
-                <controls:SearchListItem/>
-                <controls:SearchListItem/>
-                <controls:SearchListItem/>
-                <controls:SearchListItem/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

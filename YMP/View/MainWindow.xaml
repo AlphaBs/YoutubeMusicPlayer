@@ -84,6 +84,7 @@
                             <TextBox
                                 x:Name="tbSearch"
                                 KeyDown="tbSearch_KeyDown"
+                                Text="{Binding Path=SearchQuery, Mode=TwoWay}"
                                 Grid.Column="1"
                                 Margin="8 0 0 0"
                                 materialDesign:HintAssist.Hint="유튜브 검색"
@@ -96,7 +97,7 @@
 
                     <Button
                         x:Name="btnSearch"
-                        Click="btnSearch_Click"
+                        Command="{Binding SearchCommand}"
                         Style="{DynamicResource MaterialDesignToolForegroundButton}"
                         Margin="8 0 0 0"
                         Panel.ZIndex="0">

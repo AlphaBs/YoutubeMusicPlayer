@@ -21,8 +21,15 @@ namespace YMP.ViewModel
         public MainViewModel()
         {
             musicList = new MusicListPage();
+
             playerPage = new PlayerPage();
+
             searchPage = new SearchPage();
+            searchPage.BackEvent += delegate
+            {
+                SetPreviousPage();
+            };
+
             timer = new DispatcherTimer();
         }
 
@@ -181,6 +188,20 @@ namespace YMP.ViewModel
             }
         }
 
+        string _searchQ;
+        public string SearchQuery
+        {
+            get => _searchQ;
+            set
+            {
+                if (_searchQ != value)
+                {
+                    _searchQ = value;
+                    RaiseChanged(nameof(SearchQuery));
+                }
+            }
+        }
+
         private void RaiseChanged(string pn)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pn));
@@ -191,16 +212,12 @@ namespace YMP.ViewModel
             CurrentContent = FrameContent.PlayerPage;
         }
 
+        #region ICommands
+
         ICommand prevCommand;
         public ICommand PrevCommand
         {
             get => prevCommand ?? (prevCommand = new RelayCommand(PrevMusic));
-        }
-
-        private void PrevMusic(object o)
-        {
-            var p = YMPCore.PlayList.CurrentPlayList.GetPreviousMusic();
-            YMPCore.Browser.PlayMusic(p);
         }
 
         ICommand nextCommand;
@@ -209,16 +226,48 @@ namespace YMP.ViewModel
             get => nextCommand ?? (nextCommand = new RelayCommand(NextMusic));
         }
 
-        private void NextMusic(object o)
-        {
-            var p = YMPCore.PlayList.CurrentPlayList.GetNextMusic();
-            YMPCore.Browser.PlayMusic(p);
-        }
-
         ICommand playpauseCommand;
         public ICommand PlayPauseCommand
         {
             get => playpauseCommand ?? (playpauseCommand = new RelayCommand(PlayPauseMusic));
+        }
+
+        ICommand dragStartedCommand;
+        public ICommand DragStartedCommand
+        {
+            get => dragStartedCommand ?? (dragStartedCommand = new RelayCommand(SliderDragStarted));
+        }
+
+        ICommand dragCompletedCommand;
+        public ICommand DragCompletedCommand
+        {
+            get => dragCompletedCommand ?? (dragCompletedCommand = new RelayCommand(SliderDragCompleted));
+        }
+
+        ICommand loadedCommand;
+        public ICommand LoadedCommand
+        {
+            get => loadedCommand ?? (loadedCommand = new RelayCommand(LoadedWindow));
+        }
+
+        ICommand searchCommand;
+        public ICommand SearchCommand
+        {
+            get => searchCommand ?? (searchCommand = new RelayCommand(SearchClick));
+        }
+
+        #endregion
+
+        private void PrevMusic(object o)
+        {
+            var p = YMPCore.PlayList.CurrentPlayList.GetPreviousMusic();
+            YMPCore.Browser.PlayMusic(p);
+        }
+
+        private void NextMusic(object o)
+        {
+            var p = YMPCore.PlayList.CurrentPlayList.GetNextMusic();
+            YMPCore.Browser.PlayMusic(p);
         }
 
         private void PlayPauseMusic(object o)
@@ -230,21 +279,9 @@ namespace YMP.ViewModel
                 YMPCore.Browser.Play();
         }
 
-        ICommand dragStartedCommand;
-        public ICommand DragStartedCommand
-        {
-            get => dragStartedCommand ?? (dragStartedCommand = new RelayCommand(SliderDragStarted));
-        }
-
         public void SliderDragStarted(object o)
         {
             isUserSliding = true;
-        }
-
-        ICommand dragCompletedCommand;
-        public ICommand DragCompletedCommand
-        {
-            get => dragCompletedCommand ?? (dragCompletedCommand = new RelayCommand(SliderDragCompleted));
         }
 
         public void SliderDragCompleted(object o)
@@ -254,10 +291,10 @@ namespace YMP.ViewModel
             isUserSliding = false;
         }
 
-        ICommand loadedCommand;
-        public ICommand LoadedCommand
+        public void SearchClick(object o)
         {
-            get => loadedCommand ?? (loadedCommand = new RelayCommand(LoadedWindow));
+            CurrentContent = FrameContent.SearchPage;
+            searchPage.Search(SearchQuery);
         }
 
         private void LoadedWindow(object o)
