@@ -23,17 +23,18 @@ namespace YMP.ViewModel
             musicList = new MusicListPage();
 
             playerPage = new PlayerPage();
-            playerPage.BackEvent += BackEventHandler;
+            playerPage.BackEvent += delegate
+            {
+                CurrentContent = FrameContent.MusicListPage;
+            };
 
             searchPage = new SearchPage();
-            searchPage.BackEvent += BackEventHandler;
+            searchPage.BackEvent += delegate
+            {
+                SetPreviousPage();
+            };
 
             timer = new DispatcherTimer();
-        }
-
-        void BackEventHandler(object sender, EventArgs e)
-        {
-            SetPreviousPage();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
