@@ -28,6 +28,8 @@ namespace YMP.View.Pages
             YMPCore.Browser.InitializeChromiumBrowser(this.Browser);
         }
 
+        public event EventHandler BackEvent;
+
         public ChromiumWebBrowser Browser
         {
             get => this.cefBrowser.Browser;
@@ -35,7 +37,7 @@ namespace YMP.View.Pages
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            //YMPCore.MainUI.SetPreviousContent();
+            BackEvent?.Invoke(this, new EventArgs());
         }
 
         private void btnRepeat_Click(object sender, RoutedEventArgs e)
