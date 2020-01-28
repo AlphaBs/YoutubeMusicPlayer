@@ -42,7 +42,9 @@ namespace YMP.View
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
         {
-
+            tbSearch.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (e.Key == Key.Enter)
+                viewModel.SearchClick(this);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
