@@ -46,6 +46,7 @@ namespace YMP.View.Controls
                     Info = published + " / " + views + "회";
 
                     ThumbnailUrl = m.Thumbnail;
+                    Duration = StringFormat.FromISO8601Str(m.Duration);
                 }
             }
         }
@@ -63,6 +64,7 @@ namespace YMP.View.Controls
                     Channel = pl.Creator;
                     Info = "재생목록";
                     ThumbnailUrl = pl.Thumbnail;
+                    Duration = pl.Count + "개";
                 }
             }
         }
@@ -106,6 +108,12 @@ namespace YMP.View.Controls
         {
             get => (int)imgThumbnail.Height;
             set => imgThumbnail.Height = value;
+        }
+
+        public string Duration
+        {
+            get => lbDuration.Text;
+            set => lbDuration.Text = value;
         }
 
         private void imgThumbnail_MouseDown(object sender, MouseButtonEventArgs e)

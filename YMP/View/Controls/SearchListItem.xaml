@@ -30,6 +30,15 @@
             Source="/YMP;component/Resource/sample_vt.png"
             MouseDown="imgThumbnail_MouseDown"/>
 
+        <TextBlock
+            x:Name="lbDuration"
+            Margin="20"
+            Background="#7F000000"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Foreground="White"
+            Text="3:45"/>
+
         <StackPanel
             Grid.Column="1"
             HorizontalAlignment="Left">

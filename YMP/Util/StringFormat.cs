@@ -40,5 +40,13 @@ namespace YMP.Util
             else
                 return "방금";
         }
+
+        public static string FromISO8601Str(string input)
+        {
+            return input.Replace("PT", "")
+                        .Replace("H", ":")
+                        .Replace("M", ":")
+                        .Replace("S", "");
+        }
     }
 }
