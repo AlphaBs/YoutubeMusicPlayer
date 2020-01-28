@@ -23,44 +23,43 @@
 
         <Image
             x:Name="imgThumbnail"
-            Margin="10"
-            Source="/YMP;component/Resource/sample_vt.png"/>
+            Cursor="Hand"
+            Margin="20, 10, 0, 5"
+            Width="120"
+            Height="90"
+            Source="/YMP;component/Resource/sample_vt.png"
+            MouseDown="imgThumbnail_MouseDown"/>
 
-        <Label
-            x:Name="lbDuration" 
-            HorizontalAlignment="Right" VerticalAlignment="Bottom"
-            Content="12:35"
-            Background="#B2000A12"
-            Foreground="White"
-            FontSize="12"
-            Margin="10"/>
-
-        <Grid
+        <StackPanel
             Grid.Column="1"
             HorizontalAlignment="Left">
 
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            
             <TextBlock
                 x:Name="lbTitle"
                 FontSize="18"
                 Grid.Row="0"
                 Cursor="Hand"
-                TextWrapping="WrapWithOverflow"
-                Text="Ileta"
-                Margin="10,10,0,0"/>
+                Text="Video Title HAHAHAHAHAH KKKKKKK"
+                Margin="0,17,0,0"
+                MouseDown="imgThumbnail_MouseDown"/>
 
             <TextBlock
-                x:Name="lbSubtitle"
+                x:Name="lbChannel"
+                Cursor="Hand"
                 Grid.Row="1"
                 FontSize="12"
                 Foreground="Gray"
+                Text="Artist Hello" Margin="0, 0, 0, 0"
+                MouseDown="imgThumbnail_MouseDown"/>
+
+            <TextBlock
+                x:Name="lbInfo"
                 Cursor="Hand"
-                Text="WIZ*ONE" Margin="10"/>
-            <TextBlock/>
-        </Grid>
+                Grid.Row="1"
+                FontSize="12"
+                Foreground="Gray"
+                Text="whghltn 1.5" Margin="0, 0, 0, 0"
+                MouseDown="imgThumbnail_MouseDown"/>
+        </StackPanel>
     </Grid>
 </UserControl>

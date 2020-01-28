@@ -25,22 +25,52 @@ namespace YMP.View.Controls
             InitializeComponent();
         }
 
+        public event EventHandler ClickEvent;
+
         public string Title
         {
             get => lbTitle.Text;
-            set => lbTitle.Text = value.Replace("_", "__");
+            set => lbTitle.Text = value;
         }
 
-        public string Subtitle
+        public string Channel
         {
-            get => lbSubtitle.Text;
-            set => lbSubtitle.Text = value.Replace("_", "__");
+            get => lbChannel.Text;
+            set => lbChannel.Text = value;
         }
 
-        public BitmapImage Thumbnail
+        public string Info
         {
-            get => (BitmapImage)imgThumbnail.Source;
-            set => imgThumbnail.Source = value;
+            get => lbInfo.Text;
+            set => lbInfo.Text = value;
+        }
+
+        string url;
+        public string ThumbnailUrl
+        {
+            get => url;
+            set
+            {
+                url = value;
+                imgThumbnail.Source = new BitmapImage(new Uri(url));
+            }
+        }
+
+        public int ThumbnailWidth
+        {
+            get => (int)imgThumbnail.Width;
+            set => imgThumbnail.Width = value;
+        }
+
+        public int ThumbnailHeight
+        {
+            get => (int)imgThumbnail.Height;
+            set => imgThumbnail.Height = value;
+        }
+
+        private void imgThumbnail_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ClickEvent?.Invoke(this, new EventArgs());
         }
     }
 }
