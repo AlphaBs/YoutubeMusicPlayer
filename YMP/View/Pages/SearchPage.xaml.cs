@@ -28,6 +28,10 @@ namespace YMP.View.Pages
         public SearchPage()
         {
             InitializeComponent();
+            this.SizeChanged += delegate
+            {
+                stkList.Width = this.ActualWidth - 20;
+            };
         }
 
         public event EventHandler BackEvent;

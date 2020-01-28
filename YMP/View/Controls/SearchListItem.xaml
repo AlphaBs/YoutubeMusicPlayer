@@ -40,6 +40,8 @@
                 Grid.Row="0"
                 Cursor="Hand"
                 Text="Video Title HAHAHAHAHAH KKKKKKK"
+                TextWrapping="Wrap"
+                MaxHeight="40"
                 Margin="0,17,0,0"
                 MouseDown="imgThumbnail_MouseDown"/>
 

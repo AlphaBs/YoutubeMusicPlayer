@@ -50,8 +50,7 @@
             Grid.Row="1"
             VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
             
-            <StackPanel x:Name="stkList">
-            </StackPanel>
+            <StackPanel x:Name="stkList" Orientation="Vertical"/>
         </ScrollViewer>
     </Grid>
 </Page>
