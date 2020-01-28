@@ -25,13 +25,13 @@ namespace YMP.ViewModel
             playerPage = new PlayerPage();
             playerPage.BackEvent += delegate
             {
-                CurrentContent = FrameContent.MusicListPage;
+                SetPreviousPage();
             };
 
             searchPage = new SearchPage();
             searchPage.BackEvent += delegate
             {
-                SetPreviousPage();
+                CurrentContent = FrameContent.MusicListPage;
             };
 
             timer = new DispatcherTimer();
