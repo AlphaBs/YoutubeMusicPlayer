@@ -25,15 +25,10 @@ namespace YMP.View.Pages
         public PlayerPage()
         {
             InitializeComponent();
-            YMPCore.Browser.InitializeChromiumBrowser(this.Browser);
+            this.cefBrowser.AttachChild(YMPCore.Browser.InitializeChromiumBrowser());
         }
 
         public event EventHandler BackEvent;
-
-        public ChromiumWebBrowser Browser
-        {
-            get => this.cefBrowser.Browser;
-        }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
@@ -50,10 +45,9 @@ namespace YMP.View.Pages
 
         }
 
+        System.Windows.Forms.Form desktopForm;
         private void btnDesktop_Click(object sender, RoutedEventArgs e)
         {
-            var desktopForm = YMPCore.DesktopForm;
-
             if (desktopForm == null)
             {
                 desktopForm = DesktopManager.CreateDesktopForm(YMPCore.Browser.Browser, 0);
@@ -61,7 +55,9 @@ namespace YMP.View.Pages
             }
             else
             {
-                this.cefBrowser.ReAttachChild();
+                this.cefBrowser.AttachChild(YMPCore.Browser.Browser);
+                desktopForm.Close();
+                desktopForm = null;
             }
         }
     }

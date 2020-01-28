@@ -27,27 +27,14 @@ namespace YMP.View
             InitializeComponent();
 
             host = new System.Windows.Forms.Integration.WindowsFormsHost();
-            browser = new ChromiumWebBrowser("about:blank");
-            host.Child = browser;
             this.grd.Children.Add(host);
         }
 
         System.Windows.Forms.Integration.WindowsFormsHost host;
-        ChromiumWebBrowser browser;
 
-        public ChromiumWebBrowser Browser
+        public void AttachChild(System.Windows.Forms.Control c)
         {
-            get => browser;
-            set
-            {
-                host.Child = browser;
-                browser = value;
-            }
-        }
-
-        public void ReAttachChild()
-        {
-            host.Child = browser;
+            host.Child = c;
         }
     }
 }

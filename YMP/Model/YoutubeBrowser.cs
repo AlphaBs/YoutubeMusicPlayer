@@ -40,34 +40,35 @@ namespace YMP.Model
 
         public ChromiumWebBrowser Browser { get; private set; }
 
-        public void InitializeChromiumBrowser(ChromiumWebBrowser browser)
+        public ChromiumWebBrowser InitializeChromiumBrowser()
         {
-            this.Browser = browser;
+            this.Browser = new ChromiumWebBrowser("about:blank");
 
-            browser.LoadingStateChanged += (sender, e) =>
+            Browser.LoadingStateChanged += (sender, e) =>
             {
                 if (e.IsLoading == false)
                 {
-                    MainFrame = browser.GetMainFrame();
-                    browser.ShowDevTools();
+                    MainFrame = Browser.GetMainFrame();
+                    Browser.ShowDevTools();
                 }
             };
 
-            browser.BrowserSettings = new BrowserSettings()
+            Browser.BrowserSettings = new BrowserSettings()
             {
                 FileAccessFromFileUrls = CefState.Enabled,
                 UniversalAccessFromFileUrls = CefState.Enabled
             };
 
-            browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
+            Browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
             {
                 var repo = e.ObjectRepository;
                 if (e.ObjectName == "youtubeJSBound")
                     repo.Register("youtubeJSBound", this, isAsync: true);
             };
 
-            browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
-            Console.WriteLine(browser.Handle);
+            Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
+            Console.WriteLine(Browser.Handle);
+            return Browser;
         }
 
         bool jsAvailable()
