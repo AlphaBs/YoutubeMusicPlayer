@@ -40,6 +40,7 @@
                 videoId: 'MQibTJArntc',
                 //videoId: 'xUV9pnioyt4',
                 playerVars: {
+                    'autoplay': 1,
                     'disablekb': 1,
                     'enablejsapi': 1,
                     'fs': 0,
@@ -50,7 +51,7 @@
                     'rel' : 0
                 }
             });
-
+            
             (async function() {
                 await CefSharp.BindObjectAsync("youtubeJSBound");
                 player.addEventListener('onReady', async function(event) {
@@ -81,15 +82,9 @@
                         youtubeJSBound.updateTime(j);
                     }
                 }, 500);
-        })();
-        }
 
-        function getPlayerData()
-        {
-            return JSON.stringify({
-                'duration': player.getDuration(),
-                'current': player.getCurrentTime()
-            });
+                youtubeJSBound.onLoaded();
+            })();
         }
     </script>
 </body>

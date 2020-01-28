@@ -18,7 +18,8 @@ namespace YMP.Model
         Playing   =  1,
         Pause     =  2,
         Buffering =  3,
-        VSignal   =  5
+        VSignal   =  5,
+        No        =  6
     }
 
     public enum VideoQuality
@@ -85,7 +86,7 @@ namespace YMP.Model
             }
             catch (Exception ex)
             {
-                // handle error
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -93,17 +94,23 @@ namespace YMP.Model
 
         public string Title { get; private set; }
         public string Subtitle { get; private set; }
-        public PlayerState State { get; private set; }
+        public PlayerState State { get; private set; } = PlayerState.No;
         public VideoQuality Quality { get; private set; }
         public TimeSpan CurrentTime { get; private set; }
         public TimeSpan Duration { get; private set; }
 
         // YOUTUBE EVENT
 
-        public void OnReady()
+        public void onLoaded()
         {
             IsBrowserLoadingDone = true;
         }
+
+        public void OnReady()
+        { 
+
+        }
+
         public void OnStateChange(int data)
         {
             State = (PlayerState)data;

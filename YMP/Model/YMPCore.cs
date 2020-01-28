@@ -15,7 +15,9 @@ namespace YMP.Model
     {
         public static void Initialize()
         {
-            Cef.Initialize(new CefSettings());
+            var settings = new CefSettings();
+            settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
+            Cef.Initialize(settings);
 
             Youtube = new YoutubeAPI();
 
