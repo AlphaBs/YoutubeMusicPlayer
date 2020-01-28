@@ -58,17 +58,10 @@ namespace YMP.View.Pages
 
             Dispatcher.Invoke(() =>
             {
-                foreach (var item in r.Items)
+                foreach (var item in r)
                 {
                     var c = new SearchListItem();
-                    c.Title = WebUtility.HtmlDecode(item.Snippet.Title);
-                    c.Channel = item.Snippet.ChannelTitle;
-
-                    if (item.Snippet.PublishedAt != null)
-                        c.Info = StringFormat.ToTimeSpanString(item.Snippet.PublishedAt ?? DateTime.Now);
-
-                    var th = item.Snippet.Thumbnails.Medium;
-                    c.ThumbnailUrl = th.Url;
+                    c.Music = item;
 
                     c.ClickEvent += C_ClickEvent;
                     stkList.Children.Add(c);
@@ -78,7 +71,11 @@ namespace YMP.View.Pages
 
         private void C_ClickEvent(object sender, EventArgs e)
         {
-            
+            var ctr = sender as SearchListItem;
+            if (ctr == null)
+                return;
+
+            YMPCore.Browser.PlayMusic(ctr.Music);
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

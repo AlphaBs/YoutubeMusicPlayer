@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YMP.Model;
+using YMP.Util;
 
 namespace YMP.View.Controls
 {
@@ -26,6 +28,27 @@ namespace YMP.View.Controls
         }
 
         public event EventHandler ClickEvent;
+
+        Music m;
+        public Music Music
+        {
+            get => m;
+            set
+            {
+                if (m != value)
+                {
+                    m = value;
+                    Title = m.Title;
+                    Channel = m.Artists;
+
+                    var published = StringFormat.ToTimeSpanString(m.PublishAt);
+                    var views = m.Views.ToString("n0");
+                    Info = published + " / " + views + "회";
+
+                    ThumbnailUrl = m.Thumbnail;
+                }
+            }
+        }
 
         public string Title
         {

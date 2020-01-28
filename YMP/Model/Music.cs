@@ -11,17 +11,19 @@ namespace YMP.Model
     public class Music
     {
         [JsonProperty]
-        public string YoutubeID { get; private set; }
+        public string YoutubeID { get; set; }
         [JsonProperty]
-        public string Title { get; private set; }
+        public string Title { get; set; }
         [JsonProperty]
-        public string Artists { get; private set; }
+        public string Artists { get; set; }
         [JsonProperty]
-        public string Duration { get; private set; }
+        public string Duration { get; set; }
         [JsonProperty]
-        public string Thumbnail { get; private set; }
+        public string Thumbnail { get; set; }
         [JsonProperty]
-        public string AddDateStr { get; private set; }
+        public string AddDateStr { get; set; }
+        public DateTime PublishAt { get; set; }
+        public ulong Views { get; set; }
 
         [JsonIgnore]
         bool isDtParseDone = false;
