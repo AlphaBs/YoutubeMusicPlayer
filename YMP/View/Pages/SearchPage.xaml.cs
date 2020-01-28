@@ -35,19 +35,27 @@ namespace YMP.View.Pages
         }
 
         public event EventHandler BackEvent;
-        bool searching = false;
+        bool _searching = false;
+        public bool Searching
+        {
+            get => _searching;
+            set
+            {
+                _searching = value;
+                pbLoad.Visibility = _searching ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
 
         public void Search(string q)
         {
-            if (searching)
+            if (Searching)
                 return;
 
             stkList.Children.Clear();
+            Searching = true;
             var th = new Thread(() =>
             {
-                searching = true;
                 ytSearch(q, "");
-                searching = false;
             });
             th.Start();
         }
@@ -66,6 +74,8 @@ namespace YMP.View.Pages
                     c.ClickEvent += C_ClickEvent;
                     stkList.Children.Add(c);
                 }
+
+                Searching = false;
             });
         }
 

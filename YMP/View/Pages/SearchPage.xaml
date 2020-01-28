@@ -52,5 +52,14 @@
             
             <StackPanel x:Name="stkList" Orientation="Vertical"/>
         </ScrollViewer>
+
+        <ProgressBar
+            x:Name="pbLoad"
+            Grid.Row="1"
+            Style="{StaticResource MaterialDesignCircularProgressBar}"
+            Value="35"
+            IsIndeterminate="True"
+            VerticalAlignment="Top"
+            Margin="15"/>
     </Grid>
 </Page>
