@@ -93,6 +93,8 @@ namespace YMP.Model
 
         // YOUTUBE DATA
 
+        public bool Repeat { get; set; } = false;
+
         public string Title { get; private set; }
         public string Subtitle { get; private set; }
         public PlayerState State { get; private set; } = PlayerState.No;
@@ -115,6 +117,14 @@ namespace YMP.Model
         public void OnStateChange(int data)
         {
             State = (PlayerState)data;
+            
+            if (State == PlayerState.Ended)
+            {
+                if (Repeat)
+                    SeekTo(0);
+                else if (YMPCore.PlayList.CurrentPlayList != null)
+                    LoadVideo(YMPCore.PlayList.CurrentPlayList.GetNextMusic().YoutubeID);
+            }
         }
 
         public void OnPlaybackQualityChange(string data)
