@@ -107,5 +107,17 @@ namespace YMP.Youtube
 
             return list.ToArray();
         }
+
+        public PlayList PlaylistItem(PlayListMetadata data, string pagetoken)
+        {
+            var r = Service.PlaylistItems.List("id");
+            r.Id = data.ID;
+            r.PageToken = pagetoken;
+
+            var ids = r.Execute().Items.Select(x => x.Id).ToArray();
+            var musics = Videos(ids);
+
+            return new PlayList(data.Title, "youtube", musics, data);
+        }
     }
 }

@@ -90,9 +90,20 @@ namespace YMP.View.Pages
             });
         }
 
+        List<SearchListItem> SearchResultCache;
+
         private void C_ClickEvent1(object sender, EventArgs e)
         {
             // playlist
+
+            SearchResultCache = new List<SearchListItem>(stkList.Children.Count);
+            foreach (var item in stkList.Children)
+            {
+                if (item is SearchListItem)
+                    SearchResultCache.Add((SearchListItem)item);
+            }
+
+            YMPCore.Youtube.PlaylistItems();
         }
 
         private void C_ClickEvent(object sender, EventArgs e)
