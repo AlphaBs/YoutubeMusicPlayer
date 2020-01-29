@@ -8,13 +8,15 @@ namespace YMP.Model
 {
     public class PlayList
     {
-        public PlayList(string name, string type, Music[] musics)
+        public PlayList(string name, string type, Music[] musics, PlayListMetadata md)
         {
             this.Name = name;
             this.Musics = new List<Music>(musics);
             this.Type = type;
+            this.Metadata = md;
         }
 
+        public PlayListMetadata Metadata { get; private set; }
         public string Name { get; private set; }
         public string Type { get; private set; }
 
