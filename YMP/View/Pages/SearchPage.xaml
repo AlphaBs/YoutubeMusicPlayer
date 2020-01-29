@@ -34,6 +34,18 @@
                 Kind="KeyboardBackspace" Foreground="Black"/>
         </Button>
 
+        <TextBlock
+            x:Name="lbListName"
+            Style="{StaticResource MaterialDesignBody2TextBlock}"
+            Grid.Row="0"
+            Margin="30,7,7,7">
+            
+            <Hyperlink
+                IsEnabled="False">
+                <TextBlock x:Name="lbListNameContent" Text="검색결과"/>
+            </Hyperlink>
+        </TextBlock>
+
         <Button
             x:Name="btnAdd"
             Style="{StaticResource MaterialDesignFlatButton}"

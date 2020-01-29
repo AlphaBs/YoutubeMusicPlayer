@@ -111,6 +111,8 @@ namespace YMP.View.Pages
             var playlist = YMPCore.Youtube.PlaylistItem(ctr.Playlist, "");
             CurrentShowingPlayList = playlist;
 
+            lbListNameContent.Text = playlist.Metadata.Title;
+
             stkList.Children.Clear();
             foreach (var item in playlist.Musics)
             {
@@ -147,6 +149,8 @@ namespace YMP.View.Pages
                 CurrentShowingPlayList = null;
 
                 stkList.Children.Clear();
+
+                lbListNameContent.Text = "검색결과";
 
                 foreach (var item in SearchResultCache)
                 {
