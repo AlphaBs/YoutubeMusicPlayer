@@ -264,12 +264,18 @@ namespace YMP.ViewModel
 
         private void PrevMusic(object o)
         {
+            if (YMPCore.PlayList.CurrentPlayList == null)
+                return;
+
             var p = YMPCore.PlayList.CurrentPlayList.GetPreviousMusic();
             YMPCore.Browser.PlayMusic(p);
         }
 
         private void NextMusic(object o)
         {
+            if (YMPCore.PlayList.CurrentPlayList == null)
+                return;
+
             var p = YMPCore.PlayList.CurrentPlayList.GetNextMusic();
             YMPCore.Browser.PlayMusic(p);
         }
