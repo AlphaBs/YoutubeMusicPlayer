@@ -31,7 +31,7 @@ namespace YMP.Model
 
         public Music GetNextMusic()
         {
-            if (CurrentMusicIndex >= Lenght)
+            if (CurrentMusicIndex >= Lenght - 1)
                 CurrentMusicIndex = 0;
             else
                 CurrentMusicIndex++;
