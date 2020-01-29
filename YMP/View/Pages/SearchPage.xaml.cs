@@ -90,6 +90,7 @@ namespace YMP.View.Pages
             });
         }
 
+        PlayList CurrentShowingPlayList;
         List<SearchListItem> SearchResultCache;
 
         private void C_ClickEvent1(object sender, EventArgs e)
@@ -103,7 +104,22 @@ namespace YMP.View.Pages
                     SearchResultCache.Add((SearchListItem)item);
             }
 
-            YMPCore.Youtube.PlaylistItems();
+            var ctr = sender as SearchListItem;
+            if (ctr == null)
+                return;
+
+            var playlist = YMPCore.Youtube.PlaylistItem(ctr.Playlist, "");
+            CurrentShowingPlayList = playlist;
+
+            stkList.Children.Clear();
+            foreach (var item in playlist.Musics)
+            {
+                var c = new SearchListItem();
+                c.Music = item;
+
+                c.ClickEvent += C_ClickEvent;
+                stkList.Children.Add(c);
+            }
         }
 
         private void C_ClickEvent(object sender, EventArgs e)
@@ -114,12 +130,32 @@ namespace YMP.View.Pages
             if (ctr == null)
                 return;
 
+            if (CurrentShowingPlayList != null)
+                YMPCore.PlayList.CurrentPlayList = CurrentShowingPlayList;
+
             YMPCore.Browser.PlayMusic(ctr.Music);
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            BackEvent?.Invoke(this, new EventArgs());
+            if (CurrentShowingPlayList == null)
+                BackEvent?.Invoke(this, new EventArgs());
+            else
+            {
+                if (CurrentShowingPlayList == YMPCore.PlayList.CurrentPlayList)
+                    YMPCore.PlayList.CurrentPlayList = null;
+                CurrentShowingPlayList = null;
+
+                stkList.Children.Clear();
+
+                foreach (var item in SearchResultCache)
+                {
+                    stkList.Children.Add(item);
+                }
+
+                SearchResultCache.Clear();
+                SearchResultCache = null;
+            }
         }
     }
 }

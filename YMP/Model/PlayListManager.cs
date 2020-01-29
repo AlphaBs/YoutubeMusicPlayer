@@ -10,7 +10,7 @@ namespace YMP.Model
 {
     public class PlayListManager
     {
-        public PlayList CurrentPlayList { get; private set; }
+        public PlayList CurrentPlayList { get; set; }
         public PlayList RecentPlayList { get; private set; }
         public List<PlayList> PlayLists { get; private set; }
 
@@ -61,7 +61,7 @@ namespace YMP.Model
 
         public PlayList CreateNewPlaylist(string name)
         {
-            var obj = new PlayList(name, "", new Music[0]);
+            var obj = new PlayList(name, "", new Music[0], new PlayListMetadata());
             PlayLists.Add(obj);
             return obj;
         }

@@ -110,11 +110,11 @@ namespace YMP.Youtube
 
         public PlayList PlaylistItem(PlayListMetadata data, string pagetoken)
         {
-            var r = Service.PlaylistItems.List("id");
-            r.Id = data.ID;
+            var r = Service.PlaylistItems.List("snippet");
+            r.PlaylistId = data.ID;
             r.PageToken = pagetoken;
 
-            var ids = r.Execute().Items.Select(x => x.Id).ToArray();
+            var ids = r.Execute().Items.Select(x => x.Snippet.ResourceId.VideoId).ToArray();
             var musics = Videos(ids);
 
             return new PlayList(data.Title, "youtube", musics, data);
