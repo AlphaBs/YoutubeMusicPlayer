@@ -32,8 +32,7 @@ namespace YMP
 
             if (!e.Args.Contains("noDependencyCheck"))
             {
-                if (MsiQuery.MsiQueryProductState("{d992c12e-cab2-426f-bde3-fb8c53950b0d}") != MsiQuery.INSTALLSTATE.DEFAULT
-                 || MsiQuery.MsiQueryProductState("{e2803110-78b3-4664-a479-3611a381656a}") != MsiQuery.INSTALLSTATE.DEFAULT)
+                if (!VCChecker.CheckVCRuntimeInstall())
                 {
                     MessageBox.Show("Visual Studio 2015용 Visual C++ 재배포 가능 패키지가 설치되어 있지 않습니다.\n확인버튼을 누르면 설치패이지로 이동됩니다.");
                     Utils.StartProcess(YMPInfo.VC2015Url);
