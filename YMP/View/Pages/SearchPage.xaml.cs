@@ -51,8 +51,9 @@ namespace YMP.View.Pages
             if (Searching)
                 return;
 
-            stkList.Children.Clear();
             Searching = true;
+            stkList.Children.Clear();
+
             var th = new Thread(() =>
             {
                 ytSearch(q, "");
@@ -68,6 +69,15 @@ namespace YMP.View.Pages
 
             Dispatcher.Invoke(() =>
             {
+                Searching = false;
+
+                lbNoResult.Visibility = Visibility.Collapsed;
+                if (pagetoken == "" && videoIds.Length == 0 && playlistIds.Length == 0)
+                {
+                    lbNoResult.Visibility = Visibility.Visible;
+                    return;
+                }
+
                 foreach (var item in playlistIds)
                 {
                     var c = new SearchListItem();
@@ -85,8 +95,6 @@ namespace YMP.View.Pages
                     c.ClickEvent += C_ClickEvent;
                     stkList.Children.Add(c);
                 }
-
-                Searching = false;
             });
         }
 

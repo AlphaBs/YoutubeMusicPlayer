@@ -73,5 +73,15 @@
             IsIndeterminate="True"
             VerticalAlignment="Top"
             Margin="15"/>
+
+        <Label
+            x:Name="lbNoResult"
+            Grid.Row="1"
+            FontSize="16"
+            Foreground="LightSlateGray"
+            HorizontalAlignment="Center"
+            Margin="30"
+            Content="검색 결과가 없습니다"
+            Visibility="Collapsed"/>
     </Grid>
 </Page>
