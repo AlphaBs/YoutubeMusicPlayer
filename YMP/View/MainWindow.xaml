@@ -14,7 +14,8 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         Title="Youtube Music Player" Width="800" Height="500"
-        Closing="Window_Closing">
+        Closing="Window_Closing" Icon="/YMP;component/logo.ico"
+        >
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
