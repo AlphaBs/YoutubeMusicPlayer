@@ -26,6 +26,8 @@ namespace YMP.View.Pages
         {
             InitializeComponent();
             this.cefBrowser.AttachChild(YMPCore.Browser.InitializeChromiumBrowser());
+
+            SetBtnRepeatIconKind();
         }
 
         public event EventHandler BackEvent;
@@ -37,7 +39,20 @@ namespace YMP.View.Pages
 
         private void btnRepeat_Click(object sender, RoutedEventArgs e)
         {
+            if (YMPCore.Browser.Repeat)
+                YMPCore.Browser.Repeat = false;
+            else
+                YMPCore.Browser.Repeat = true;
 
+            SetBtnRepeatIconKind();
+        }
+
+        private void SetBtnRepeatIconKind()
+        {
+            if (YMPCore.Browser.Repeat)
+                btnRepeatIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.RepeatOff;
+            else
+                btnRepeatIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Repeat;
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)

@@ -61,6 +61,7 @@
                 Click="btnRepeat_Click">
 
                 <materialDesign:PackIcon
+                    x:Name="btnRepeatIcon"
                     Width="20" Height="20"
                     Foreground="Black" Kind="Repeat"/>
             </Button>
