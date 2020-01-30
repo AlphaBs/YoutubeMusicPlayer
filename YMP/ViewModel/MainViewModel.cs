@@ -34,6 +34,12 @@ namespace YMP.ViewModel
                 CurrentContent = FrameContent.MusicListPage;
             };
 
+            settingPage = new SettingPage();
+            settingPage.BackEvent += delegate
+            {
+                SetPreviousPage();
+            };
+
             timer = new DispatcherTimer();
         }
 
@@ -42,6 +48,7 @@ namespace YMP.ViewModel
         MusicListPage musicList;
         PlayerPage playerPage;
         SearchPage searchPage;
+        SettingPage settingPage;
 
         DispatcherTimer timer;
 
@@ -67,6 +74,9 @@ namespace YMP.ViewModel
                             break;
                         case FrameContent.PlayerPage:
                             DisplayPage = playerPage;
+                            break;
+                        case FrameContent.SettingPage:
+                            DisplayPage = settingPage;
                             break;
                         default:
                             break;
@@ -213,7 +223,8 @@ namespace YMP.ViewModel
 
         public void OnClickBrowser()
         {
-            CurrentContent = FrameContent.PlayerPage;
+            if (CurrentContent != FrameContent.SettingPage)
+                CurrentContent = FrameContent.PlayerPage;
         }
 
         #region ICommands
@@ -258,6 +269,12 @@ namespace YMP.ViewModel
         public ICommand SearchCommand
         {
             get => searchCommand ?? (searchCommand = new RelayCommand(SearchClick));
+        }
+
+        ICommand settingCommand;
+        public ICommand OnSettingClickCommand
+        {
+            get => settingCommand ?? (settingCommand = new RelayCommand(OnSettingClick));
         }
 
         #endregion
@@ -307,7 +324,12 @@ namespace YMP.ViewModel
             searchPage.Search(SearchQuery);
         }
 
-        private void LoadedWindow(object o)
+        public void OnSettingClick(object o)
+        {
+            CurrentContent = FrameContent.SettingPage;
+        }
+
+        public void LoadedWindow(object o)
         {
             CurrentContent = FrameContent.MusicListPage;
             timer.Interval = TimeSpan.FromMilliseconds(500);

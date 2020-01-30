@@ -1,0 +1,52 @@
+﻿<Page x:Class="YMP.View.Pages.SettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:YMP.View.Pages"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:controls="clr-namespace:YMP.View.Controls"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="{materialDesign:MaterialDesignFont}"
+      d:DesignHeight="329" d:DesignWidth="792"
+      Title="SettingPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button
+            x:Name="btnBack"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Padding="0"
+            Width="30" Height="30"
+            HorizontalAlignment="Left"
+            Click="btnBack_Click">
+
+            <materialDesign:PackIcon 
+                Width="25" Height="25"
+                Kind="KeyboardBackspace" Foreground="Black"/>
+        </Button>
+
+        <TextBlock
+            x:Name="lbListName"
+            Style="{StaticResource MaterialDesignBody2TextBlock}"
+            Grid.Row="0"
+            Margin="30,7,7,7">
+            
+            <Hyperlink
+                IsEnabled="False">
+                <TextBlock x:Name="lbListNameContent" Text="설정"/>
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="112,109,0,0" TextWrapping="Wrap" Text="SettingPage" VerticalAlignment="Top"/>
+
+    </Grid>
+</Page>

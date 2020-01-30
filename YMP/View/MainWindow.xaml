@@ -43,15 +43,14 @@
             Padding="16">
 
             <DockPanel>
-                <materialDesign:PopupBox
+                <Button
+                    Style="{DynamicResource MaterialDesignToolForegroundButton}"
                     VerticalAlignment="Center"
-                    DockPanel.Dock="Right">
+                    DockPanel.Dock="Right"
+                    Command="{Binding OnSettingClickCommand}">
 
-                    <Grid>
-                        <TextBlock Text="asdfadf"/>
-                    </Grid>
-
-                </materialDesign:PopupBox>
+                    <materialDesign:PackIcon Kind="Settings" Width="25" Height="25"/>
+                </Button>
 
                 <StackPanel
                     Orientation="Horizontal"

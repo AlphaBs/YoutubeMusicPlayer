@@ -22,7 +22,8 @@ namespace YMP.View
         Blank,
         MusicListPage,
         SearchPage,
-        PlayerPage
+        PlayerPage,
+        SettingPage
     }
 
     /// <summary>
