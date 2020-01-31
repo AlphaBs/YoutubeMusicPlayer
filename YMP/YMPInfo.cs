@@ -31,6 +31,7 @@ namespace YMP
             PlaylistPath    = p("playlist", isdir: true),
             LicensePath     = p("LICENSE.txt"),
             SettingPath     = p("setting.json"),
+            CachePath       = p("ytcache", isdir: true),
             
             VC2015Url       = "https://www.microsoft.com/ko-kr/download/confirmation.aspx?id=48145"
             ;

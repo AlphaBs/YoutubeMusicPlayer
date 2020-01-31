@@ -163,6 +163,7 @@
     <Compile Include="Util\Base64Image.cs" />
     <Compile Include="Util\StringFormat.cs" />
     <Compile Include="Util\WinApi.cs" />
+    <Compile Include="Util\WebImage.cs" />
     <Compile Include="YMPInfo.cs" />
     <Compile Include="Youtube\YoutubeAPI.cs" />
     <Compile Include="Youtube\YoutubeDataAPI.cs" />

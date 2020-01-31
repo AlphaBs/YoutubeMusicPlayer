@@ -339,8 +339,12 @@ namespace YMP.ViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Title = YMPCore.Browser.Title;
-            Subtitle = YMPCore.Browser.Subtitle;
+            if (YMPCore.Browser.CurrentMusic != null)
+            {
+                Title = YMPCore.Browser.CurrentMusic.Title;
+                Subtitle = YMPCore.Browser.CurrentMusic.Artists;
+                setThumbnail(YMPCore.Browser.CurrentMusic.Thumbnail);
+            }
 
             if (!isTimeUpdated)
             {
@@ -352,6 +356,11 @@ namespace YMP.ViewModel
             }
             else
                 isTimeUpdated = false;
+        }
+
+        private async void setThumbnail(string url)
+        {
+            Thumbnail = await WebImage.GetImage(url);
         }
     }
 }

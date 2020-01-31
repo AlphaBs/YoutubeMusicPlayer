@@ -95,8 +95,7 @@ namespace YMP.Model
 
         public bool Repeat { get; set; } = false;
 
-        public string Title { get; private set; }
-        public string Subtitle { get; private set; }
+        public Music CurrentMusic { get; private set; }
         public PlayerState State { get; private set; } = PlayerState.No;
         public VideoQuality Quality { get; private set; }
         public TimeSpan CurrentTime { get; private set; }
@@ -167,8 +166,7 @@ namespace YMP.Model
         {
             LoadVideo(m.YoutubeID);
             Play();
-            Title = m.Title;
-            Subtitle = m.Artists;
+            CurrentMusic = m;
         }
 
         public void LoadVideo(string id)

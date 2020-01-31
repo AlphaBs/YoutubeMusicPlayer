@@ -67,13 +67,13 @@ namespace YMP.View.Pages
             }
         }
 
-        private void AddMusicItem(Music music)
+        private async void AddMusicItem(Music music)
         {
             var item = new PlayListItem();
 
             item.Title = music.Title;
             item.SubTitle = music.Artists;
-            item.Thumbnail = Base64Image.GetImage(music.Thumbnail);
+            item.Thumbnail = await WebImage.GetImage(music.Thumbnail);
             item.Length = StringFormat.ToDurationString(music.Duration);
             item.Tag = music;
 

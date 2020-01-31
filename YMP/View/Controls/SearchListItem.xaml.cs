@@ -46,7 +46,7 @@ namespace YMP.View.Controls
                     var views = m.Views.ToString("n0");
                     Info = published + " / " + views + "회";
 
-                    ThumbnailUrl = m.Thumbnail;
+                    SetImageUrl(m.Thumbnail);
                     Duration = StringFormat.ToDurationString(m.Duration);
                 }
             }
@@ -64,7 +64,7 @@ namespace YMP.View.Controls
                     Title = pl.Title;
                     Channel = pl.Creator;
                     Info = "재생목록";
-                    ThumbnailUrl = pl.Thumbnail;
+                    SetImageUrl(pl.Thumbnail);
                     Duration = pl.Count + "개";
                 }
             }
@@ -88,27 +88,9 @@ namespace YMP.View.Controls
             set => lbInfo.Text = value;
         }
 
-        string url;
-        public string ThumbnailUrl
+        public async void SetImageUrl(string url)
         {
-            get => url;
-            set
-            {
-                url = value;
-                imgThumbnail.Source = new BitmapImage(new Uri(url));
-            }
-        }
-
-        public int ThumbnailWidth
-        {
-            get => (int)imgThumbnail.Width;
-            set => imgThumbnail.Width = value;
-        }
-
-        public int ThumbnailHeight
-        {
-            get => (int)imgThumbnail.Height;
-            set => imgThumbnail.Height = value;
+            imgThumbnail.Source = await WebImage.GetImage(url);
         }
 
         public string Duration
