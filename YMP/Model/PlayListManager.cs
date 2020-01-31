@@ -82,6 +82,11 @@ namespace YMP.Model
             return null;
         }
 
+        public void AddPlayList(PlayList pl)
+        {
+            PlayLists.Add(pl);
+        }
+
         public void RemovePlayList(int index)
         {
             PlayLists.RemoveAt(index);

@@ -49,7 +49,7 @@ namespace YMP.Model
                 if (e.IsLoading == false)
                 {
                     MainFrame = Browser.GetMainFrame();
-                    Browser.ShowDevTools();
+                    //Browser.ShowDevTools();
                 }
             };
 

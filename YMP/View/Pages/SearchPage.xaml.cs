@@ -17,6 +17,7 @@ using YMP.Model;
 using YMP.Util;
 using YMP.View.Controls;
 using System.Net;
+using MaterialDesignThemes.Wpf;
 
 namespace YMP.View.Pages
 {
@@ -63,7 +64,7 @@ namespace YMP.View.Pages
 
         void ytSearch(string q, string pagetoken)
         {
-            var r = YMPCore.Youtube.Search(q, pagetoken);
+            var r = YMPCore.Youtube.Search(q, ref pagetoken);
             var videoIds = YMPCore.Youtube.Videos(r.Item1);
             var playlistIds = YMPCore.Youtube.Playlists(r.Item2);
 
@@ -83,7 +84,8 @@ namespace YMP.View.Pages
                     var c = new SearchListItem();
                     c.Playlist = item;
 
-                    c.ClickEvent += C_ClickEvent1;
+                    c.ClickEvent += PlayListItemClick;
+                    c.AddEvent += PlayListItemAdd;
                     stkList.Children.Add(c);
                 }
 
@@ -92,7 +94,8 @@ namespace YMP.View.Pages
                     var c = new SearchListItem();
                     c.Music = item;
 
-                    c.ClickEvent += C_ClickEvent;
+                    c.ClickEvent += VideoItemClick;
+                    c.AddEvent += VideoItemAdd;
                     stkList.Children.Add(c);
                 }
             });
@@ -101,7 +104,7 @@ namespace YMP.View.Pages
         PlayList CurrentShowingPlayList;
         List<SearchListItem> SearchResultCache;
 
-        private void C_ClickEvent1(object sender, EventArgs e)
+        private void PlayListItemClick(object sender, EventArgs e)
         {
             // playlist
 
@@ -116,23 +119,41 @@ namespace YMP.View.Pages
             if (ctr == null)
                 return;
 
-            var playlist = YMPCore.Youtube.PlaylistItem(ctr.Playlist, "");
-            CurrentShowingPlayList = playlist;
+            var pagetoken = "";
+            var musics = YMPCore.Youtube.PlaylistItem(ctr.Playlist, ref pagetoken);
+            CurrentShowingPlayList = new PlayList(ctr.Playlist.Title, "youtube", musics, ctr.Playlist);
 
-            lbListNameContent.Text = playlist.Metadata.Title;
+            lbListNameContent.Text = ctr.Playlist.Title;
 
             stkList.Children.Clear();
-            foreach (var item in playlist.Musics)
+            foreach (var item in musics)
             {
                 var c = new SearchListItem();
                 c.Music = item;
 
-                c.ClickEvent += C_ClickEvent;
+                c.ClickEvent += VideoItemClick;
                 stkList.Children.Add(c);
             }
         }
 
-        private void C_ClickEvent(object sender, EventArgs e)
+        private void PlayListItemAdd(object sender, EventArgs e)
+        {
+            var ctrl = sender as SearchListItem;
+            if (ctrl == null)
+                return;
+
+            var pagetoken = "";
+            var musics = new List<Music>();
+            do
+            {
+                musics.AddRange(YMPCore.Youtube.PlaylistItem(ctrl.Playlist, ref pagetoken));
+
+            } while (!string.IsNullOrEmpty(pagetoken));
+
+            YMPCore.PlayList.AddPlayList(new PlayList(ctrl.Playlist.Title, "youtube", musics.ToArray(), ctrl.Playlist));
+        }
+
+        private void VideoItemClick(object sender, EventArgs e)
         {
             // music
 
@@ -144,6 +165,42 @@ namespace YMP.View.Pages
                 YMPCore.PlayList.CurrentPlayList = CurrentShowingPlayList;
 
             YMPCore.Browser.PlayMusic(ctr.Music);
+        }
+
+        Music AddMusic;
+
+        private void VideoItemAdd(object sender, EventArgs e)
+        {
+            var ctrl = sender as SearchListItem;
+            if (ctrl == null)
+                return;
+
+            AddMusic = ctrl.Music;
+
+            foreach (var item in YMPCore.PlayList.PlayLists)
+            {
+                liPlaylist.Items.Add(item.Name);
+            }
+
+            addDialogHost.IsOpen = true;
+        }
+
+        private void AddDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            liPlaylist.Items.Clear();
+        }
+
+        private void btnAddCancle_Click(object sender, RoutedEventArgs e)
+        {
+            addDialogHost.IsOpen = false;
+        }
+
+        private void liPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var pl = YMPCore.PlayList.GetPlayList(liPlaylist.SelectedItem.ToString());
+            pl.AddMusic(AddMusic);
+
+            addDialogHost.IsOpen = false;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

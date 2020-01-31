@@ -28,6 +28,7 @@ namespace YMP.View.Controls
         }
 
         public event EventHandler ClickEvent;
+        public event EventHandler AddEvent;
 
         Music m;
         public Music Music
@@ -41,12 +42,12 @@ namespace YMP.View.Controls
                     Title = m.Title;
                     Channel = m.Artists;
 
-                    var published = StringFormat.ToTimeSpanString(m.PublishAt);
+                    var published = StringFormat.ToFrendlyString(m.PublishAt);
                     var views = m.Views.ToString("n0");
                     Info = published + " / " + views + "회";
 
                     ThumbnailUrl = m.Thumbnail;
-                    Duration = StringFormat.FromISO8601Str(m.Duration);
+                    Duration = StringFormat.ToDurationString(m.Duration);
                 }
             }
         }
@@ -116,9 +117,28 @@ namespace YMP.View.Controls
             set => lbDuration.Text = value;
         }
 
-        private void imgThumbnail_MouseDown(object sender, MouseButtonEventArgs e)
+        private void lbTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ClickEvent?.Invoke(this, new EventArgs());
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddEvent?.Invoke(this, new EventArgs());
+        }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (Music != null)
+                Utils.StartProcess(YMPCore.Youtube.GetVideoUrl(Music.YoutubeID));
+
+            if (Playlist != null)
+                Utils.StartProcess(YMPCore.Youtube.GetPlayListUrl(Playlist.ID));
+        }
+
+        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

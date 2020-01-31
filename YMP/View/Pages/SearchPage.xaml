@@ -83,5 +83,51 @@
             Margin="30"
             Content="검색 결과가 없습니다"
             Visibility="Collapsed"/>
+
+        <materialDesign:DialogHost
+            x:Name="addDialogHost"
+            DialogClosing="AddDialogHost_DialogClosing"
+            Grid.RowSpan="2">
+
+            <materialDesign:DialogHost.DialogContent>
+                <Grid
+                    Margin="5"
+                    MinWidth="300"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Margin="10"
+                        Text="재생목록을 선택해 주세요 : "/>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto">
+                        
+                        <ListBox
+                            x:Name="liPlaylist"
+                            SelectionChanged="liPlaylist_SelectionChanged">
+                        </ListBox>
+                    </ScrollViewer>
+
+                    <Button
+                        x:Name="btnAddCancle"
+                        Content="취소"
+                        Click="btnAddCancle_Click"
+                        Grid.Row="2"
+                        Margin="5"/>
+
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>

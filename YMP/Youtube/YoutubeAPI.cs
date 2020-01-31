@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YMP.Model;
+using YMP.Util;
 
 namespace YMP.Youtube
 {
@@ -27,7 +28,7 @@ namespace YMP.Youtube
 
         public YouTubeService Service { get; private set; }
 
-        public Tuple<string[], string[]> Search(string query, string pagetoken)
+        public Tuple<string[], string[]> Search(string query, ref string pagetoken)
         {
             var count = 10;
 
@@ -38,6 +39,8 @@ namespace YMP.Youtube
             q.Type = "video,playlist";
 
             var r = q.Execute();
+            pagetoken = r.NextPageToken;
+
             var v = new List<string>(count);
             var p = new List<string>(count);
 
@@ -72,7 +75,7 @@ namespace YMP.Youtube
                     Title = item.Snippet.Title,
                     Artists = item.Snippet.ChannelTitle,
                     PublishAt = item.Snippet.PublishedAt ?? DateTime.Now,
-                    Duration = item.ContentDetails.Duration,
+                    Duration = StringFormat.FromISO8601Str(item.ContentDetails.Duration),
                     Thumbnail = item.Snippet.Thumbnails.Medium.Url,
                     Views = item.Statistics.ViewCount ?? 0
                 });
@@ -89,7 +92,7 @@ namespace YMP.Youtube
             var list = new List<PlayListMetadata>(10);
 
             var l = Service.Playlists.List("id,snippet,contentDetails");
-            l.MaxResults = 10;
+            l.MaxResults = ids.Length;
             l.Id = string.Join(",", ids);
 
             var playlists = l.Execute();
@@ -108,16 +111,27 @@ namespace YMP.Youtube
             return list.ToArray();
         }
 
-        public PlayList PlaylistItem(PlayListMetadata data, string pagetoken)
+        public Music[] PlaylistItem(PlayListMetadata data, ref string pagetoken)
         {
             var r = Service.PlaylistItems.List("snippet");
             r.PlaylistId = data.ID;
             r.PageToken = pagetoken;
 
-            var ids = r.Execute().Items.Select(x => x.Snippet.ResourceId.VideoId).ToArray();
-            var musics = Videos(ids);
+            var res = r.Execute();
+            pagetoken = res.NextPageToken;
 
-            return new PlayList(data.Title, "youtube", musics, data);
+            var ids = res.Items.Select(x => x.Snippet.ResourceId.VideoId).ToArray();
+            return Videos(ids);
+        }
+
+        public string GetVideoUrl(string id)
+        {
+            return "https://www.youtube.com/watch?v=" + id;
+        }
+
+        public string GetPlayListUrl(string id)
+        {
+            return "https://www.youtube.com/playlist?list=" + id;
         }
     }
 }

@@ -19,6 +19,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="170"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
 
         <Image
@@ -28,7 +29,7 @@
             Width="120"
             Height="90"
             Source="/YMP;component/Resource/sample_vt.png"
-            MouseDown="imgThumbnail_MouseDown"/>
+            MouseDown="lbTitle_MouseDown"/>
 
         <TextBlock
             x:Name="lbDuration"
@@ -50,9 +51,10 @@
                 Cursor="Hand"
                 Text="Video Title HAHAHAHAHAH KKKKKKK"
                 TextWrapping="Wrap"
+                Height="40"
                 MaxHeight="40"
                 Margin="0,17,0,0"
-                MouseDown="imgThumbnail_MouseDown"/>
+                MouseDown="lbTitle_MouseDown"/>
 
             <TextBlock
                 x:Name="lbChannel"
@@ -61,7 +63,7 @@
                 FontSize="12"
                 Foreground="Gray"
                 Text="Artist Hello" Margin="0, 0, 0, 0"
-                MouseDown="imgThumbnail_MouseDown"/>
+                MouseDown="lbTitle_MouseDown"/>
 
             <TextBlock
                 x:Name="lbInfo"
@@ -70,7 +72,34 @@
                 FontSize="12"
                 Foreground="Gray"
                 Text="whghltn 1.5" Margin="0, 0, 0, 0"
-                MouseDown="imgThumbnail_MouseDown"/>
+                MouseDown="lbTitle_MouseDown"/>
         </StackPanel>
+
+        <materialDesign:PopupBox
+            x:Name="btnMore"
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            StaysOpen="False">
+
+            <StackPanel>
+                <Button
+                    x:Name="btnAdd"
+                    Click="btnAdd_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Content="재생목록 추가"/>
+                <Button
+                    x:Name="btnDownload"
+                    Click="btnDownload_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Content="다운로드"/>
+                <Button
+                     x:Name="btnOpen"
+                     Click="btnOpen_Click"
+                     Style="{StaticResource MaterialDesignFlatButton}"
+                     Content="브라우저에서 열기"/>
+            </StackPanel>
+
+        </materialDesign:PopupBox>
     </Grid>
 </UserControl>
