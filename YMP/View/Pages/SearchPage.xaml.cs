@@ -188,21 +188,24 @@ namespace YMP.View.Pages
             addDialogHost.IsOpen = true;
         }
 
-        private void AddDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
-        {
-            liPlaylist.Items.Clear();
-        }
 
         private void btnAddCancle_Click(object sender, RoutedEventArgs e)
         {
+            liPlaylist.Items.Clear();
             addDialogHost.IsOpen = false;
         }
 
         private void liPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var pl = YMPCore.PlayList.GetPlayList(liPlaylist.SelectedItem.ToString());
+            var selected = liPlaylist.SelectedItem;
+
+            if (selected == null)
+                return;
+
+            var pl = YMPCore.PlayList.GetPlayList(selected.ToString());
             pl.AddMusic(AddMusic);
 
+            liPlaylist.Items.Clear();
             addDialogHost.IsOpen = false;
         }
 
@@ -228,6 +231,11 @@ namespace YMP.View.Pages
                 SearchResultCache.Clear();
                 SearchResultCache = null;
             }
+        }
+
+        private void addDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+
         }
     }
 }

@@ -86,7 +86,7 @@
 
         <materialDesign:DialogHost
             x:Name="addDialogHost"
-            DialogClosing="AddDialogHost_DialogClosing"
+            DialogClosing="addDialogHost_DialogClosing"
             Grid.RowSpan="2">
 
             <materialDesign:DialogHost.DialogContent>
