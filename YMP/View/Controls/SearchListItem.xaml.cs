@@ -22,13 +22,16 @@ namespace YMP.View.Controls
     /// </summary>
     public partial class SearchListItem : UserControl
     {
-        public SearchListItem()
+        public SearchListItem(int index)
         {
             InitializeComponent();
+            this.Index = index;
         }
 
         public event EventHandler ClickEvent;
         public event EventHandler AddEvent;
+
+        public int Index { get; private set; }
 
         Music m;
         public Music Music
