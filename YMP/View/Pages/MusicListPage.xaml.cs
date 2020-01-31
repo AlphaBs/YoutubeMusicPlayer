@@ -74,7 +74,7 @@ namespace YMP.View.Pages
             item.Title = music.Title;
             item.SubTitle = music.Artists;
             item.Thumbnail = Base64Image.GetImage(music.Thumbnail);
-            item.Length = music.Duration;
+            item.Length = StringFormat.ToDurationString(music.Duration);
             item.Tag = music;
 
             item.Click += (sender, e) =>

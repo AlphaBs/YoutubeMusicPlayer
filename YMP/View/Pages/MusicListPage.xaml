@@ -17,7 +17,7 @@
 
     <Page.Resources>
 
-        <BitmapImage x:Key="folder" UriSource="/YMP;component/Resource/folder.jpg"/>
+        <BitmapImage x:Key="folder" UriSource="/YMP;component/Resource/icon_folder.png"/>
 
         <ResourceDictionary x:Key="-">
             <ResourceDictionary.MergedDictionaries>
