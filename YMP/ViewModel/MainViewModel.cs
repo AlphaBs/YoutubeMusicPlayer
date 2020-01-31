@@ -67,6 +67,7 @@ namespace YMP.ViewModel
                     switch (value)
                     {
                         case FrameContent.MusicListPage:
+                            musicList.UpdateList();
                             DisplayPage = musicList;
                             break;
                         case FrameContent.SearchPage:
