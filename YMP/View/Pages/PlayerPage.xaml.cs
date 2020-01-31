@@ -50,9 +50,9 @@ namespace YMP.View.Pages
         private void SetBtnRepeatIconKind()
         {
             if (YMPCore.Browser.Repeat)
-                btnRepeatIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.RepeatOff;
-            else
                 btnRepeatIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Repeat;
+            else
+                btnRepeatIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.RepeatOff;
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)

@@ -11,7 +11,13 @@ namespace YMP.Model
         public PlayList(string name, string type, Music[] musics, PlayListMetadata md)
         {
             this.Name = name;
-            this.Musics = new List<Music>(musics);
+            this.Musics = new List<Music>(musics.Length);
+
+            foreach (var item in musics)
+            {
+                AddMusic(item);
+            }
+
             this.Type = type;
             this.Metadata = md;
         }
@@ -21,7 +27,7 @@ namespace YMP.Model
         public string Type { get; private set; }
 
         public int Lenght { get => Musics.Count; }
-        public int CurrentMusicIndex { get; private set; } = 0;
+        public int CurrentMusicIndex { get; set; } = 0;
         public List<Music> Musics { get; private set; }
 
         public Music GetCurrentusic()
@@ -51,6 +57,8 @@ namespace YMP.Model
 
         public void AddMusic(Music music)
         {
+            if (music.AddDate == null)
+                music.AddDate = DateTime.Now;
             Musics.Add(music);
         }
 

@@ -75,12 +75,16 @@ namespace YMP.View.Pages
             item.SubTitle = music.Artists;
             item.Thumbnail = await WebImage.GetImage(music.Thumbnail);
             item.Length = StringFormat.ToDurationString(music.Duration);
-            item.Tag = music;
+            item.Tag = stkList.Children.Count;
 
             item.Click += (sender, e) =>
             {
                 var pli = (PlayListItem)sender;
-                // PLAY MUSIC
+                var click_music = (int)pli.Tag;
+
+                YMPCore.PlayList.CurrentPlayList = CurrentPlayList;
+                CurrentPlayList.CurrentMusicIndex = click_music;
+                YMPCore.Browser.PlayMusic(CurrentPlayList.Musics[click_music]);
             };
 
             stkList.Children.Add(item);
@@ -105,7 +109,7 @@ namespace YMP.View.Pages
             stkList.Children.Add(item);
         }
 
-        private void UpdateList()
+        public void UpdateList()
         {
             if (CurrentPlayList != null)
             {
@@ -121,10 +125,10 @@ namespace YMP.View.Pages
                 switch (PlayListSortMode)
                 {
                     case SortMode.Time:
-                        result = list.OrderBy(x => ((Music)x.Tag).AddDate);
+                        result = list.OrderBy(x => CurrentPlayList.Musics[(int)(x.Tag)].AddDate);
                         break;
                     case SortMode.Name:
-                        result = list.OrderBy(x => ((Music)x.Tag).Title);
+                        result = list.OrderBy(x => CurrentPlayList.Musics[(int)(x.Tag)].Title);
                         break;
                     case SortMode.Custom:
                     default:
@@ -138,6 +142,8 @@ namespace YMP.View.Pages
                     stkList.Children.Add(item);
                 }
             }
+            else
+                ShowAllPlayLists();
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)

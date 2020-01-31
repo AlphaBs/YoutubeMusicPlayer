@@ -17,45 +17,14 @@ namespace YMP.Model
         [JsonProperty]
         public string Artists { get; set; }
         [JsonProperty]
-        public string DurationStr { get; set; }
+        public TimeSpan Duration { get; set; }
         [JsonProperty]
         public string Thumbnail { get; set; }
         [JsonProperty]
-        public string AddDateStr { get; set; }
-
+        public DateTime? AddDate { get; set; }
+        [JsonProperty]
         public DateTime PublishAt { get; set; }
+        [JsonProperty]
         public ulong Views { get; set; }
-
-        DateTime _addDate = DateTime.MinValue;
-        public DateTime AddDate 
-        {
-            get
-            {
-                if (_addDate == DateTime.MinValue)
-                    _addDate = DateTime.Parse(AddDateStr);
-                return _addDate;
-            }
-            set
-            {
-                _addDate = value;
-                AddDateStr = _addDate.ToString("G");
-            }
-        }
-
-        TimeSpan _duration = TimeSpan.Zero;
-        public TimeSpan Duration 
-        {
-            get
-            {
-                if (_duration == TimeSpan.Zero)
-                    _duration = TimeSpan.Parse(DurationStr);
-                return _duration;
-            }
-            set
-            {
-                _duration = value;
-                DurationStr = _duration.ToString("G");
-            }
-        }
     }
 }

@@ -79,20 +79,20 @@ namespace YMP.View.Pages
                     return;
                 }
 
-                foreach (var item in playlistIds)
+                for (int i = 0; i < playlistIds.Length; i++)
                 {
-                    var c = new SearchListItem();
-                    c.Playlist = item;
+                    var c = new SearchListItem(i);
+                    c.Playlist = playlistIds[i];
 
                     c.ClickEvent += PlayListItemClick;
                     c.AddEvent += PlayListItemAdd;
                     stkList.Children.Add(c);
                 }
 
-                foreach (var item in videoIds)
+                for (int i = 0; i < videoIds.Length; i++)
                 {
-                    var c = new SearchListItem();
-                    c.Music = item;
+                    var c = new SearchListItem(i);
+                    c.Music = videoIds[i];
 
                     c.ClickEvent += VideoItemClick;
                     c.AddEvent += VideoItemAdd;
@@ -126,10 +126,10 @@ namespace YMP.View.Pages
             lbListNameContent.Text = ctr.Playlist.Title;
 
             stkList.Children.Clear();
-            foreach (var item in musics)
+            for (int i = 0; i < musics.Length; i++)
             {
-                var c = new SearchListItem();
-                c.Music = item;
+                var c = new SearchListItem(i);
+                c.Music = musics[i];
 
                 c.ClickEvent += VideoItemClick;
                 stkList.Children.Add(c);
@@ -162,7 +162,10 @@ namespace YMP.View.Pages
                 return;
 
             if (CurrentShowingPlayList != null)
+            {
+                CurrentShowingPlayList.CurrentMusicIndex = ctr.Index;
                 YMPCore.PlayList.CurrentPlayList = CurrentShowingPlayList;
+            }
 
             YMPCore.Browser.PlayMusic(ctr.Music);
         }
