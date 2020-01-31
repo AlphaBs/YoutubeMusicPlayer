@@ -19,7 +19,7 @@ namespace YMP.Util
             try
             {
                 var cacheFile = GetCachePath(url);
-                //if (!File.Exists(cacheFile))
+                if (!File.Exists(cacheFile))
                 {
                     using (var wc = new WebClient())
                     {
