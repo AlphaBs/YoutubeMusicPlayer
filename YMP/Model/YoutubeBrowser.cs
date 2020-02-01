@@ -160,6 +160,11 @@ namespace YMP.Model
             return qualityToStr(Quality);
         }
 
+        public void OpenProcess(string p)
+        {
+            Util.Utils.StartProcess(p);
+        }
+
         // YOUTUBE FUNCTION
 
         public void PlayMusic(Music m)
@@ -202,6 +207,11 @@ namespace YMP.Model
         public void Unmute()
         {
             js("player.unMute()");
+        }
+
+        public void OpenInBrowser()
+        {
+            js("openVideoUrl()");
         }
 
         private VideoQuality strToQuality(string s)

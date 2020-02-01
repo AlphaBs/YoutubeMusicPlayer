@@ -78,9 +78,11 @@
                     Foreground="Black" Kind="Download"/>
             </Button>
             
-            <materialDesign:PopupBox>
+            <materialDesign:PopupBox Height="30" VerticalAlignment="Bottom">
                 <StackPanel>
-                    
+                    <Button x:Name="btnOpenBrowser"
+                            Content="브라우저에서 열기"
+                            Click="btnOpenBrowser_Click"/>
                 </StackPanel>
             </materialDesign:PopupBox>
             

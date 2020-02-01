@@ -75,5 +75,10 @@ namespace YMP.View.Pages
                 desktopForm = null;
             }
         }
+
+        private void btnOpenBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            YMPCore.Browser.OpenInBrowser();
+        }
     }
 }
