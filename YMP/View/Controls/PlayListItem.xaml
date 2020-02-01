@@ -15,6 +15,10 @@
              Height="50"
              d:DesignWidth="700" d:DesignHeight="50">
 
+    <UserControl.Resources>
+        <BitmapImage x:Key="folder" UriSource="/YMP;component/Resource/icon_folder.png"/>
+    </UserControl.Resources>
+    
     <Grid
         MouseDown="Grid_MouseDown">
         

@@ -16,10 +16,7 @@
       Title="MusicListPage">
 
     <Page.Resources>
-
-        <BitmapImage x:Key="folder" UriSource="/YMP;component/Resource/icon_folder.png"/>
-
-        <ResourceDictionary x:Key="-">
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
