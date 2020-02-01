@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -217,6 +218,20 @@ namespace YMP.ViewModel
             }
         }
 
+        PackIconKind _kind = PackIconKind.PlayArrow;
+        public PackIconKind PlayPauseButtonIconKind
+        {
+            get => _kind;
+            set
+            {
+                if (_kind != value)
+                {
+                    _kind = value;
+                    RaiseChanged(nameof(PlayPauseButtonIconKind));
+                }
+            }
+        }
+
         private void RaiseChanged(string pn)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pn));
@@ -357,6 +372,11 @@ namespace YMP.ViewModel
             }
             else
                 isTimeUpdated = false;
+
+            if (YMPCore.Browser.State == PlayerState.Playing)
+                PlayPauseButtonIconKind = PackIconKind.Pause;
+            else
+                PlayPauseButtonIconKind = PackIconKind.PlayArrow;
         }
 
         private async void setThumbnail(string url)

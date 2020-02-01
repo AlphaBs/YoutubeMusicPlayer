@@ -141,7 +141,7 @@
                         Style="{StaticResource MaterialDesignIconButton}"
                         Command="{Binding PlayPauseCommand}">
 
-                        <materialDesign:PackIcon Foreground="White" Kind="PlayArrow"/>
+                        <materialDesign:PackIcon Foreground="White" Kind="{Binding PlayPauseButtonIconKind}"/>
                     </Button>
 
                     <Button
