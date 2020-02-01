@@ -167,11 +167,12 @@ namespace YMP.View.Pages
 
             if (CurrentShowingPlayList != null)
             {
-                CurrentShowingPlayList.CurrentMusicIndex = ctr.Index;
                 YMPCore.PlayList.CurrentPlayList = CurrentShowingPlayList;
+                var music = CurrentShowingPlayList.GetMusic(ctr.Index);
+                YMPCore.Browser.PlayMusic(music);
             }
-
-            YMPCore.Browser.PlayMusic(ctr.Music);
+            else
+                YMPCore.Browser.PlayMusic(ctr.Music);
         }
 
         Music AddMusic;

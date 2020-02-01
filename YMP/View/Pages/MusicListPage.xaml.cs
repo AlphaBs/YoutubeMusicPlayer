@@ -47,66 +47,51 @@ namespace YMP.View.Pages
             btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.PlaylistNote;
             EnableCreate(true);
 
-            foreach (var item in YMPCore.PlayList.PlayLists)
+            var playlists = YMPCore.PlayList.PlayLists;
+            for (int i = 0; i < playlists.Count; i++)
             {
-                AddPlaylistItem(item);
+                var item = new PlayListItem(i);
+                item.Playlist = playlists[i];
+                item.Click += PlayListItem_Click;
+                stkList.Children.Add(item);
             }
+        }
+        
+        private void PlayListItem_Click(object sender, EventArgs e)
+        {
+            var ctrl = sender as PlayListItem;
+            if (ctrl == null)
+                return;
+
+            ShowPlayListMusic(ctrl.Playlist);
         }
 
         private void ShowPlayListMusic(PlayList pl)
         {
             stkList.Children.Clear();
+
             CurrentPlayList = pl;
             lbListNameContent.Text = pl.Name;
             btnReturnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.KeyboardBackspace;
             EnableCreate(false);
 
-            foreach (var item in pl.Musics)
+            var musics = pl.GetMusics();
+            for (int i = 0; i < musics.Length; i++)
             {
-                AddMusicItem(item);
+                var item = new PlayListItem(i);
+                item.Music = musics[i];
+                item.Click += MusicItem_Click;
+                stkList.Children.Add(item);
             }
         }
 
-        private async void AddMusicItem(Music music)
+        private void MusicItem_Click(object sender, EventArgs e)
         {
-            var item = new PlayListItem();
+            var ctrl = sender as PlayListItem;
+            var musicIndex = ctrl.Index;
 
-            item.Title = music.Title;
-            item.SubTitle = music.Artists;
-            item.Thumbnail = await WebImage.GetImage(music.Thumbnail);
-            item.Length = StringFormat.ToDurationString(music.Duration);
-            item.Tag = stkList.Children.Count;
-
-            item.Click += (sender, e) =>
-            {
-                var pli = (PlayListItem)sender;
-                var click_music = (int)pli.Tag;
-
-                YMPCore.PlayList.CurrentPlayList = CurrentPlayList;
-                CurrentPlayList.CurrentMusicIndex = click_music;
-                YMPCore.Browser.PlayMusic(CurrentPlayList.Musics[click_music]);
-            };
-
-            stkList.Children.Add(item);
-        }
-
-        private void AddPlaylistItem(PlayList list)
-        {
-            var item = new PlayListItem();
-
-            item.Title = list.Name;
-            item.SubTitle = $"곡 {list.Lenght}개";
-            item.Thumbnail = (BitmapImage)FindResource("folder");
-            item.Length = "";
-            item.Tag = list;
-
-            item.Click += (sender, e) =>
-            {
-                var pli = (PlayListItem)sender;
-                ShowPlayListMusic((PlayList)pli.Tag);
-            };
-
-            stkList.Children.Add(item);
+            YMPCore.PlayList.CurrentPlayList = CurrentPlayList;
+            YMPCore.Browser.PlayMusic(CurrentPlayList.GetMusic(musicIndex));
         }
 
         public void UpdateList()
@@ -125,10 +110,10 @@ namespace YMP.View.Pages
                 switch (PlayListSortMode)
                 {
                     case SortMode.Time:
-                        result = list.OrderBy(x => CurrentPlayList.Musics[(int)(x.Tag)].AddDate);
+                        result = list.OrderBy(x => CurrentPlayList.GetMusic(x.Index).AddDate);
                         break;
                     case SortMode.Name:
-                        result = list.OrderBy(x => CurrentPlayList.Musics[(int)(x.Tag)].Title);
+                        result = list.OrderBy(x => CurrentPlayList.GetMusic(x.Index).Title);
                         break;
                     case SortMode.Custom:
                     default:

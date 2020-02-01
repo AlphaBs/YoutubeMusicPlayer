@@ -27,8 +27,19 @@ namespace YMP.Model
         public string Type { get; private set; }
 
         public int Lenght { get => Musics.Count; }
-        public int CurrentMusicIndex { get; set; } = 0;
-        public List<Music> Musics { get; private set; }
+        public int CurrentMusicIndex { get; private set; } = 0;
+        private List<Music> Musics { get; set; }
+
+        public Music GetMusic(int index)
+        {
+            CurrentMusicIndex = index;
+            return Musics[index];
+        }
+
+        public Music[] GetMusics()
+        {
+            return Musics.ToArray();
+        }
 
         public Music GetCurrentusic()
         {

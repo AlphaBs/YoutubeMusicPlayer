@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YMP.Model;
+using YMP.Util;
 
 namespace YMP.View.Controls
 {
@@ -21,12 +22,48 @@ namespace YMP.View.Controls
     /// </summary>
     public partial class PlayListItem : UserControl
     {
-        public PlayListItem()
+        public PlayListItem(int index)
         {
             InitializeComponent();
+            this.Index = index;
         }
 
+        public int Index { get; private set; }
         public event EventHandler Click;
+
+        Music _music;
+        public Music Music
+        {
+            get => _music;
+            set
+            {
+                if (_music != value)
+                {
+                    _music = value;
+                    Title = _music.Title;
+                    SubTitle = _music.Artists;
+                    Length = StringFormat.ToDurationString(_music.Duration);
+                    SetThumbnailAsync(_music.Thumbnail);
+                }
+            }
+        }
+
+        PlayList _playlist;
+        public PlayList Playlist
+        {
+            get => _playlist;
+            set
+            {
+                if (_playlist != value)
+                {
+                    _playlist = value;
+                    Title = _playlist.Name;
+                    SubTitle = $"곡 {_playlist.Lenght}개";
+                    Thumbnail = (BitmapImage)FindResource("folder");
+                    Length = "재생목록";
+                }
+            }
+        }
 
         public string Title
         {
@@ -44,6 +81,11 @@ namespace YMP.View.Controls
         {
             get => (BitmapImage)imgThumbnail.Source;
             set => imgThumbnail.Source = value;
+        }
+
+        public async void SetThumbnailAsync(string url)
+        {
+            Thumbnail = await Util.WebImage.GetImage(url);
         }
 
         public string Length
