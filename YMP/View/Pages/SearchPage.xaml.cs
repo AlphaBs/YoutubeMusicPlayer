@@ -53,6 +53,10 @@ namespace YMP.View.Pages
                 return;
 
             Searching = true;
+
+            if (CurrentShowingPlayList != null)
+                btnBack_Click(this, null);
+
             stkList.Children.Clear();
 
             var th = new Thread(() =>
@@ -220,7 +224,6 @@ namespace YMP.View.Pages
                 CurrentShowingPlayList = null;
 
                 stkList.Children.Clear();
-
                 lbListNameContent.Text = "검색결과";
 
                 foreach (var item in SearchResultCache)
