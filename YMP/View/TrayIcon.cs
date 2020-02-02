@@ -32,6 +32,8 @@ namespace YMP.View
 
         public void Close()
         {
+            notify.Visible = false;
+            notify.Icon = null;
             notify.Dispose();
         }
     }
