@@ -22,17 +22,6 @@ namespace YMP.Model
         No        =  6
     }
 
-    public enum VideoQuality
-    {
-        Small,
-        Medium,
-        Large,
-        HD720,
-        HD1080,
-        Highres,
-        Default
-    }
-
     public class YoutubeBrowser
     {
         private bool IsBrowserLoadingDone = false;
@@ -91,13 +80,33 @@ namespace YMP.Model
             }
         }
 
+        async Task<T> jsasync<T>(string script)
+        {
+            if (!jsAvailable())
+                return default;
+
+            try
+            {
+                var ret = await MainFrame.EvaluateScriptAsync(script);
+                if (ret.Success)
+                    return (T)ret.Result;
+                else
+                    return default;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return default;
+            }
+        }
+
         // YOUTUBE DATA
 
         public bool Repeat { get; set; } = false;
 
         public Music CurrentMusic { get; private set; }
         public PlayerState State { get; private set; } = PlayerState.No;
-        public VideoQuality Quality { get; private set; }
+        public string QualityString { get; private set; }
         public TimeSpan CurrentTime { get; private set; }
         public TimeSpan Duration { get; private set; }
 
@@ -128,7 +137,7 @@ namespace YMP.Model
 
         public void OnPlaybackQualityChange(string data)
         {
-            Quality = strToQuality(data);
+            QualityString = data;
         }
 
         public void OnError(int data)
@@ -144,11 +153,6 @@ namespace YMP.Model
         public void UpdateCurrentTime(int c)
         {
             CurrentTime = TimeSpan.FromSeconds(c);
-        }
-
-        public string GetQualityString()
-        {
-            return qualityToStr(Quality);
         }
 
         public void OpenProcess(string p)
@@ -205,49 +209,22 @@ namespace YMP.Model
             js("openVideoUrl()");
         }
 
-        private VideoQuality strToQuality(string s)
+        public async Task<string[]> GetAvailableVideoQuality()
         {
-            switch (s)
-            {
-                case "small":
-                    return VideoQuality.Small;
-                case "medium":
-                    return VideoQuality.Medium;
-                case "large":
-                    return VideoQuality.Large;
-                case "hd720":
-                    return VideoQuality.HD720;
-                case "hd1080":
-                    return VideoQuality.HD1080;
-                case "highres":
-                    return VideoQuality.Highres;
-                case "default":
-                    return VideoQuality.Default;
-                default:
-                    return VideoQuality.Small;
-            }
+            var result = await jsasync<string>("getVideoQuality()");
+            if (result == null)
+                return new string[0];
+
+            if (result.Contains(","))
+                return result.Split(',');
+            else
+                return new string[0];
         }
 
-        private string qualityToStr(VideoQuality q)
+        public void SetVideoQuality(string quality)
         {
-            switch (q)
-            {
-                case VideoQuality.Small:
-                    return "small";
-                case VideoQuality.Medium:
-                    return "medium";
-                case VideoQuality.Large:
-                    return "large";
-                case VideoQuality.HD720:
-                    return "hd720";
-                case VideoQuality.HD1080:
-                    return "hd1080";
-                case VideoQuality.Highres:
-                    return "highres";
-                case VideoQuality.Default:
-                default:
-                    return "default";
-            }
+            Console.WriteLine(quality);
+            js($"player.setPlaybackQuality(\"{quality}\")");
         }
     }
 }

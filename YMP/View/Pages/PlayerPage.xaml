@@ -80,6 +80,11 @@
             
             <materialDesign:PopupBox Height="30" VerticalAlignment="Bottom">
                 <StackPanel>
+                    <Button
+                        x:Name="btnVideoQuality"
+                        Content="화질 설정"
+                        Click="btnVideoQuality_Click"/>
+                    
                     <Button x:Name="btnOpenBrowser"
                             Content="브라우저에서 열기"
                             Click="btnOpenBrowser_Click"/>
@@ -95,5 +100,62 @@
         <ui:CEFBrowser
             x:Name="cefBrowser"
             Grid.Row="1"/>
+
+        <materialDesign:DialogHost
+            x:Name="qualityDialogHost"
+            Grid.RowSpan="2">
+
+            <materialDesign:DialogHost.DialogContent>
+                <Grid
+                    Margin="5"
+                    MinWidth="300"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        x:Name="tbNoQuality"
+                        Visibility="Hidden"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Content="   설정할 수 있는 화질이 없습니다.&#x0d;&#x0a;영상이 재생되었는지 확인해주세요."
+                        Margin="10"/>
+
+                    <ScrollViewer
+                        Grid.Row="0"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto">
+
+                        <ListBox
+                            x:Name="liQualities"
+                            SelectionChanged="liQualities_SelectionChanged">
+                        </ListBox>
+                    </ScrollViewer>
+
+                    <ProgressBar
+                        x:Name="pbLoad"
+                        Grid.Row="0"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Value="35"
+                        IsIndeterminate="True"
+                        VerticalAlignment="Top"
+                        Margin="15"/>
+
+                    <Button
+                        x:Name="btnCancle"
+                        Content="확인"
+                        Click="btnCancle_Click"
+                        Grid.Row="1"
+                        Margin="5"/>
+
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>
