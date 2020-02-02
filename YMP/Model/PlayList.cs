@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,13 +23,19 @@ namespace YMP.Model
             this.Metadata = md;
         }
 
+        [JsonProperty]
         public PlayListMetadata Metadata { get; private set; }
+        [JsonProperty]
         public string Name { get; private set; }
+        [JsonProperty]
         public string Type { get; private set; }
-
-        public int Lenght { get => Musics.Count; }
-        public int CurrentMusicIndex { get; private set; } = 0;
+        [JsonProperty]
         private List<Music> Musics { get; set; }
+
+        [JsonIgnore]
+        public int Lenght { get => Musics.Count; }
+        [JsonIgnore]
+        public int CurrentMusicIndex { get; private set; } = 0;
 
         public Music GetMusic(int index)
         {
