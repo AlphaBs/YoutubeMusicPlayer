@@ -145,9 +145,11 @@ namespace YMP.View.Pages
             {
                 desktopForm = DesktopManager.CreateDesktopForm(YMPCore.Browser.Browser, 0);
                 DesktopManager.SetDesktopChildForm(desktopForm);
+                cefBrowser.Visibility = Visibility.Hidden;
             }
             else
             {
+                cefBrowser.Visibility = Visibility.Visible;
                 this.cefBrowser.AttachChild(YMPCore.Browser.Browser);
                 desktopForm.Close();
                 desktopForm = null;
