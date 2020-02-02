@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YMP.Util;
+
+/*
+ * This code is from Code Project (https://www.codeproject.com/Articles/856020/Draw-Behind-Desktop-Icons-in-Windows-plus)
+ * By Gerald Degeneve, 23 Dec 2014.
+ * License : CPOL (https://www.codeproject.com/info/cpol10.aspx)
+ */
 
 namespace YMP.Model
 {
