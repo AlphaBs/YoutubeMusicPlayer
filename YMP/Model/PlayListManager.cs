@@ -36,7 +36,8 @@ namespace YMP.Model
                 }
                 catch (JsonSerializationException jex)
                 {
-
+                    // TODO : handle exception
+                    Console.WriteLine(jex.ToString());
                 }
             }
 

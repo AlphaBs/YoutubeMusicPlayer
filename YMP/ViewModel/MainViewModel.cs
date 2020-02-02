@@ -372,7 +372,7 @@ namespace YMP.ViewModel
 
         public void ClosingWindow(object o)
         {
-            playerPage.CloseDesktop();
+            playerPage.Dispose();
             tray.Close();
             miniWindow.Close();
             YMPCore.Stop();
