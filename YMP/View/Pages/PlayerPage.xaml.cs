@@ -143,17 +143,27 @@ namespace YMP.View.Pages
         {
             if (desktopForm == null)
             {
-                desktopForm = DesktopManager.CreateDesktopForm(YMPCore.Browser.Browser, 0);
-                DesktopManager.SetDesktopChildForm(desktopForm);
-                cefBrowser.Visibility = Visibility.Hidden;
+                ShowDesktop();
             }
             else
             {
-                cefBrowser.Visibility = Visibility.Visible;
-                this.cefBrowser.AttachChild(YMPCore.Browser.Browser);
-                desktopForm.Close();
-                desktopForm = null;
+                CloseDesktop();
             }
+        }
+
+        public void ShowDesktop()
+        {
+            desktopForm = DesktopManager.CreateDesktopForm(YMPCore.Browser.Browser, 0);
+            DesktopManager.SetDesktopChildForm(desktopForm);
+            cefBrowser.Visibility = Visibility.Hidden;
+        }
+
+        public void CloseDesktop()
+        {
+            cefBrowser.Visibility = Visibility.Visible;
+            this.cefBrowser.AttachChild(YMPCore.Browser.Browser);
+            desktopForm.Close();
+            desktopForm = null;
         }
 
         private void btnOpenBrowser_Click(object sender, RoutedEventArgs e)

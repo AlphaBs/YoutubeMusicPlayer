@@ -145,6 +145,9 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\MiniWindow.xaml.cs">
+      <DependentUpon>MiniWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\MusicListPage.xaml.cs">
       <DependentUpon>MusicListPage.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,7 @@
     <Compile Include="Util\StringFormat.cs" />
     <Compile Include="Util\WinApi.cs" />
     <Compile Include="Util\WebImage.cs" />
+    <Compile Include="View\TrayIcon.cs" />
     <Compile Include="YMPInfo.cs" />
     <Compile Include="Youtube\YoutubeAPI.cs" />
     <Compile Include="Youtube\YoutubeDataAPI.cs" />
@@ -208,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\MiniWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,12 +14,15 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         Title="Youtube Music Player" Width="800" Height="500"
-        Closing="Window_Closing" Icon="/YMP;component/logo.ico"
-        >
+        Icon="/YMP;component/logo.ico">
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </intr:EventTrigger>
+
+        <intr:EventTrigger EventName="Closing">
+            <intr:InvokeCommandAction Command="{Binding ClosingCommand}"/>
         </intr:EventTrigger>
     </intr:Interaction.Triggers>
 

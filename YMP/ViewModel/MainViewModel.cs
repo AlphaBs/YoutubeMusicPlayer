@@ -42,9 +42,14 @@ namespace YMP.ViewModel
             };
 
             timer = new DispatcherTimer();
+
+            miniWindow = new MiniWindow();
+            tray = new TrayIcon(miniWindow);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        MiniWindow miniWindow;
 
         MusicListPage musicList;
         PlayerPage playerPage;
@@ -52,6 +57,7 @@ namespace YMP.ViewModel
         SettingPage settingPage;
 
         DispatcherTimer timer;
+        TrayIcon tray;
 
         FrameContent _frameContent = FrameContent.Blank;
         FrameContent PreviousContent = FrameContent.Blank;
@@ -362,6 +368,14 @@ namespace YMP.ViewModel
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        public void ClosingWindow(object o)
+        {
+            playerPage.CloseDesktop();
+            tray.Close();
+            miniWindow.Close();
+            YMPCore.Stop();
         }
 
         private void Timer_Tick(object sender, EventArgs e)

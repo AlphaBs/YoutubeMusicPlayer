@@ -1,0 +1,21 @@
+﻿<Window x:Class="YMP.View.Pages.MiniWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YMP.View.Pages"
+        mc:Ignorable="d"
+        WindowStartupLocation="Manual"
+        WindowState="Normal"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Title="MiniWindow" 
+        Width="400" Height="200" Icon="/YMP;component/logo.ico"
+        >
+    
+    <Grid>
+        <Button Content="프로그램 종료" HorizontalAlignment="Left" Margin="42,35,0,0" VerticalAlignment="Top" Width="146" Height="56" Click="Button_Click"/>
+        <Button Content="x" HorizontalAlignment="Left" Margin="292,108,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

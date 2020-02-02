@@ -58,11 +58,6 @@ namespace YMP.View
             viewModel.OnClickBrowser();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            YMPCore.Stop();
-        }
-
         private void slSeeker_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             viewModel.DragStartedCommand.Execute(this);
