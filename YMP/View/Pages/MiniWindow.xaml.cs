@@ -25,9 +25,11 @@ namespace YMP.View.Pages
             InitializeComponent();
         }
 
+        public event EventHandler ExitProgram;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            YMPCore.Stop();
+            ExitProgram?.Invoke(this, new EventArgs());
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

@@ -142,13 +142,9 @@ namespace YMP.View.Pages
         private void btnDesktop_Click(object sender, RoutedEventArgs e)
         {
             if (desktopForm == null)
-            {
                 ShowDesktop();
-            }
             else
-            {
                 CloseDesktop();
-            }
         }
 
         public void ShowDesktop()
@@ -182,7 +178,9 @@ namespace YMP.View.Pages
                 {
                     // TODO: 관리되는 상태(관리되는 개체)를 삭제합니다.
                     cefBrowser.Dispose();
-                    CloseDesktop();
+
+                    if (desktopForm != null)
+                        CloseDesktop();
                 }
 
                 // TODO: 관리되지 않는 리소스(관리되지 않는 개체)를 해제하고 아래의 종료자를 재정의합니다.

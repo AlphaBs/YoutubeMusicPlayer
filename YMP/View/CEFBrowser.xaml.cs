@@ -34,7 +34,8 @@ namespace YMP.View
 
         public void AttachChild(System.Windows.Forms.Control c)
         {
-            host.Child = c;
+            if (host != null)
+                host.Child = c;
         }
 
         #region IDisposable Support

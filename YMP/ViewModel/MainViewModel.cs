@@ -44,6 +44,11 @@ namespace YMP.ViewModel
             timer = new DispatcherTimer();
 
             miniWindow = new MiniWindow();
+            miniWindow.ExitProgram += delegate
+            {
+                ClosingWindow(null);
+            };
+
             tray = new TrayIcon(miniWindow);
         }
 
@@ -303,6 +308,12 @@ namespace YMP.ViewModel
         public ICommand SearchGotFocusCommand
         {
             get => searchGotFocusCommand ?? (searchGotFocusCommand = new RelayCommand(OnSearchGotFocus));
+        }
+
+        ICommand closingCommand;
+        public ICommand ClosingCommand
+        {
+            get => closingCommand ?? (closingCommand = new RelayCommand(ClosingWindow));
         }
 
         #endregion

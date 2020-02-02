@@ -67,5 +67,11 @@ namespace YMP.View
         {
             viewModel.DragCompletedCommand.Execute(this);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
     }
 }
