@@ -160,7 +160,6 @@
     <Compile Include="View\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\Base64Image.cs" />
     <Compile Include="Util\StringFormat.cs" />
     <Compile Include="Util\WinApi.cs" />
     <Compile Include="Util\WebImage.cs" />

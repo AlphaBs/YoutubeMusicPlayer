@@ -24,7 +24,6 @@ namespace YMP.Util
                     using (var wc = new WebClient())
                     {
                         await wc.DownloadFileTaskAsync(url, cacheFile);
-                        Console.WriteLine("asdfasdd");
                     }
                 }
 
