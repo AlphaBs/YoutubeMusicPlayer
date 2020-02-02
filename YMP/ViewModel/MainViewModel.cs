@@ -348,7 +348,7 @@ namespace YMP.ViewModel
         public void LoadedWindow(object o)
         {
             CurrentContent = FrameContent.MusicListPage;
-            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += Timer_Tick;
             timer.Start();
         }

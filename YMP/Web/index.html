@@ -73,15 +73,12 @@
                     var d = Math.floor(player.getDuration());
                     var c = Math.floor(player.getCurrentTime());
 
-                    if (d != duration || c != curr)
-                    {
-                        var j = JSON.stringify({
-                            duration: d,
-                            current: c
-                        });
-                        youtubeJSBound.updateTime(j);
-                    }
-                }, 500);
+                    if (d != duration)
+                        youtubeJSBound.updateDuration(d);
+
+                    if (c != curr)
+                        youtubeJSBound.updateCurrentTime(c);
+                }, 100);
 
                 youtubeJSBound.onLoaded();
             })();
@@ -89,6 +86,10 @@
 
         function openVideoUrl() {
             youtubeJSBound.openProcess(player.getVideoUrl());
+        }
+
+        function getVideoQuality() {
+            return player.getAvailableQualityLevels();
         }
     </script>
 </body>

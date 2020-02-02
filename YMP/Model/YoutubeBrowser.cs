@@ -136,23 +136,14 @@ namespace YMP.Model
             Console.WriteLine("err {0}", data);
         }
 
-        public void UpdateTime(string d)
+        public void UpdateDuration(int d)
         {
-            var job = JObject.Parse(d);
-            Duration = tParse(job["duration"]?.ToString());
-            CurrentTime = tParse(job["current"]?.ToString());
+            Duration = TimeSpan.FromSeconds(d);
         }
 
-        private TimeSpan tParse(string s)
+        public void UpdateCurrentTime(int c)
         {
-            if (string.IsNullOrEmpty(s))
-                return TimeSpan.Zero;
-
-            int sec = 0;
-            if (int.TryParse(s, out sec))
-                return TimeSpan.FromSeconds(sec);
-            else
-                return TimeSpan.Zero;
+            CurrentTime = TimeSpan.FromSeconds(c);
         }
 
         public string GetQualityString()
