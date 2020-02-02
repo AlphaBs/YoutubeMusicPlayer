@@ -37,28 +37,28 @@ namespace YMP.Model
         public static bool SetDesktopChildForm(Form f)
         {
             var handle = f.Handle;
-            var progman = WinApi.FindWindow("Progman", null);
+            var progman = NativeMethods.FindWindow("Progman", null);
 
             var result = IntPtr.Zero;
-            WinApi.SendMessageTimeout(progman,
+            NativeMethods.SendMessageTimeout(progman,
                                       0x052C,
                                       new IntPtr(0),
                                       IntPtr.Zero,
-                                      WinApi.SendMessageTimeoutFlags.SMTO_NORMAL,
+                                      NativeMethods.SendMessageTimeoutFlags.SMTO_NORMAL,
                                       1000,
                                       out result);
 
             IntPtr workerw = IntPtr.Zero;
-            WinApi.EnumWindows(new WinApi.EnumWindowsProc((tophandle, topparamhandle) =>
+            NativeMethods.EnumWindows(new NativeMethods.EnumWindowsProc((tophandle, topparamhandle) =>
             {
-                IntPtr p = WinApi.FindWindowEx(tophandle,
+                IntPtr p = NativeMethods.FindWindowEx(tophandle,
                                                IntPtr.Zero,
                                                "SHELLDLL_DefView",
                                                IntPtr.Zero);
 
                 if (p != IntPtr.Zero)
                 {
-                    workerw = WinApi.FindWindowEx(IntPtr.Zero,
+                    workerw = NativeMethods.FindWindowEx(IntPtr.Zero,
                                                   tophandle,
                                                   "WorkerW",
                                                   IntPtr.Zero);
@@ -68,8 +68,8 @@ namespace YMP.Model
             }), IntPtr.Zero);
 
             var formHandle = f.Handle;
-            WinApi.ShowWindow(workerw, 0);
-            WinApi.SetParent(formHandle, progman);
+            NativeMethods.ShowWindow(workerw, 0);
+            NativeMethods.SetParent(formHandle, progman);
 
             return true;
         }

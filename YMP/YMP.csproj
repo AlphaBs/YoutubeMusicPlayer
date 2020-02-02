@@ -164,7 +164,7 @@
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\StringFormat.cs" />
-    <Compile Include="Util\WinApi.cs" />
+    <Compile Include="Util\NativeMethods.cs" />
     <Compile Include="Util\WebImage.cs" />
     <Compile Include="View\TrayIcon.cs" />
     <Compile Include="YMPInfo.cs" />
