@@ -293,6 +293,12 @@ namespace YMP.ViewModel
             get => settingCommand ?? (settingCommand = new RelayCommand(OnSettingClick));
         }
 
+        ICommand searchGotFocusCommand;
+        public ICommand SearchGotFocusCommand
+        {
+            get => searchGotFocusCommand ?? (searchGotFocusCommand = new RelayCommand(OnSearchGotFocus));
+        }
+
         #endregion
 
         private void PrevMusic(object o)
@@ -343,6 +349,11 @@ namespace YMP.ViewModel
         public void OnSettingClick(object o)
         {
             CurrentContent = FrameContent.SettingPage;
+        }
+
+        public void OnSearchGotFocus(object o)
+        {
+            CurrentContent = FrameContent.SearchPage;
         }
 
         public void LoadedWindow(object o)

@@ -91,7 +91,15 @@
                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                 BorderThickness="0"
                                 MinWidth="300"
-                                VerticalAlignment="Center" />
+                                VerticalAlignment="Center">
+
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="GotFocus">
+                                        <intr:InvokeCommandAction Command="{Binding SearchGotFocusCommand}"/>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                                
+                            </TextBox>
                         </Grid>
                     </materialDesign:ColorZone>
 

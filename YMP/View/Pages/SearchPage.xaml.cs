@@ -53,6 +53,7 @@ namespace YMP.View.Pages
                 return;
 
             Searching = true;
+            lbInputPlease.Visibility = Visibility.Collapsed;
 
             if (CurrentShowingPlayList != null)
                 btnBack_Click(this, null);

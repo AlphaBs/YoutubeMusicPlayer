@@ -72,7 +72,8 @@
             Value="35"
             IsIndeterminate="True"
             VerticalAlignment="Top"
-            Margin="15"/>
+            Margin="15"
+            Visibility="Collapsed"/>
 
         <Label
             x:Name="lbNoResult"
@@ -83,6 +84,16 @@
             Margin="30"
             Content="검색 결과가 없습니다"
             Visibility="Collapsed"/>
+
+        <Label
+            x:Name="lbInputPlease"
+            Grid.Row="1"
+            FontSize="16"
+            Foreground="LightSlateGray"
+            HorizontalAlignment="Center"
+            Margin="30"
+            Content="검색어를 입력해 주세요"
+            Visibility="Visible"/>
 
         <materialDesign:DialogHost
             x:Name="addDialogHost"
