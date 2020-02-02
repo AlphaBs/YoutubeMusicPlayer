@@ -15,6 +15,9 @@ namespace YMP.Model
     {
         public static void Initialize()
         {
+            if (Running)
+                throw new InvalidOperationException("already initialized");
+
             var settings = new CefSettings();
             settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
             Cef.Initialize(settings);
@@ -26,10 +29,11 @@ namespace YMP.Model
 
             Browser = new YoutubeBrowser();
 
+            Running = true;
             new MainWindow().Show();
         }
 
-        public static bool Running = true;
+        public static bool Running = false;
 
         public static YoutubeAPI Youtube { get; private set; }
         public static PlayListManager PlayList { get; private set; }
