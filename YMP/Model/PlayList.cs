@@ -41,7 +41,7 @@ namespace YMP.Model
             return Musics.ToArray();
         }
 
-        public Music GetCurrentusic()
+        public Music GetCurrentMusic()
         {
             return Musics[CurrentMusicIndex];
         }
