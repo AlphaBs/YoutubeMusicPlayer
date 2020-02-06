@@ -30,6 +30,8 @@ namespace YMP.View.Controls
 
         public int Index { get; private set; }
         public event EventHandler Click;
+        public event EventHandler Play;
+        public event EventHandler Remove;
 
         Music _music;
         public Music Music
@@ -97,6 +99,16 @@ namespace YMP.View.Controls
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Click?.Invoke(this, new EventArgs());
+        }
+
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            Play?.Invoke(this, new EventArgs());
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            Remove?.Invoke(this, new EventArgs());
         }
     }
 }

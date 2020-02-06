@@ -67,7 +67,8 @@
                 Foreground="Gray"
                 Cursor="Hand"
                 MouseDown="Grid_MouseDown"
-                Text="WIZ*ONE"/>
+                Text="WIZ*ONE"
+                TextWrapping="NoWrap"/>
             <TextBlock/>
         </Grid>
 
@@ -86,7 +87,16 @@
             HorizontalAlignment="Center">
 
             <StackPanel>
-                
+                <Button
+                    x:Name="btnPlay"
+                    Content="재생"
+                    Margin="3"
+                    Click="btnPlay_Click"/>
+                <Button 
+                    x:Name="btnRemove"
+                    Content="삭제"
+                    Margin="3"
+                    Click="btnRemove_Click"/>
             </StackPanel>
         </materialDesign:PopupBox>
     </Grid>

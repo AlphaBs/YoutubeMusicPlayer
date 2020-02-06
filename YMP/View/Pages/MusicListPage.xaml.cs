@@ -53,20 +53,42 @@ namespace YMP.View.Pages
                 var item = new PlayListItem(i);
                 item.Playlist = playlists[i];
                 item.Click += PlayListItem_Click;
+                item.Play += PlayListItem_Play;
+                item.Remove += PlayListItem_Remove;
                 stkList.Children.Add(item);
             }
         }
-        
+
         private void PlayListItem_Click(object sender, EventArgs e)
         {
             var ctrl = sender as PlayListItem;
             if (ctrl == null)
                 return;
 
-            ShowPlayListMusic(ctrl.Playlist);
+            ShowMusicInPlayList(ctrl.Playlist);
         }
 
-        private void ShowPlayListMusic(PlayList pl)
+        private void PlayListItem_Play(object sender, EventArgs e)
+        {
+            var ctrl = sender as PlayListItem;
+            if (ctrl == null)
+                return;
+
+            YMPCore.PlayList.CurrentPlayList = ctrl.Playlist;
+            YMPCore.Browser.PlayMusic(ctrl.Playlist.GetCurrentMusic());
+        }
+
+        private void PlayListItem_Remove(object sender, EventArgs e)
+        {
+            var ctrl = sender as PlayListItem;
+            if (ctrl == null)
+                return;
+
+            YMPCore.PlayList.RemovePlayList(ctrl.Index);
+            UpdateList();
+        }
+
+        private void ShowMusicInPlayList(PlayList pl)
         {
             stkList.Children.Clear();
 
@@ -76,11 +98,18 @@ namespace YMP.View.Pages
             EnableCreate(false);
 
             var musics = pl.GetMusics();
+            ShowMusics(musics);
+        }
+
+        private void ShowMusics(Music[] musics)
+        {
             for (int i = 0; i < musics.Length; i++)
             {
                 var item = new PlayListItem(i);
                 item.Music = musics[i];
                 item.Click += MusicItem_Click;
+                item.Play += MusicItem_Click;
+                item.Remove += MusicItem_Remove;
                 stkList.Children.Add(item);
             }
         }
@@ -88,32 +117,39 @@ namespace YMP.View.Pages
         private void MusicItem_Click(object sender, EventArgs e)
         {
             var ctrl = sender as PlayListItem;
+            if (ctrl == null)
+                return;
+
             var musicIndex = ctrl.Index;
 
             YMPCore.PlayList.CurrentPlayList = CurrentPlayList;
             YMPCore.Browser.PlayMusic(CurrentPlayList.GetMusic(musicIndex));
         }
 
+        private void MusicItem_Remove(object sender, EventArgs e)
+        {
+            var ctrl = sender as PlayListItem;
+            if (ctrl == null)
+                return;
+
+            CurrentPlayList.RemoveMusic(ctrl.Index);
+            UpdateList();
+        }
+
         public void UpdateList()
         {
             if (CurrentPlayList != null)
             {
-                var list = new List<PlayListItem>(stkList.Children.Count);
-                foreach (var item in stkList.Children)
-                {
-                    if (item is FrameworkElement)
-                        list.Add((PlayListItem)item);
-                }
-
-                IEnumerable<PlayListItem> result;
+                var list = CurrentPlayList.GetMusics();
+                IEnumerable<Music> result;
 
                 switch (PlayListSortMode)
                 {
                     case SortMode.Time:
-                        result = list.OrderBy(x => CurrentPlayList.GetMusic(x.Index).AddDate);
+                        result = list.OrderBy(x => x.AddDate);
                         break;
                     case SortMode.Name:
-                        result = list.OrderBy(x => CurrentPlayList.GetMusic(x.Index).Title);
+                        result = list.OrderBy(x => x.Title);
                         break;
                     case SortMode.Custom:
                     default:
@@ -122,10 +158,7 @@ namespace YMP.View.Pages
                 }
 
                 stkList.Children.Clear();
-                foreach (var item in result)
-                {
-                    stkList.Children.Add(item);
-                }
+                ShowMusics(result.ToArray());
             }
             else
                 ShowAllPlayLists();

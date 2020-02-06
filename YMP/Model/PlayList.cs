@@ -84,6 +84,11 @@ namespace YMP.Model
         {
             Musics.Remove(music);
         }
+
+        public void RemoveMusic(int index)
+        {
+            Musics.RemoveAt(index);
+        }
     }
 }
  
