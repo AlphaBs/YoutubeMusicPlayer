@@ -217,15 +217,28 @@ namespace YMP.View.Pages
             if (ctrl == null)
                 return;
 
-            var pagetoken = "";
-            var musics = new List<Music>();
-            do
+            Searching = true;
+            stkList.IsEnabled = false;
+
+            var th = new Thread(() =>
             {
-                musics.AddRange(YMPCore.Youtube.PlaylistItem(ctrl.Playlist, ref pagetoken));
+                var pagetoken = "";
+                var musics = new List<Music>();
+                do
+                {
+                    musics.AddRange(YMPCore.Youtube.PlaylistItem(ctrl.Playlist, ref pagetoken));
 
-            } while (!string.IsNullOrEmpty(pagetoken));
+                } while (!string.IsNullOrEmpty(pagetoken));
 
-            YMPCore.PlayList.AddPlayList(new PlayList(ctrl.Playlist.Title, "youtube", musics.ToArray(), ctrl.Playlist));
+                YMPCore.PlayList.AddPlayList(new PlayList(ctrl.Playlist.Title, "youtube", musics.ToArray(), ctrl.Playlist));
+
+                Dispatcher.Invoke(() =>
+                {
+                    Searching = false;
+                    stkList.IsEnabled = true;
+                });
+            });
+            th.Start();
         }
 
         private void VideoItemClick(object sender, EventArgs e)
