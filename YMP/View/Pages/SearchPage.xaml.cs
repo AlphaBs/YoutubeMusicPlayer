@@ -69,41 +69,75 @@ namespace YMP.View.Pages
 
         void ytSearch(string q, string pagetoken)
         {
-            var r = YMPCore.Youtube.Search(q, ref pagetoken);
-            var videoIds = YMPCore.Youtube.Videos(r.Item1);
-            var playlistIds = YMPCore.Youtube.Playlists(r.Item2);
-
-            Dispatcher.Invoke(() =>
+            // Search one video by video id
+            if (q.Substring(0, 4) == "#id=")
             {
-                Searching = false;
+                var id = q.Substring(4);
+                var video = YMPCore.Youtube.Videos(new string[] { id });
 
-                lbNoResult.Visibility = Visibility.Collapsed;
-                if (pagetoken == "" && videoIds.Length == 0 && playlistIds.Length == 0)
+                Dispatcher.Invoke(() =>
                 {
-                    lbNoResult.Visibility = Visibility.Visible;
-                    return;
-                }
+                    Searching = false;
 
-                for (int i = 0; i < playlistIds.Length; i++)
+                    lbNoResult.Visibility = Visibility.Collapsed;
+                    if (video.Length == 0)
+                        lbNoResult.Visibility = Visibility.Visible;
+
+                    for (int i = 0; i < video.Length; i++)
+                    {
+                        AddVideo(i, video[i]);
+                    }
+                });
+            }
+            // Search videos by query string
+            else
+            {
+                var r = YMPCore.Youtube.Search(q, ref pagetoken);
+                var videoIds = YMPCore.Youtube.Videos(r.Item1);
+                var playlistIds = YMPCore.Youtube.Playlists(r.Item2);
+
+                Dispatcher.Invoke(() =>
                 {
-                    var c = new SearchListItem(i);
-                    c.Playlist = playlistIds[i];
+                    Searching = false;
 
-                    c.ClickEvent += PlayListItemClick;
-                    c.AddEvent += PlayListItemAdd;
-                    stkList.Children.Add(c);
-                }
+                    lbNoResult.Visibility = Visibility.Collapsed;
+                    if (pagetoken == "" && videoIds.Length == 0 && playlistIds.Length == 0)
+                    {
+                        lbNoResult.Visibility = Visibility.Visible;
+                        return;
+                    }
 
-                for (int i = 0; i < videoIds.Length; i++)
-                {
-                    var c = new SearchListItem(i);
-                    c.Music = videoIds[i];
+                    for (int i = 0; i < playlistIds.Length; i++)
+                    {
+                        AddPlayList(i, playlistIds[i]);
+                    }
 
-                    c.ClickEvent += VideoItemClick;
-                    c.AddEvent += VideoItemAdd;
-                    stkList.Children.Add(c);
-                }
-            });
+                    for (int i = 0; i < videoIds.Length; i++)
+                    {
+                        AddVideo(i, videoIds[i]);
+                    }
+                });
+            }
+        }
+
+        private void AddPlayList(int index, PlayListMetadata playlist)
+        {
+            var c = new SearchListItem(index);
+            c.Playlist = playlist;
+
+            c.ClickEvent += PlayListItemClick;
+            c.AddEvent += PlayListItemAdd;
+            stkList.Children.Add(c);
+        }
+
+        private void AddVideo(int index, Music music)
+        {
+            var c = new SearchListItem(index);
+            c.Music = music;
+
+            c.ClickEvent += VideoItemClick;
+            c.AddEvent += VideoItemAdd;
+            stkList.Children.Add(c);
         }
 
         PlayList CurrentShowingPlayList;
