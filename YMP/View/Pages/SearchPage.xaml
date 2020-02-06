@@ -46,23 +46,13 @@
             </Hyperlink>
         </TextBlock>
 
-        <Button
-            x:Name="btnAdd"
-            Style="{StaticResource MaterialDesignFlatButton}"
-            Padding="0"
-            Width="30" Height="30"
-            HorizontalAlignment="Right">
-
-            <materialDesign:PackIcon 
-                Width="25" Height="25"
-                Kind="Add" Foreground="Black"/>
-        </Button>
-
         <ScrollViewer 
+            x:Name="svList"
             Grid.Row="1"
             VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
-            
-            <StackPanel x:Name="stkList" Orientation="Vertical"/>
+
+            <StackPanel x:Name="stkList" Orientation="Vertical">
+            </StackPanel>
         </ScrollViewer>
 
         <ProgressBar
@@ -97,7 +87,6 @@
 
         <materialDesign:DialogHost
             x:Name="addDialogHost"
-            DialogClosing="addDialogHost_DialogClosing"
             Grid.RowSpan="2">
 
             <materialDesign:DialogHost.DialogContent>

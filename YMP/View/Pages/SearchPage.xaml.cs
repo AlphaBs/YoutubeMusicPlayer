@@ -29,6 +29,7 @@ namespace YMP.View.Pages
         public SearchPage()
         {
             InitializeComponent();
+            CurrentNextPageButton = getNextPageButton();
             this.SizeChanged += delegate
             {
                 stkList.Width = this.ActualWidth - 20;
@@ -47,7 +48,28 @@ namespace YMP.View.Pages
             }
         }
 
-        public void Search(string q)
+        Button CurrentNextPageButton;
+        string CurrentNextPageToken = "";
+        string CurrentQuery = "";
+
+        private Button getNextPageButton()
+        {
+            var btn = new Button();
+            btn.Click += NextBtn_Click;
+            btn.Content = "다음 페이지";
+            btn.Style = (Style)FindResource("MaterialDesignFlatButton");
+            return btn;
+        }
+
+        private void NextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentShowingPlayList == null)
+                Search(CurrentQuery, false);
+            else
+                ShowPlayListItems(CurrentShowingPlayList.Metadata, false);
+        }
+
+        public void Search(string q, bool refresh)
         {
             if (Searching)
                 return;
@@ -58,66 +80,66 @@ namespace YMP.View.Pages
             if (CurrentShowingPlayList != null)
                 btnBack_Click(this, null);
 
-            stkList.Children.Clear();
+            CurrentQuery = q;
+            if (refresh)
+            {
+                CurrentNextPageToken = "";
+                stkList.Children.Clear();
+                svList.ScrollToHome();
+            }
 
             var th = new Thread(() =>
             {
-                ytSearch(q, "");
+                ytSearch(q);
             });
             th.Start();
         }
 
-        void ytSearch(string q, string pagetoken)
+        void ytSearch(string q)
         {
+            Music[] videoIds = new Music[0];
+            PlayListMetadata[] playlistIds = new PlayListMetadata[0];
+
             // Search one video by video id
-            if (q.Substring(0, 4) == "#id=")
+            if (q.Length > 4 && q.Substring(0, 4) == "#id=")
             {
                 var id = q.Substring(4);
-                var video = YMPCore.Youtube.Videos(new string[] { id });
-
-                Dispatcher.Invoke(() =>
-                {
-                    Searching = false;
-
-                    lbNoResult.Visibility = Visibility.Collapsed;
-                    if (video.Length == 0)
-                        lbNoResult.Visibility = Visibility.Visible;
-
-                    for (int i = 0; i < video.Length; i++)
-                    {
-                        AddVideo(i, video[i]);
-                    }
-                });
+                videoIds = YMPCore.Youtube.Videos(new string[] { id });
             }
             // Search videos by query string
             else
             {
-                var r = YMPCore.Youtube.Search(q, ref pagetoken);
-                var videoIds = YMPCore.Youtube.Videos(r.Item1);
-                var playlistIds = YMPCore.Youtube.Playlists(r.Item2);
-
-                Dispatcher.Invoke(() =>
-                {
-                    Searching = false;
-
-                    lbNoResult.Visibility = Visibility.Collapsed;
-                    if (pagetoken == "" && videoIds.Length == 0 && playlistIds.Length == 0)
-                    {
-                        lbNoResult.Visibility = Visibility.Visible;
-                        return;
-                    }
-
-                    for (int i = 0; i < playlistIds.Length; i++)
-                    {
-                        AddPlayList(i, playlistIds[i]);
-                    }
-
-                    for (int i = 0; i < videoIds.Length; i++)
-                    {
-                        AddVideo(i, videoIds[i]);
-                    }
-                });
+                var r = YMPCore.Youtube.Search(q, ref CurrentNextPageToken);
+                videoIds = YMPCore.Youtube.Videos(r.Item1);
+                playlistIds = YMPCore.Youtube.Playlists(r.Item2);
             }
+
+            // UI
+            Dispatcher.Invoke(() =>
+            {
+                Searching = false;
+
+                lbNoResult.Visibility = Visibility.Collapsed;
+                if (string.IsNullOrEmpty(CurrentNextPageToken) && videoIds.Length == 0 && playlistIds.Length == 0)
+                {
+                    lbNoResult.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                for (int i = 0; i < playlistIds.Length; i++)
+                {
+                    AddPlayList(i, playlistIds[i]);
+                }
+
+                for (int i = 0; i < videoIds.Length; i++)
+                {
+                    AddVideo(i, videoIds[i]);
+                }
+
+                stkList.Children.Remove(CurrentNextPageButton);
+                if (!string.IsNullOrEmpty(CurrentNextPageToken))
+                    stkList.Children.Add(CurrentNextPageButton);
+            });
         }
 
         private void AddPlayList(int index, PlayListMetadata playlist)
@@ -147,24 +169,34 @@ namespace YMP.View.Pages
         {
             // playlist
 
-            SearchResultCache = new List<SearchListItem>(stkList.Children.Count);
-            foreach (var item in stkList.Children)
-            {
-                if (item is SearchListItem)
-                    SearchResultCache.Add((SearchListItem)item);
-            }
-
-            var ctr = sender as SearchListItem;
-            if (ctr == null)
+            var ctrl = sender as SearchListItem;
+            if (ctrl == null)
                 return;
 
-            var pagetoken = "";
-            var musics = YMPCore.Youtube.PlaylistItem(ctr.Playlist, ref pagetoken);
-            CurrentShowingPlayList = new PlayList(ctr.Playlist.Title, "youtube", musics, ctr.Playlist);
+            ShowPlayListItems(ctrl.Playlist, true);
+        }
 
-            lbListNameContent.Text = ctr.Playlist.Title;
+        private void ShowPlayListItems(PlayListMetadata playlist, bool refresh)
+        {
+            if (refresh)
+            {
+                SearchResultCache = new List<SearchListItem>(stkList.Children.Count);
+                foreach (var item in stkList.Children)
+                {
+                    if (item is SearchListItem)
+                        SearchResultCache.Add((SearchListItem)item);
+                }
+                CurrentNextPageToken = "";
+                stkList.Children.Clear();
+                svList.ScrollToHome();
+                lbListNameContent.Text = playlist.Title;
+            }
 
-            stkList.Children.Clear();
+            var musics = YMPCore.Youtube.PlaylistItem(playlist, ref CurrentNextPageToken);
+
+            if (refresh)
+                CurrentShowingPlayList = new PlayList(playlist.Title, "youtube", musics, playlist);
+
             for (int i = 0; i < musics.Length; i++)
             {
                 var c = new SearchListItem(i);
@@ -173,6 +205,10 @@ namespace YMP.View.Pages
                 c.ClickEvent += VideoItemClick;
                 stkList.Children.Add(c);
             }
+
+            stkList.Children.Remove(CurrentNextPageButton);
+            if (!string.IsNullOrEmpty(CurrentNextPageToken))
+                stkList.Children.Add(CurrentNextPageButton);
         }
 
         private void PlayListItemAdd(object sender, EventArgs e)
@@ -270,11 +306,6 @@ namespace YMP.View.Pages
                 SearchResultCache.Clear();
                 SearchResultCache = null;
             }
-        }
-
-        private void addDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
-        {
-
         }
     }
 }

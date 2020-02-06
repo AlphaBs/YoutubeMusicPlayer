@@ -27,13 +27,12 @@ namespace YMP.Youtube
         }
 
         public YouTubeService Service { get; private set; }
+        public int MaxResult { get; set; } = 20;
 
         public Tuple<string[], string[]> Search(string query, ref string pagetoken)
         {
-            var count = 10;
-
             var q = Service.Search.List("id");
-            q.MaxResults = count;
+            q.MaxResults = MaxResult;
             q.PageToken = pagetoken;
             q.Q = query;
             q.Type = "video,playlist";
@@ -41,8 +40,8 @@ namespace YMP.Youtube
             var r = q.Execute();
             pagetoken = r.NextPageToken;
 
-            var v = new List<string>(count);
-            var p = new List<string>(count);
+            var v = new List<string>(MaxResult);
+            var p = new List<string>(MaxResult);
 
             foreach (var item in r.Items)
             {
@@ -60,10 +59,10 @@ namespace YMP.Youtube
             if (ids.Length == 0)
                 return new Music[0];
 
-            var list = new List<Music>(10);
+            var list = new List<Music>(ids.Length);
 
             var r = Service.Videos.List("id,snippet,contentDetails,statistics");
-            r.MaxResults = 10;
+            r.MaxResults = ids.Length;
             r.Id = string.Join(",", ids);
 
             var videos = r.Execute();
@@ -89,7 +88,7 @@ namespace YMP.Youtube
             if (ids.Length == 0)
                 return new PlayListMetadata[0];
 
-            var list = new List<PlayListMetadata>(10);
+            var list = new List<PlayListMetadata>(ids.Length);
 
             var l = Service.Playlists.List("id,snippet,contentDetails");
             l.MaxResults = ids.Length;
@@ -116,6 +115,7 @@ namespace YMP.Youtube
             var r = Service.PlaylistItems.List("snippet");
             r.PlaylistId = data.ID;
             r.PageToken = pagetoken;
+            r.MaxResults = MaxResult;
 
             var res = r.Execute();
             pagetoken = res.NextPageToken;

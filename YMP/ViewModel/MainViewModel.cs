@@ -360,7 +360,7 @@ namespace YMP.ViewModel
         public void SearchClick(object o)
         {
             CurrentContent = FrameContent.SearchPage;
-            searchPage.Search(SearchQuery);
+            searchPage.Search(SearchQuery, true);
         }
 
         public void OnSettingClick(object o)
