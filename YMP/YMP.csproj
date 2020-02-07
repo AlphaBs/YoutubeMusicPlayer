@@ -247,6 +247,9 @@
     <Resource Include="Resource\sample_vt.png" />
     <Resource Include="logo.ico" />
     <Resource Include="Resource\icon_folder.png" />
+    <None Include="buildscript.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Web\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
