@@ -84,10 +84,10 @@ echo.
 echo Create Launcher
 echo.
 
-@echo off >> %o%\YoutubeMusicPlayer.bat
-echo YMP Launcher  >> %o%\YoutubeMusicPlayer.bat
-echo Starting YMP...  >> %o%\YoutubeMusicPlayer.bat
-start /D bin bin\YMP.exe >> %o%\YoutubeMusicPlayer.bat
+echo @echo off >> %o%\YoutubeMusicPlayer.bat
+echo echo YMP Launcher  >> %o%\YoutubeMusicPlayer.bat
+echo echo Starting YMP...  >> %o%\YoutubeMusicPlayer.bat
+echo start /D bin bin\YMP.exe >> %o%\YoutubeMusicPlayer.bat
 
 echo.
 echo Done.
