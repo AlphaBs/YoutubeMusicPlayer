@@ -110,10 +110,10 @@ namespace YMP.Youtube
             return list.ToArray();
         }
 
-        public Music[] PlaylistItem(PlayListMetadata data, ref string pagetoken)
+        public Music[] PlaylistItem(string playlistid, ref string pagetoken)
         {
             var r = Service.PlaylistItems.List("snippet");
-            r.PlaylistId = data.ID;
+            r.PlaylistId = playlistid;
             r.PageToken = pagetoken;
             r.MaxResults = MaxResult;
 

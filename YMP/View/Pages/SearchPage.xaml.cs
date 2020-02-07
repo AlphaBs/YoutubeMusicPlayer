@@ -192,14 +192,19 @@ namespace YMP.View.Pages
                 lbListNameContent.Text = playlist.Title;
             }
 
-            var musics = YMPCore.Youtube.PlaylistItem(playlist, ref CurrentNextPageToken);
+            var musics = YMPCore.Youtube.PlaylistItem(playlist.ID, ref CurrentNextPageToken);
 
             if (refresh)
-                CurrentShowingPlayList = new PlayList(playlist.Title, "youtube", musics, playlist);
+            {
+                CurrentShowingPlayList = new PlayList(playlist.Title, "youtube", new Music[0], (int)playlist.Count, playlist);
+                CurrentShowingPlayList.NextLoadFunc = LoadNextMusicInPlaylist;
+            }
 
             for (int i = 0; i < musics.Length; i++)
             {
-                var c = new SearchListItem(i);
+                CurrentShowingPlayList.AddMusic(musics[i]);
+
+                var c = new SearchListItem(CurrentShowingPlayList.LoadedMusicIndex);
                 c.Music = musics[i];
 
                 c.ClickEvent += VideoItemClick;
@@ -209,6 +214,20 @@ namespace YMP.View.Pages
             stkList.Children.Remove(CurrentNextPageButton);
             if (!string.IsNullOrEmpty(CurrentNextPageToken))
                 stkList.Children.Add(CurrentNextPageButton);
+        }
+
+        private void LoadNextMusicInPlaylist(PlayList pl)
+        {
+            if (CurrentShowingPlayList == pl)
+                ShowPlayListItems(pl.Metadata, false);
+            else
+            {
+                var musics = YMPCore.Youtube.PlaylistItem(pl.Metadata.ID, ref CurrentNextPageToken);
+                foreach (var m in musics)
+                {
+                    pl.AddMusic(m);
+                }
+            }
         }
 
         private void PlayListItemAdd(object sender, EventArgs e)
@@ -226,11 +245,12 @@ namespace YMP.View.Pages
                 var musics = new List<Music>();
                 do
                 {
-                    musics.AddRange(YMPCore.Youtube.PlaylistItem(ctrl.Playlist, ref pagetoken));
+                    musics.AddRange(YMPCore.Youtube.PlaylistItem(ctrl.Playlist.ID, ref pagetoken));
 
                 } while (!string.IsNullOrEmpty(pagetoken));
 
-                YMPCore.PlayList.AddPlayList(new PlayList(ctrl.Playlist.Title, "youtube", musics.ToArray(), ctrl.Playlist));
+                var playlistObj = new PlayList(ctrl.Playlist.Title, "youtube", musics.ToArray(), (int)ctrl.Playlist.Count, ctrl.Playlist);
+                YMPCore.PlayList.AddPlayList(playlistObj);
 
                 Dispatcher.Invoke(() =>
                 {
@@ -304,8 +324,6 @@ namespace YMP.View.Pages
                 BackEvent?.Invoke(this, new EventArgs());
             else
             {
-                if (CurrentShowingPlayList == YMPCore.PlayList.CurrentPlayList)
-                    YMPCore.PlayList.CurrentPlayList = null;
                 CurrentShowingPlayList = null;
 
                 stkList.Children.Clear();

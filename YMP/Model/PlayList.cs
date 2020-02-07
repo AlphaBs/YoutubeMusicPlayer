@@ -9,10 +9,11 @@ namespace YMP.Model
 {
     public class PlayList
     {
-        public PlayList(string name, string type, Music[] musics, PlayListMetadata md)
+        public PlayList(string name, string type, Music[] musics, int count, PlayListMetadata md)
         {
             this.Name = name;
-            this.Musics = new List<Music>(musics.Length);
+            this.Musics = new List<Music>(count);
+            Lenght = count;
 
             foreach (var item in musics)
             {
@@ -33,13 +34,23 @@ namespace YMP.Model
         private List<Music> Musics { get; set; }
 
         [JsonIgnore]
-        public int Lenght { get => Musics.Count; }
+        public int Lenght { get; private set; }
+        [JsonIgnore]
+        public int LoadedMusicIndex { get => Musics.Count - 1; }
+        [JsonIgnore]
+        public Action<PlayList> NextLoadFunc { get; set; }
         [JsonIgnore]
         public int CurrentMusicIndex { get; private set; } = 0;
 
         public Music GetMusic(int index)
         {
             CurrentMusicIndex = index;
+            while (index > LoadedMusicIndex)
+            {
+                if (!LoadNextMusics())
+                    return null;
+            }
+
             return Musics[index];
         }
 
@@ -57,20 +68,16 @@ namespace YMP.Model
         {
             if (CurrentMusicIndex >= Lenght - 1)
                 CurrentMusicIndex = 0;
-            else
-                CurrentMusicIndex++;
 
-            return Musics[CurrentMusicIndex];
+            return GetMusic(CurrentMusicIndex + 1);
         }
 
         public Music GetPreviousMusic()
         {
             if (CurrentMusicIndex <= 0)
                 CurrentMusicIndex = Lenght - 1;
-            else
-                CurrentMusicIndex--;
 
-            return Musics[CurrentMusicIndex];
+            return GetMusic(CurrentMusicIndex - 1);
         }
 
         public void AddMusic(Music music)
@@ -78,16 +85,34 @@ namespace YMP.Model
             if (music.AddDate == null)
                 music.AddDate = DateTime.Now;
             Musics.Add(music);
+
+            if (LoadedMusicIndex >= Lenght)
+                Lenght++;
         }
 
         public void RemoveMusic(Music music)
         {
             Musics.Remove(music);
+
+            if (LoadedMusicIndex <= Lenght)
+                Lenght--;
         }
 
         public void RemoveMusic(int index)
         {
             Musics.RemoveAt(index);
+
+            if (LoadedMusicIndex <= Lenght)
+                Lenght--;
+        }
+
+        private bool LoadNextMusics()
+        {
+            if (NextLoadFunc == null)
+                return false;
+
+            NextLoadFunc(this);
+            return true;
         }
     }
 }

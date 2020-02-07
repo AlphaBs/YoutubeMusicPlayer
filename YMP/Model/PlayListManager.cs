@@ -62,7 +62,7 @@ namespace YMP.Model
 
         public PlayList CreateNewPlaylist(string name)
         {
-            var obj = new PlayList(name, "", new Music[0], new PlayListMetadata());
+            var obj = new PlayList(name, "", new Music[0], 0, new PlayListMetadata());
             PlayLists.Add(obj);
             return obj;
         }
