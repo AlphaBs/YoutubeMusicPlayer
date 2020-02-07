@@ -68,16 +68,20 @@ namespace YMP.Model
         {
             if (CurrentMusicIndex >= Lenght - 1)
                 CurrentMusicIndex = 0;
+            else
+                CurrentMusicIndex++;
 
-            return GetMusic(CurrentMusicIndex + 1);
+            return GetMusic(CurrentMusicIndex);
         }
 
         public Music GetPreviousMusic()
         {
             if (CurrentMusicIndex <= 0)
                 CurrentMusicIndex = Lenght - 1;
+            else
+                CurrentMusicIndex--;
 
-            return GetMusic(CurrentMusicIndex - 1);
+            return GetMusic(CurrentMusicIndex);
         }
 
         public void AddMusic(Music music)
