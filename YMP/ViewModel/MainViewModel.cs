@@ -338,11 +338,11 @@ namespace YMP.ViewModel
 
         private void PlayPauseMusic(object o)
         {
-            var state = YMPCore.Browser.State;
+            var state = YMPCore.Browser.Controller.State;
             if (state == PlayerState.Playing)
-                YMPCore.Browser.Pause();
+                YMPCore.Browser.Controller.Pause();
             else
-                YMPCore.Browser.Play();
+                YMPCore.Browser.Controller.Play();
         }
 
         public void SliderDragStarted(object o)
@@ -352,7 +352,7 @@ namespace YMP.ViewModel
 
         public void SliderDragCompleted(object o)
         {
-            YMPCore.Browser.SeekTo(CurrentTimeInt);
+            YMPCore.Browser.Controller.SeekTo(CurrentTimeInt);
             isTimeUpdated = true;
             isUserSliding = false;
         }
@@ -402,14 +402,14 @@ namespace YMP.ViewModel
             {
                 if (!isUserSliding)
                 {
-                    CurrentTime = YMPCore.Browser.CurrentTime;
-                    Duration = YMPCore.Browser.Duration;
+                    CurrentTime = YMPCore.Browser.Controller.CurrentTimeSpan;
+                    Duration = YMPCore.Browser.Controller.DurationTimeSpan;
                 }
             }
             else
                 isTimeUpdated = false;
 
-            if (YMPCore.Browser.State == PlayerState.Playing)
+            if (YMPCore.Browser.Controller.State == PlayerState.Playing)
                 PlayPauseButtonIconKind = PackIconKind.Pause;
             else
                 PlayPauseButtonIconKind = PackIconKind.PlayArrow;

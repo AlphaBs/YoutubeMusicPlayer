@@ -61,7 +61,7 @@ namespace YMP.View.Pages
             tbNoQuality.Visibility = Visibility.Hidden;
 
             qualityDialogHost.IsOpen = true;
-            var qualities = await YMPCore.Browser.GetAvailableVideoQuality();
+            var qualities = await YMPCore.Browser.Controller.GetAvailableVideoQuality();
 
             pbLoad.Visibility = Visibility.Collapsed;
 
@@ -75,7 +75,7 @@ namespace YMP.View.Pages
                     Tag = item
                 };
 
-                if (YMPCore.Browser.QualityString == item)
+                if (YMPCore.Browser.Controller.Quality == item)
                 {
                     tb.FontWeight = FontWeights.Bold;
                     tb.Foreground = new SolidColorBrush(Color.FromRgb(62, 165, 255));
@@ -99,7 +99,7 @@ namespace YMP.View.Pages
                 return;
 
             var quality = ctrl.Tag.ToString();
-            YMPCore.Browser.SetVideoQuality(quality);
+            YMPCore.Browser.Controller.RequestChangeVideoQuality(quality);
 
             qualityDialogHost.IsOpen = false;
             liQualities.Items.Clear();
@@ -164,7 +164,7 @@ namespace YMP.View.Pages
 
         private void btnOpenBrowser_Click(object sender, RoutedEventArgs e)
         {
-            YMPCore.Browser.OpenInBrowser();
+            YMPCore.Browser.Controller.OpenInBrowser();
         }
 
         #region IDisposable Support
