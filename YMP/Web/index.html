@@ -55,16 +55,16 @@
             (async function() {
                 await CefSharp.BindObjectAsync("youtubeJSBound");
                 player.addEventListener('onReady', async function(event) {
-                    youtubeJSBound.onReady();
+                    youtubeJSBound.onPlayerReady();
                 });
                 player.addEventListener('onStateChange', async function(event) {
-                    youtubeJSBound.onStateChange(event.data);
+                    youtubeJSBound.onPlayerStateChange(event.data);
                 });
                 player.addEventListener('onPlaybackQualityChange', async function(event) {
-                    youtubeJSBound.onPlaybackQualityChange(event.data);
+                    youtubeJSBound.onPlayerPlaybackQualityChange(event.data);
                 });
                 player.addEventListener('onError', async function(event) {
-                    youtubeJSBound.onError(event.data);
+                    youtubeJSBound.onPlayerError(event.data);
                 });
 
                 var duration = 0;
