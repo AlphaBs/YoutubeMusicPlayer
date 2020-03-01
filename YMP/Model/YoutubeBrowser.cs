@@ -53,7 +53,9 @@ namespace YMP.Model
 
         public void PlayMusic(Music m)
         {
+            Console.WriteLine("asdfasdf   :   " + m.Title);
             Controller.LoadVideo(m.YoutubeID);
+            Controller.SetVideoInfo(m.Thumbnail, m.Title, m.Artists);
             Controller.Play();
             CurrentMusic = m;
         }

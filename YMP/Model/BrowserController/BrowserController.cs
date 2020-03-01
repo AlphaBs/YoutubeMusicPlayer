@@ -39,6 +39,7 @@ namespace YMP.Model
         public TimeSpan DurationTimeSpan { get => TimeSpan.FromSeconds(duration); }
         public TimeSpan CurrentTimeSpan { get => TimeSpan.FromSeconds(currentTime); }
 
+        public abstract void SetVideoInfo(string thumb, string title, string subtitle);
         public abstract void LoadVideo(string id);
         public abstract void Play();
         public abstract void Pause();

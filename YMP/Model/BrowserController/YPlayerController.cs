@@ -74,6 +74,17 @@ namespace YMP.Model
             Util.Utils.StartProcess(p);
         }
 
+        string escape(string arg)
+        {
+            return arg.Replace("\"", "\\\"");
+        }
+
+        public override void SetVideoInfo(string thumb, string title, string subtitle)
+        {
+            Console.WriteLine(title);
+            js($"setVideoInfo(\"{escape(thumb)}\", \"{escape(title)}\", \"{escape(subtitle)}\")");
+        }
+
         public override void LoadVideo(string id)
         {
             js($"loadVideoById('{id}')");

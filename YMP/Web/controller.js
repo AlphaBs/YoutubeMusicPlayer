@@ -1,8 +1,5 @@
-var change_time_state = true;
 
-let video;
 let audio;
-let videoTrack;
 let audioTrack;
 
 const playing = 1;
@@ -15,146 +12,111 @@ let onCurrentTimeChange = function () { };
 let onDurationChange = function () { };
 
 function loadElement() {
-    if (!video) {
-        video = document.getElementById("myVideo");
-        videoTrack = document.getElementById("myVideoTrack");
+  if (!audio) {
+    audio = document.getElementById("myAudio");
+    audioTrack = document.getElementById("myAudioTrack");
 
-        video.addEventListener('play', onPlay);
-        video.addEventListener('pause', onPause);
-        video.addEventListener('ended', onEnded);
-        video.addEventListener('timeupdate', onTimeupdate);
-        video.addEventListener('durationchange', onDurationupdate);
-        video.addEventListener('error', onVideoError);
-    }
-
-    if (!audio) {
-        audio = document.getElementById("myAudio");
-        audioTrack = document.getElementById("myAudioTrack");
-
-        audio.addEventListener('error', onAudioError);
-    }
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('ended', onEnded);
+    audio.addEventListener('timeupdate', onTimeupdate);
+    audio.addEventListener('durationchange', onDurationupdate);
+    audio.addEventListener('error', onError);
+  }
 }
 
 function onPlay() {
-    if (change_time_state) {
-        audio.currentTime = video.currentTime;
-        change_time_state = false;
-    }
-    audio.play();
-
-    onStateChange(playing);
+  audio.play();
+  onStateChange(playing);
 }
 
 function onPause() {
-    audio.pause();
-    change_time_state = true;
+  audio.pause();
+  change_time_state = true;
 
-    onStateChange(pause);
+  onStateChange(pause);
 }
 
 function onEnded() {
-    onStateChange(ended);
+  onCurrentTimeChange(0);
+  onDurationChange(0);
+  onStateChange(ended);
 }
 
 var previousTime;
 function onTimeupdate() {
-    if (Math.abs(video.currentTime - audio.currentTime) > 0.2) {
-        audio.currentTime = video.currentTime;
-        audio.play();
-    }
-
-    var currentTime = parseInt(video.currentTime);
-    if (currentTime && previousTime != currentTime) {
-        previousTime = currentTime;
-        onCurrentTimeChange(currentTime);
-    }
+  var currentTime = parseInt(audio.currentTime);
+  if (currentTime && previousTime != currentTime) {
+    previousTime = currentTime;
+    onCurrentTimeChange(currentTime);
+  }
 }
 
 var previousDuration;
 function onDurationupdate() {
-    var currentDuration = parseInt(video.duration);
-    if (currentDuration && previousDuration != currentDuration) {
-        previousDuration = currentDuration;
-        onDurationChange(currentDuration);
-    }
+  var currentDuration = parseInt(audio.duration);
+  if (currentDuration && previousDuration != currentDuration) {
+    previousDuration = currentDuration;
+    onDurationChange(currentDuration);
+  }
 }
 
-function onVideoError() {
-    console.log(video.error);
+function onError() {
+  console.log(audio.error);
 
-    if (currVideoStreams.length > 0 && currVideoStreams.length > currVideoIndex) {
-        currVideoIndex++;
-        loadVideo(currVideoStreams[currVideoIndex]);
-        seekTo(previousTime);
-    }
+  if (currAudioStreams.length > 0 && currAudioStreams.length > currAudioIndex) {
+    currAudioIndex++;
+    loadAudio(currAudioStreams[currAudioIndex]);
+    seekTo(previousTime);
+  }
 }
 
-function onAudioError() {
-    console.log(audio.error);
-
-    if (currAudioStreams.length > 0 && currAudioStreams.length > currAudioIndex) {
-        currAudioIndex++;
-        loadAudio(currAudioStreams[currAudioIndex]);
-        seekTo(previousTime);
-    }
-}
-
-var currVideoIndex = 0;
 var currAudioIndex = 0;
-var currVideoStreams = [];
 var currAudioStreams = [];
 
 async function loadVideoById(id) {
-    stop();
-    var [videoStreams, audioStreams] = await getVideoInfo(id);
+  stop();
+  var [videoStreams, audioStreams] = await getVideoInfo(id);
 
-    currVideoStreams = videoStreams;
-    currAudioStreams = audioStreams;
+  //currVideoStreams = videoStreams;
+  currAudioStreams = audioStreams;
 
-    loadVideo(currVideoStreams[0]);
-    loadAudio(currAudioStreams[0]);
-}
-
-function loadVideo(v) {
-    console.log(v);
-    video.src = v.url;
-    video.type = v.mime;
+  //loadVideo(currVideoStreams[0]);
+  loadAudio(currAudioStreams[0]);
+  playVideo();
 }
 
 function loadAudio(a) {
-    console.log(a);
-    audio.src = a.url;
-    audio.type = a.mime;
+  audio.src = a.url;
+  audio.type = a.mime;
 }
 
 function playVideo() {
-    video.play();
+  audio.play();
 }
 
 function pauseVideo() {
-    video.pause();
+  audio.pause();
 }
 
 function stop() {
-    video.src = "";
-    audio.src = "";
-    currVideoStreams = [];
-    currAudioStreams = [];
-    currAudioIndex = 0;
-    currVideoIndex = 0;
-    previousDuration = 0;
-    previousTime = 0;
+  audio.src = "";
+  currAudioStreams = [];
+  currAudioIndex = 0;
+  previousDuration = 0;
+  previousTime = 0;
+  onCurrentTimeChange(0);
+  onDurationChange(0);
 }
 
 function seekTo(position) {
-    video.currentTime = position;
-    audio.currentTime = position;
+  audio.currentTime = position;
 }
 
 function mute() {
-    audio.muted = true;
+  audio.muted = true;
 }
 
 function unMute() {
-    audio.muted = false;
+  audio.muted = false;
 }

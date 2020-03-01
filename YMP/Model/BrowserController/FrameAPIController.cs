@@ -65,6 +65,11 @@ namespace YMP.Model
             Util.Utils.StartProcess(p);
         }
 
+        public override void SetVideoInfo(string thumb, string title, string subtitle)
+        {
+            
+        }
+
         public override void LoadVideo(string id)
         {
             js($"player.loadVideoById('{id}')");

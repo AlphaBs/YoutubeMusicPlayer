@@ -1,62 +1,246 @@
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+            rel="stylesheet"
+        />
+        <style type="text/css">
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                background-color: #212121;
+            }
 
-    <style type="text/css">
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        background-color: black;
-      }
+            p {
+                color: white;
+            }
 
-      #myVideo {
-        width: 100%;
-        height: 100%;
-      }
+            #myVideo {
+                width: 100%;
+                height: 100%;
+            }
 
-      #myAudio {
-        display: none;
-      }
+            #myAudio {
+                display: none;
+            }
 
-      @media screen and (min-height: 8px) {
-        body {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    </style>
+            .center {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 500px;
+            }
 
-    <script src="controller.js"></script>
-    <script src="yt.js"></script>
-  </head>
-  <body>
-    <video id="myVideo" autoplay>
-      <source id="myVideoTrack" />
-    </video>
+            .right {
+                float: right;
+                font-size: 13;
+                font-family: "Roboto";
+            }
 
-    <audio id="myAudio">
-      <source id="myAudioTrack" />
-    </audio>
+            .left {
+                float: left;
+                font-size: 13;
+                font-family: "Roboto";
+            }
 
-    <script>
-      (async function() {
-        loadElement();
+            .thumb_img {
+                position: relative;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 200px;
+                text-align: center;
+            }
 
-        await CefSharp.BindObjectAsync("controller");
-        onStateChange = function(data) {
-          controller.onPlayerStateChange(data);
-        };
-        onCurrentTimeChange = function(data) {
-          controller.updateCurrentTime(data);
-        };
-        onDurationChange = function(data) {
-          controller.updateDuration(data);
-        };
+            .title_p {
+                position: relative;
+                text-align: center;
+                font-size: 24;
+                font-family: "Roboto";
+                font-weight: 300;
+                color: #cccccc;
 
-        controller.onPlayerLoaded();
-      })();
-    </script>
-  </body>
+                margin-bottom: 0px;
+            }
+
+            .subtitle_p {
+                position: relative;
+                text-align: center;
+                font-size: 15;
+                font-family: "Roboto";
+                font-weight: 300;
+                color: #666666;
+
+                margin-top: 10px;
+                margin-bottom: 30px;
+            }
+
+            .slidercontainer {
+                width: 80%;
+                margin: auto;
+            }
+
+            .progress {
+                display: block;
+                width: 100%;
+                height: 5px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                border-radius: 20px;
+            }
+
+            .progress::-webkit-progress-value {
+                background: #b61616;
+                border-radius: 20px;
+            }
+
+            .progress::-webkit-progress-bar {
+                background: #cccccc;
+                border-radius: 20px;
+            }
+
+            @media screen and (min-height: 8px) {
+                body {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        </style>
+
+        <script>
+            let pThumb;
+            let pTitle;
+            let pSubtitle;
+            let pCurrentTime;
+            let pDuration;
+            let pSeekbar;
+            let pCanvas;
+
+            function setVideoInfo(thumb, title, subtitle) {
+                console.log(thumb);
+
+                if (thumb) pThumb.src = thumb;
+
+                if (title) pTitle.innerHTML = title;
+
+                if (subtitle) pSubtitle.innerHTML = subtitle;
+            }
+
+            function getT(i) {
+                if (i < 10) return "0" + i;
+                else return i;
+            }
+
+            function getTimeStr(s) {
+                var sec = parseInt(s % 60);
+                var min = parseInt(s / 60);
+                var hour = parseInt(min / 60);
+                min = min % 60;
+
+                if (min) {
+                    if (hour) return hour + ":" + getT(min) + ":" + getT(sec);
+                    else return min + ":" + getT(sec);
+                } else return "0:" + getT(sec);
+            }
+
+            function onImageLoaded() {
+                Vibrant.from(pThumb)
+                    .getSwatches()
+                    .then(resolve => {
+                        console.log(resolve);
+                        previousVibrant = resolve;
+                        setColors(resolve);
+                    });
+            }
+
+            let previousVibrant;
+
+            function setColors(v) {
+                pCanvas.width = document.body.clientWidth;
+                pCanvas.height = document.body.clientHeight;
+
+                var ctx = pCanvas.getContext("2d");
+                var m = ctx.createLinearGradient(0, 0, 0, pCanvas.height);
+                m.addColorStop(0, v.LightVibrant.hex);
+                m.addColorStop(1, v.DarkVibrant.hex);
+                ctx.fillStyle = m;
+                ctx.fillRect(0, 0, pCanvas.width, pCanvas.height);
+
+                pTitle.style.color = v.LightVibrant.getTitleTextColor();
+            }
+
+            window.addEventListener("resize", function() {
+                if (previousVibrant) setColors(previousVibrant);
+            });
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                async function loading() {
+                    console.log("onload");
+
+                    loadElement();
+                    pCanvas = document.getElementById("canvas");
+                    pThumb = document.getElementById("thumbnail");
+                    pTitle = document.getElementById("title");
+                    pSubtitle = document.getElementById("subtitle");
+                    pCurrentTime = document.getElementById("currenttime");
+                    pDuration = document.getElementById("duration");
+                    pSeekbar = document.getElementById("seekbar");
+
+                    pThumb.addEventListener("load", onImageLoaded);
+
+                    await CefSharp.BindObjectAsync("controller");
+                    onStateChange = function(data) {
+                        controller.onPlayerStateChange(data);
+                    };
+                    onCurrentTimeChange = function(data) {
+                        controller.updateCurrentTime(data);
+                        pCurrentTime.innerHTML = getTimeStr(data);
+                        pSeekbar.value = data;
+                    };
+                    onDurationChange = function(data) {
+                        controller.updateDuration(data);
+                        pDuration.innerHTML = getTimeStr(data);
+                        pSeekbar.max = data;
+                    };
+
+                    controller.onPlayerLoaded();
+                }
+            );
+        </script>
+
+        <!-- Uglified version -->
+        <script src="vibrant.min.js"></script>
+        <script src="controller.js"></script>
+        <script src="yt.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <div class="center">
+            <img id="thumbnail" class="thumb_img" src="logo.png" />
+            <p id="title" class="title_p">Youtube Music Player</p>
+            <p id="subtitle" class="subtitle_p">YMP 2.0</p>
+
+            <div class="slidercontainer">
+                <div>
+                    <p id="currenttime" class="left">0:00</p>
+                    <p id="duration" class="right">0:00</p>
+                </div>
+
+                <progress
+                    id="seekbar"
+                    class="progress"
+                    value="0"
+                    max="100"
+                ></progress>
+            </div>
+        </div>
+
+        <audio id="myAudio"></audio>
+    </body>
 </html>
