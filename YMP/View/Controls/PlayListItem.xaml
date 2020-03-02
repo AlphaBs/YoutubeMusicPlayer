@@ -20,6 +20,8 @@
     </UserControl.Resources>
     
     <Grid
+        Cursor="Hand"
+        Background="Transparent"
         MouseDown="Grid_MouseDown">
         
         <Grid.ColumnDefinitions>
@@ -33,14 +35,15 @@
             Fill="#E0E0E0"
             Margin="8,0,8,5"
             Height="1"
-            
             Grid.ColumnSpan="4" VerticalAlignment="Top"/>
 
         <Image
             x:Name="imgThumbnail"
             Grid.Column="0"
             Margin="20,5,5,5"
-            Source="/YMP;component/Resource/sample_thumbnail.png"/>
+            Source="/YMP;component/Resource/sample_thumbnail.png"
+            Cursor="Hand"
+            MouseDown="Grid_MouseDown"/>
 
         <Grid
             Grid.Column="1"
