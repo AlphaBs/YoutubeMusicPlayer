@@ -57,6 +57,8 @@ namespace YMP.View.Pages
                 item.Remove += PlayListItem_Remove;
                 stkList.Children.Add(item);
             }
+
+            CurrentPlayList = null;
         }
 
         private void PlayListItem_Click(object sender, EventArgs e)
