@@ -88,6 +88,10 @@
                     <Button x:Name="btnOpenBrowser"
                             Content="브라우저에서 열기"
                             Click="btnOpenBrowser_Click"/>
+
+                    <Button x:Name="btnChangePlayer"
+                            Content="플레이어 변경"
+                            Click="btnChangePlayer_Click"/>
                 </StackPanel>
             </materialDesign:PopupBox>
             

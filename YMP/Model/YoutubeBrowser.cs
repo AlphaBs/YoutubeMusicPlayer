@@ -14,6 +14,7 @@ namespace YMP.Model
     public class YoutubeBrowser
     {
         public ChromiumWebBrowser Browser { get; private set; }
+        public BrowserControllerKind ControllerName { get; private set; }
         public BrowserController Controller { get; private set; }
 
         public bool Repeat { get; set; } = false;
@@ -36,7 +37,6 @@ namespace YMP.Model
 
         public void OnStateChange(object sender, EventArgs e)
         {
-            Console.WriteLine(((BrowserController)sender).State);
             if (Controller.State == PlayerState.Ended)
             {
                 if (Repeat)
@@ -46,14 +46,23 @@ namespace YMP.Model
             }
         }
 
+        int errorCount = 0;
+
         public void OnError(object sender, int data)
         {
             Console.WriteLine("err {0}", data);
+            errorCount++;
+
+            if (errorCount < 2)
+            {
+                SwitchController();
+            }
         }
 
         public void PlayMusic(Music m)
         {
-            Console.WriteLine("asdfasdf   :   " + m.Title);
+            errorCount = 0;
+
             Controller.LoadVideo(m.YoutubeID);
             Controller.SetVideoInfo(m.Thumbnail, m.Title, m.Artists);
             Controller.Play();
@@ -76,6 +85,27 @@ namespace YMP.Model
 
             Controller.StateChange += OnStateChange;
             Controller.Error += OnError;
+            ControllerName = kind;
+        }
+
+        public void SwitchController()
+        {
+            BrowserControllerKind kind;
+
+            switch (ControllerName)
+            {
+                case BrowserControllerKind.FrameAPI:
+                    kind = BrowserControllerKind.YPlayer;
+                    break;
+                case BrowserControllerKind.YPlayer:
+                    kind = BrowserControllerKind.FrameAPI;
+                    break;
+                default:
+                    kind = BrowserControllerKind.FrameAPI;
+                    break;
+            }
+
+            ChangeController(kind);
         }
     }
 }

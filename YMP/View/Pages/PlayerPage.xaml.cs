@@ -138,6 +138,11 @@ namespace YMP.View.Pages
 
         }
 
+        private void btnChangePlayer_Click(object sender, RoutedEventArgs e)
+        {
+            YMPCore.Browser.SwitchController();
+        }
+
         System.Windows.Forms.Form desktopForm;
         private void btnDesktop_Click(object sender, RoutedEventArgs e)
         {
