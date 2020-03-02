@@ -208,6 +208,7 @@ namespace YMP.View.Pages
                 c.Music = musics[i];
 
                 c.ClickEvent += VideoItemClick;
+                c.AddEvent += VideoItemAdd;
                 stkList.Children.Add(c);
             }
 
