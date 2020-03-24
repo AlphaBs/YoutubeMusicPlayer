@@ -43,7 +43,7 @@ namespace YMP.ViewModel
 
             timer = new DispatcherTimer();
 
-            miniWindow = new MiniWindow();
+            miniWindow = new MiniWindow(this);
             miniWindow.ExitProgram += delegate
             {
                 ClosingWindow(null);
@@ -63,6 +63,8 @@ namespace YMP.ViewModel
 
         DispatcherTimer timer;
         TrayIcon tray;
+
+        bool miniShown = false;
 
         FrameContent _frameContent = FrameContent.Blank;
         FrameContent PreviousContent = FrameContent.Blank;
@@ -134,6 +136,8 @@ namespace YMP.ViewModel
                     if (!isUserSliding)
                     {
                         RaiseChanged(nameof(CurrentTimeInt));
+                        CurrentTimeStr = StringFormat.ToDurationString(_currentTime);
+                        RaiseChanged(nameof(CurrentTimeStr));
                         RaiseChanged(nameof(Position));
                     }
                 }
@@ -151,15 +155,21 @@ namespace YMP.ViewModel
                     if (!isUserSliding)
                     {
                         RaiseChanged(nameof(DurationInt));
+                        DurationStr = StringFormat.ToDurationString(_duration);
+                        RaiseChanged(nameof(DurationStr));
                         RaiseChanged(nameof(Position));
                     }
                 }
             }
         }
 
+        public string DurationStr { get; set; }
+
+        public string CurrentTimeStr { get; set; }
+
         public string Position
         {
-            get => $"{StringFormat.ToDurationString(_currentTime)} / {StringFormat.ToDurationString(_duration)}";
+            get => $"{CurrentTimeStr} / {DurationStr}";
         }
 
         public int CurrentTimeInt
@@ -183,6 +193,20 @@ namespace YMP.ViewModel
                 {
                     _thumbnail = value;
                     RaiseChanged(nameof(Thumbnail));
+                }
+            }
+        }
+
+        string _highThumb;
+        public string HighThumb
+        {
+            get => _highThumb;
+            set
+            {
+                if (_highThumb != value)
+                {
+                    _highThumb = value;
+                    RaiseChanged(nameof(HighThumb));
                 }
             }
         }
@@ -396,6 +420,7 @@ namespace YMP.ViewModel
                 Title = YMPCore.Browser.CurrentMusic.Title;
                 Subtitle = YMPCore.Browser.CurrentMusic.Artists;
                 setThumbnail(YMPCore.Browser.CurrentMusic.Thumbnail);
+                HighThumb = YMPCore.Browser.CurrentMusic.HighResThumbnail;
             }
 
             if (!isTimeUpdated)

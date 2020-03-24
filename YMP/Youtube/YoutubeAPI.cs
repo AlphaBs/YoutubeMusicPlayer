@@ -75,7 +75,8 @@ namespace YMP.Youtube
                     Artists = item.Snippet.ChannelTitle,
                     PublishAt = item.Snippet.PublishedAt ?? DateTime.Now,
                     Duration = StringFormat.FromISO8601Str(item.ContentDetails.Duration),
-                    Thumbnail = item.Snippet.Thumbnails.Medium.Url,
+                    Thumbnail = item.Snippet.Thumbnails.Default__.Url,
+                    HighResThumbnail = item.Snippet.Thumbnails.High.Url,
                     Views = item.Statistics.ViewCount ?? 0
                 });
             }

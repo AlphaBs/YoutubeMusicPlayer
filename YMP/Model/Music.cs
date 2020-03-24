@@ -21,6 +21,8 @@ namespace YMP.Model
         [JsonProperty]
         public string Thumbnail { get; set; }
         [JsonProperty]
+        public string HighResThumbnail { get; set; }
+        [JsonProperty]
         public DateTime? AddDate { get; set; }
         [JsonProperty]
         public DateTime PublishAt { get; set; }

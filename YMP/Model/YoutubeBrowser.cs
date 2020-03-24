@@ -64,7 +64,7 @@ namespace YMP.Model
             errorCount = 0;
 
             Controller.LoadVideo(m.YoutubeID);
-            Controller.SetVideoInfo(m.Thumbnail, m.Title, m.Artists);
+            Controller.SetVideoInfo(m.HighResThumbnail, m.Title, m.Artists);
             Controller.Play();
             CurrentMusic = m;
         }
