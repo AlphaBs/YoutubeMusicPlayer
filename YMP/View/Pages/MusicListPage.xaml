@@ -59,7 +59,7 @@
 
         <materialDesign:PopupBox
             x:Name="btnSort"
-            StaysOpen="True"
+            StaysOpen="False"
             HorizontalAlignment="Right"
             PlacementMode="BottomAndAlignRightEdges"
             Margin="0 0 15 0"

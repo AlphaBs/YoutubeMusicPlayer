@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +21,10 @@ namespace YMP.View.Pages
     /// </summary>
     public partial class MiniWindow : Window
     {
-        public MiniWindow()
+        public MiniWindow(object context)
         {
             InitializeComponent();
+            this.DataContext = context;
         }
 
         public event EventHandler ExitProgram;
@@ -35,6 +37,33 @@ namespace YMP.View.Pages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Hide();
+        }
+
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            YMPCore.Stop();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var wid = SystemParameters.WorkArea.Width;
+            var hei = SystemParameters.WorkArea.Height;
+
+            var margin = 30;
+
+            this.Left = wid - margin - this.Width;
+            this.Top = hei - margin - this.Height;
+        }
+
+        private void btnShow_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

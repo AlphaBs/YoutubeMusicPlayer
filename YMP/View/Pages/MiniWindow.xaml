@@ -5,17 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YMP.View.Pages"
         mc:Ignorable="d"
+        Title="MiniWindow"
         WindowStartupLocation="Manual"
-        WindowState="Normal"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Title="MiniWindow" 
-        Width="400" Height="200" Icon="/YMP;component/logo.ico"
-        >
-    
-    <Grid>
-        <Button Content="프로그램 종료" HorizontalAlignment="Left" Margin="42,35,0,0" VerticalAlignment="Top" Width="146" Height="56" Click="Button_Click"/>
-        <Button Content="x" HorizontalAlignment="Left" Margin="292,108,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click_1"/>
+        Width="270" Height="350"
+        Icon="/YMP;component/logo.ico"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="Transparent"
+        AllowsTransparency="True"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Loaded="Window_Loaded">
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Fill="Black" RadiusX="7" RadiusY="7"/>
+
+        <Rectangle RadiusX="7" RadiusY="7" MouseDown="Rectangle_MouseDown">
+            <Rectangle.Fill>
+                <ImageBrush x:Name="imgThumb" ImageSource="{Binding HighThumb}" Stretch="Uniform"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth5"
+            materialDesign:ShadowAssist.ShadowEdges="Top"
+            UniformCornerRadius="7"
+            Margin="0" Grid.Row="1">
+
+            <Rectangle Fill="#FF263238"/>
+        </materialDesign:Card>
+
+        <Button Grid.Row="1"
+                Width="50" Height="50"
+                Padding="0"
+                Margin="0,0,0,10"
+                Style="{StaticResource MaterialDesignIconButton}"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                Command="{Binding PlayPauseCommand}" VerticalAlignment="Bottom">
+            <materialDesign:PackIcon Kind="{Binding PlayPauseButtonIconKind}" Width="30" Height="30" Margin="0" Padding="0" Foreground="White"/>
+        </Button>
+
+        <Label x:Name="lbTitle" Foreground="White" FontSize="16" Content="{Binding Title}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
+        <ProgressBar x:Name="slider" Value="{Binding CurrentTimeInt}" Maximum="{Binding DurationInt}" Grid.Row="1" Margin="20,0,20,35" Background="#FF445062" BorderBrush="#00000000" Height="5" Foreground="#FFD50000"/>
+
+        <Label x:Name="lbCurrent" Foreground="Gray" Padding="0" FontSize="13" Content="{Binding CurrentTimeStr}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,5"/>
+        <Label x:Name="lbDuration" Foreground="Gray" Padding="0" FontSize="13" Content="{Binding DurationStr}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,20,10"/>
+
+        <Button Grid.Row="1"
+                Width="40" Height="40"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}" HorizontalAlignment="Left" Margin="45,0,0,15"
+                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Command="{Binding PrevCommand}" VerticalAlignment="Bottom">
+            <materialDesign:PackIcon Kind="SkipPrevious" Width="20" Height="20" Foreground="White"/>
+        </Button>
+
+        <Button Grid.Row="1"
+                Width="40" Height="40"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}" HorizontalAlignment="Right" Margin="0,0,45,15"
+                materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                Command="{Binding NextCommand}" VerticalAlignment="Bottom">
+            <materialDesign:PackIcon Kind="SkipNext" Width="20" Height="20" Foreground="White"/>
+        </Button>
+
+        <materialDesign:PopupBox
+            x:Name="btnSort"
+            HorizontalAlignment="Right"
+            PlacementMode="BottomAndAlignRightEdges"
+            Grid.Row="0" VerticalAlignment="Top"
+            Foreground="White"
+            Margin="5">
+
+            <StackPanel>
+                <Button
+                    x:Name="btnShow"
+                    Style="{StaticResource MaterialDesignFlatAccentButton}"
+                    Content="창 표시"
+                    Click="btnShow_Click"/>
+
+                <Button
+                    x:Name="btnExit"
+                    Style="{StaticResource MaterialDesignFlatAccentButton}"
+                    Content="프로그램 종료"
+                    Click="btnExit_Click"/>
+            </StackPanel>
+
+        </materialDesign:PopupBox>
     </Grid>
 </Window>
