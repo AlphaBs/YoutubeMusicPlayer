@@ -13,7 +13,8 @@
       TextElement.FontSize="14"
       FontFamily="{materialDesign:MaterialDesignFont}"
       d:DesignHeight="329" d:DesignWidth="792"
-      Title="SettingPage">
+      Title="SettingPage"
+      Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -46,7 +47,21 @@
             </Hyperlink>
         </TextBlock>
 
-        <TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="112,109,0,0" TextWrapping="Wrap" Text="SettingPage" VerticalAlignment="Top"/>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="20,0,20,3">
+                <Label Content="기본 플레이어 (프로그램 재시작 후 적용됩니다)" Margin="10,10,10,0"/>
+                <ComboBox x:Name="cbPlayer" Width="100" Height="30" HorizontalAlignment="Left" Margin="10,0,10,10" SelectionChanged="cbPlayer_SelectionChanged">
+                </ComboBox>
 
+                <CheckBox x:Name="cbAutoSwitch" Content="재생 오류시 자동으로 플레이어 바꾸기" Margin="10" Checked="cbAutoSwitch_Checked" Unchecked="cbAutoSwitch_Unchecked"/>
+
+                <Button x:Name="btnLicense" Content="라이센스 정보 보기" HorizontalAlignment="Left" Margin="10" Click="btnLicense_Click"/>
+
+                <Button x:Name="btnGithub" Content="프로젝트 사이트로" HorizontalAlignment="Left" Margin="10" Click="btnGithub_Click"/>
+
+                <Label x:Name="lbVersion" Margin="10,10,10,0"/>
+                <Label Content="by. ksi123456ab (ksi123456ab@naver.com)" Margin="10,0"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -127,6 +127,7 @@
     <Compile Include="Model\BrowserController\BrowserController.cs" />
     <Compile Include="Model\BrowserController\FrameAPIController.cs" />
     <Compile Include="Model\PlayListMetadata.cs" />
+    <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\YoutubeBrowser.cs" />
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\PlayList.cs" />

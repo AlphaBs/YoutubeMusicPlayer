@@ -9,16 +9,21 @@ namespace YMP
 {
     public class YMPInfo
     {
-        static string p(string path, bool isdir=false)
+        static string initFile(string path)
         {
             var fullpath = Path.Combine(Environment.CurrentDirectory, path);
 
-            var dirname = "";
-            if (isdir)
-                dirname = fullpath;
-            else
-                dirname = Path.GetDirectoryName(fullpath);
+            var dirname = Path.GetDirectoryName(fullpath);
 
+            Directory.CreateDirectory(dirname);
+            return fullpath;
+        }
+
+        static string initDirc(string path)
+        {
+            var fullpath = Path.Combine(Environment.CurrentDirectory, path);
+
+            var dirname = fullpath;
             Directory.CreateDirectory(dirname);
             return fullpath;
         }
@@ -27,13 +32,14 @@ namespace YMP
             ProgramName     = "YoutubeMusicPlayer",
             Version         = "2.0-b1",
 
-            WebFrontendPath = p("Web\\index.html"),
-            PlaylistPath    = p("playlist", isdir: true),
-            LicensePath     = p("LICENSE.txt"),
-            SettingPath     = p("setting.json"),
-            CachePath       = p("ytcache", isdir: true),
+            WebFrontendPath = initFile("Web\\index.html"),
+            PlaylistPath    = initDirc("playlist"),
+            LicensePath     = initFile("LICENSE.txt"),
+            SettingPath     = initFile("setting.json"),
+            CachePath       = initDirc("ytcache"),
             
-            VC2015Url       = "https://www.microsoft.com/ko-kr/download/confirmation.aspx?id=48145"
+            VC2015Url       = "https://www.microsoft.com/ko-kr/download/confirmation.aspx?id=48145",
+            ProjectUrl      = "https://github.com/AlphaBs/YoutubeMusicPlayer"
             ;
     }
 }

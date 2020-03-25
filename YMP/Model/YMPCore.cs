@@ -18,23 +18,32 @@ namespace YMP.Model
             if (Running)
                 throw new InvalidOperationException("already initialized");
 
+            // init CEF
             var settings = new CefSettings();
             settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
             Cef.Initialize(settings);
 
+            // init Setting file
+            Setting = Setting.LoadSetting(YMPInfo.SettingPath);
+
+            // init Youtube Data v3 API
             Youtube = new YoutubeAPI();
 
+            // load PlayLists
             PlayList = new PlayListManager();
             PlayList.LoadAllPlayLists();
 
+            // load CEF Browser
             Browser = new YoutubeBrowser();
 
+            // Show MainWindow
             Running = true;
             new MainWindow().Show();
         }
 
         public static bool Running = false;
 
+        public static Setting Setting { get; private set; }
         public static YoutubeAPI Youtube { get; private set; }
         public static PlayListManager PlayList { get; private set; }
         public static YoutubeBrowser Browser { get; private set; }
@@ -43,6 +52,7 @@ namespace YMP.Model
         {
             Running = false;
             PlayList.SaveAllPlayLists();
+            Setting.SaveSetting();
 
             Cef.Shutdown();
             Environment.Exit(0);

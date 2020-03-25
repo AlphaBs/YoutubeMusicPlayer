@@ -20,7 +20,7 @@ namespace YMP.Model
         public bool Repeat { get; set; } = false;
         public Music CurrentMusic { get; private set; }
 
-        public ChromiumWebBrowser InitializeChromiumBrowser()
+        public ChromiumWebBrowser InitializeChromiumBrowser(BrowserControllerKind browser)
         {
             this.Browser = new ChromiumWebBrowser("about:blank");
 
@@ -30,7 +30,7 @@ namespace YMP.Model
                 UniversalAccessFromFileUrls = CefState.Enabled
             };
 
-            ChangeController(BrowserControllerKind.YPlayer);
+            ChangeController(browser);
             Console.WriteLine(Browser.Handle);
             return Browser;
         }
