@@ -249,9 +249,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Web\logo.png">
+    <Content Include="Web\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="Web\synccontroller.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
