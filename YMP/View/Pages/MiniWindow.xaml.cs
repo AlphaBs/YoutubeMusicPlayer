@@ -27,27 +27,10 @@ namespace YMP.View.Pages
             this.DataContext = context;
         }
 
-        public event EventHandler ExitProgram;
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ExitProgram?.Invoke(this, new EventArgs());
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-        }
-
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            YMPCore.Stop();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -61,9 +44,15 @@ namespace YMP.View.Pages
             this.Top = hei - margin - this.Height;
         }
 
-        private void btnShow_Click(object sender, RoutedEventArgs e)
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
+            YMPCore.Main.Show();
+        }
 
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
         }
     }
 }

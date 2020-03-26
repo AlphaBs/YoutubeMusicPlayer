@@ -44,10 +44,6 @@ namespace YMP.ViewModel
             timer = new DispatcherTimer();
 
             miniWindow = new MiniWindow(this);
-            miniWindow.ExitProgram += delegate
-            {
-                ClosingWindow(null);
-            };
 
             tray = new TrayIcon(miniWindow);
         }
@@ -193,20 +189,6 @@ namespace YMP.ViewModel
                 {
                     _thumbnail = value;
                     RaiseChanged(nameof(Thumbnail));
-                }
-            }
-        }
-
-        string _highThumb;
-        public string HighThumb
-        {
-            get => _highThumb;
-            set
-            {
-                if (_highThumb != value)
-                {
-                    _highThumb = value;
-                    RaiseChanged(nameof(HighThumb));
                 }
             }
         }
@@ -410,6 +392,7 @@ namespace YMP.ViewModel
             playerPage.Dispose();
             tray.Close();
             miniWindow.Close();
+
             YMPCore.Stop();
         }
 
@@ -420,7 +403,6 @@ namespace YMP.ViewModel
                 Title = YMPCore.Browser.CurrentMusic.Title;
                 Subtitle = YMPCore.Browser.CurrentMusic.Artists;
                 setThumbnail(YMPCore.Browser.CurrentMusic.Thumbnail);
-                HighThumb = YMPCore.Browser.CurrentMusic.HighResThumbnail;
             }
 
             if (!isTimeUpdated)

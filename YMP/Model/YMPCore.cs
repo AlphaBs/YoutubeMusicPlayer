@@ -38,10 +38,13 @@ namespace YMP.Model
 
             // Show MainWindow
             Running = true;
-            new MainWindow().Show();
+            Main = new MainWindow();
+            Main.Show();
         }
 
         public static bool Running = false;
+
+        public static MainWindow Main { get; private set; }
 
         public static Setting Setting { get; private set; }
         public static YoutubeAPI Youtube { get; private set; }
