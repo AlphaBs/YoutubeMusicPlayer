@@ -13,18 +13,17 @@ namespace YMP.Model
     {
         private static ILog log = LogManager.GetLogger("YPlayerController");
 
-        public YPlayerController(ChromiumWebBrowser browser)
+        Music initMusic;
+
+        public YPlayerController(ChromiumWebBrowser browser, Music music)
         {
             base.Browser = browser;
 
             Browser.JavascriptObjectRepository.UnRegisterAll();
-            Browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
-            {
-                var repo = e.ObjectRepository;
-                if (e.ObjectName == "controller")
-                    repo.Register("controller", this, isAsync: true);
-            };
+            Browser.JavascriptObjectRepository.Register("controller", this, isAsync: true);
             browser.LoadingStateChanged += Browser_LoadingStateChanged;
+
+            initMusic = music;
 
             Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "yplayer.html"));
             log.Info("Browser Loaded");
@@ -38,7 +37,9 @@ namespace YMP.Model
 
         public void onPlayerLoaded()
         {
+            Console.WriteLine($"YP init('{initMusic.YoutubeID}')");
             OnLoaded();
+            js($"init('{initMusic.YoutubeID}')");
         }
 
         public void OnPlayerReady()

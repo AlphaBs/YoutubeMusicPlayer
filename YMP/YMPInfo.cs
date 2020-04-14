@@ -28,6 +28,9 @@ namespace YMP
             return fullpath;
         }
 
+        // This is nothing really woa f
+        public static bool MBungMode = false;
+
         public readonly static string
             ProgramName     = "YoutubeMusicPlayer",
             Version         = "2.0-b1",

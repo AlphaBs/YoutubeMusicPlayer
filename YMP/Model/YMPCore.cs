@@ -75,5 +75,20 @@ namespace YMP.Model
             log.Info("Bye");
             Environment.Exit(0);
         }
+
+        // IZ*ONE FIESTA IS LEGEND
+        // https://www.youtube.com/watch?v=eDEFolvLn0A
+
+        public static Music GetLegendSong()
+        {
+            return new Music()
+            {
+                Title = "IZ*ONE (아이즈원) - 'FIESTA' MV",
+                YoutubeID = "eDEFolvLn0A",
+                Artists = "IZ*ONE",
+                Thumbnail = "https://i.ytimg.com/vi/eDEFolvLn0A/default.jpg",
+                HighResThumbnail = "https://i.ytimg.com/vi/eDEFolvLn0A/hqdefault.jpg"
+            };
+        }
     }
 }

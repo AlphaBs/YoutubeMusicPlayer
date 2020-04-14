@@ -12,25 +12,25 @@ namespace YMP.Model
     {
         private static ILog log = LogManager.GetLogger("FrameAPIController");
 
-        public FrameAPIController(ChromiumWebBrowser browser)
+        Music initMusic;
+
+        public FrameAPIController(ChromiumWebBrowser browser, Music music)
         {
             base.Browser = browser;
-
+            
             Browser.JavascriptObjectRepository.UnRegisterAll();
-            Browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
-            {
-                var repo = e.ObjectRepository;
-                if (e.ObjectName == "youtubeJSBound")
-                    repo.Register("youtubeJSBound", this, isAsync: true);
-            };
+            Browser.JavascriptObjectRepository.Register("youtubeJSBound", this, isAsync: true);
 
+            initMusic = music;
             Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
             log.Info("Browser Loaded");
         }
 
         public void onPlayerLoaded()
         {
+            Console.WriteLine($"FAPI init('{initMusic.YoutubeID}')");
             OnLoaded();
+            js($"init('{initMusic.YoutubeID}')");
         }
 
         public void OnPlayerReady()

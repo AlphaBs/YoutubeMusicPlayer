@@ -122,8 +122,6 @@
             let pCanvas;
 
             function setVideoInfo(thumb, title, subtitle) {
-                console.log(thumb);
-
                 if (thumb) pThumb.src = thumb;
 
                 if (title) pTitle.innerHTML = title;
@@ -151,8 +149,7 @@
             function onImageLoaded() {
                 Vibrant.from(pThumb)
                     .getSwatches()
-                    .then(resolve => {
-                        console.log(resolve);
+                    .then((resolve) => {
                         previousVibrant = resolve;
                         setColors(resolve);
                     });
@@ -174,47 +171,50 @@
                 pTitle.style.color = v.LightVibrant.getTitleTextColor();
             }
 
-            window.addEventListener("resize", function() {
+            window.addEventListener("resize", function () {
                 if (previousVibrant) setColors(previousVibrant);
             });
 
-            document.addEventListener(
-                "DOMContentLoaded",
-                async function loading() {
-                    console.log("onload");
+            function init(id) {
+                loadElement();
+                pCanvas = document.getElementById("canvas");
+                pThumb = document.getElementById("thumbnail");
+                pTitle = document.getElementById("title");
+                pSubtitle = document.getElementById("subtitle");
+                pCurrentTime = document.getElementById("currenttime");
+                pDuration = document.getElementById("duration");
+                pSeekbar = document.getElementById("seekbar");
 
-                    loadElement();
-                    pCanvas = document.getElementById("canvas");
-                    pThumb = document.getElementById("thumbnail");
-                    pTitle = document.getElementById("title");
-                    pSubtitle = document.getElementById("subtitle");
-                    pCurrentTime = document.getElementById("currenttime");
-                    pDuration = document.getElementById("duration");
-                    pSeekbar = document.getElementById("seekbar");
+                pThumb.addEventListener("load", onImageLoaded);
 
-                    pThumb.addEventListener("load", onImageLoaded);
+                onStateChange = function (data) {
+                    controller.onPlayerStateChange(data);
+                };
+                onCurrentTimeChange = function (data) {
+                    controller.updateCurrentTime(data);
+                    pCurrentTime.innerHTML = getTimeStr(data);
+                    pSeekbar.value = data;
+                };
+                onDurationChange = function (data) {
+                    controller.updateDuration(data);
+                    pDuration.innerHTML = getTimeStr(data);
+                    pSeekbar.max = data;
+                };
 
-                    await CefSharp.BindObjectAsync("controller");
-                    onStateChange = function(data) {
-                        controller.onPlayerStateChange(data);
-                    };
-                    onCurrentTimeChange = function(data) {
-                        controller.updateCurrentTime(data);
-                        pCurrentTime.innerHTML = getTimeStr(data);
-                        pSeekbar.value = data;
-                    };
-                    onDurationChange = function(data) {
-                        controller.updateDuration(data);
-                        pDuration.innerHTML = getTimeStr(data);
-                        pSeekbar.max = data;
-                    };
-
-                    controller.onPlayerLoaded();
+                if (id) {
+                    loadVideoById(id);
+                    playVideo();
                 }
-            );
+            }
+
+            document.addEventListener("DOMContentLoaded", async () => {
+                await CefSharp.RemoveObjectFromCache("contoller");
+                await CefSharp.DeleteBoundObject("controller");
+                await CefSharp.BindObjectAsync("controller");
+                controller.onPlayerLoaded();
+            });
         </script>
 
-        <!-- Uglified version -->
         <script src="Vibrant.min.js"></script>
         <script src="controller.js"></script>
         <script src="yt.js"></script>

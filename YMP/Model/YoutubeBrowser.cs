@@ -23,6 +23,23 @@ namespace YMP.Model
         public bool Repeat { get; set; } = false;
         public Music CurrentMusic { get; private set; }
 
+        private Music getDefaultMusic()
+        {
+            var m = new Music()
+            {
+                Title = "Youtube Music Player",
+                Artists = "ksi123456ab",
+                YoutubeID = "xUV9pnioyt4",
+                Thumbnail = "https://i.ytimg.com/vi/xUV9pnioyt4/hqdefault.jpg"
+            };
+
+            if (YMPInfo.MBungMode)
+                m = YMPCore.GetLegendSong();
+
+            CurrentMusic = m;
+            return m;
+        }
+
         public ChromiumWebBrowser InitializeChromiumBrowser(BrowserControllerKind browser)
         {
             this.Browser = new ChromiumWebBrowser("about:blank");
@@ -33,7 +50,8 @@ namespace YMP.Model
                 UniversalAccessFromFileUrls = CefState.Enabled
             };
 
-            ChangeController(browser);
+            var music = getDefaultMusic();
+            ChangeController(browser, music);
             log.Info("ChromiumWebBrowser created : " + Browser.Handle);
             return Browser;
         }
@@ -76,17 +94,17 @@ namespace YMP.Model
             CurrentMusic = m;
         }
 
-        public void ChangeController(BrowserControllerKind kind)
+        public void ChangeController(BrowserControllerKind kind, Music music)
         {
             log.Info("Changing Controller :" + kind.ToString());
 
             switch (kind)
             {
                 case BrowserControllerKind.FrameAPI:
-                    Controller = new FrameAPIController(Browser);
+                    Controller = new FrameAPIController(Browser, music);
                     break;
                 case BrowserControllerKind.YPlayer:
-                    Controller = new YPlayerController(Browser);
+                    Controller = new YPlayerController(Browser, music);
                     break;
                 default:
                     break;
@@ -114,7 +132,7 @@ namespace YMP.Model
                     break;
             }
 
-            ChangeController(kind);
+            ChangeController(kind, CurrentMusic);
         }
     }
 }
