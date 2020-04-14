@@ -59,7 +59,7 @@
             .title_p {
                 position: relative;
                 text-align: center;
-                font-size: 24;
+                font-size: 26;
                 font-family: "Roboto";
                 font-weight: 300;
                 color: #cccccc;
@@ -165,11 +165,12 @@
                 var ctx = pCanvas.getContext("2d");
                 var m = ctx.createLinearGradient(0, 0, 0, pCanvas.height);
                 m.addColorStop(0, v.LightVibrant.hex);
-                m.addColorStop(1, v.DarkVibrant.hex);
+                m.addColorStop(1, v.LightMuted.hex);
                 ctx.fillStyle = m;
                 ctx.fillRect(0, 0, pCanvas.width, pCanvas.height);
 
                 pTitle.style.color = v.LightVibrant.getTitleTextColor();
+                pSubtitle.style.color = v.LightVibrant.getTitleTextColor();
             }
 
             window.addEventListener("resize", function () {
