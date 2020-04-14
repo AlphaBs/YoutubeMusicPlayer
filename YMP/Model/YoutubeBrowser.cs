@@ -58,7 +58,7 @@ namespace YMP.Model
             errorCount++;
             log.Info("Browser OnError : " + data + ", errorCount : " + errorCount);
 
-            if (errorCount < 2)
+            if (YMPCore.Setting.AutoSwitchPlayer && errorCount < 2)
             {
                 SwitchController();
             }
