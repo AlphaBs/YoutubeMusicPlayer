@@ -39,6 +39,7 @@ namespace YMP.Model
         {
             OnLoaded();
             js($"init('{initMusic.YoutubeID}')");
+            SetVideoInfo(initMusic.HighResThumbnail, initMusic.Title, initMusic.Artists);
         }
 
         public void OnPlayerReady()
@@ -79,6 +80,9 @@ namespace YMP.Model
 
         string escape(string arg)
         {
+            if (arg == null)
+                return "";
+
             return arg.Replace("\"", "\\\"");
         }
 
