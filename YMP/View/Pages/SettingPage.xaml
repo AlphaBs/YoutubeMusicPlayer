@@ -55,6 +55,8 @@
 
                 <CheckBox x:Name="cbAutoSwitch" Content="재생 오류시 자동으로 플레이어 바꾸기" Margin="10" Checked="cbAutoSwitch_Checked" Unchecked="cbAutoSwitch_Unchecked"/>
 
+                <Button x:Name="btnCache" Content="캐시 삭제" HorizontalAlignment="Left" Margin="10" Click="btnCache_Click"/>
+
                 <Button x:Name="btnLicense" Content="라이센스 정보 보기" HorizontalAlignment="Left" Margin="10" Click="btnLicense_Click"/>
 
                 <Button x:Name="btnGithub" Content="프로젝트 사이트로" HorizontalAlignment="Left" Margin="10" Click="btnGithub_Click"/>

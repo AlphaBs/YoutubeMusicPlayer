@@ -44,5 +44,41 @@ namespace YMP.Util
 
             return Path.Combine(CachePath, filename);
         }
+
+        public static long GetCacheSize()
+        {
+            var dir = new DirectoryInfo(CachePath);
+
+            if (!dir.Exists)
+                return 0;
+
+            long sum = 0;
+            foreach (var item in dir.GetFiles())
+            {
+                sum += item.Length;
+            }
+
+            return sum;
+        }
+
+        public static void ClearCache()
+        {
+            var dir = new DirectoryInfo(CachePath);
+
+            if (!dir.Exists)
+                return;
+
+            foreach (var item in dir.GetFiles())
+            {
+                try
+                {
+                    item.Delete();
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+        }
     }
 }
