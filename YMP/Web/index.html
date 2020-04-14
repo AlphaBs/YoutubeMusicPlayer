@@ -31,7 +31,6 @@
         <script>
             var player;
             var initId;
-            console.log("hi");
 
             function loadScript() {
                 var s = document.createElement("script");
@@ -43,18 +42,15 @@
             }
 
             function init(id) {
-                console.log(id);
                 initId = id;
                 loadScript();
             }
 
             function onYouTubeIframeAPIReady() {
-                console.log("sibal");
                 loadPlayer();
             }
 
             function loadPlayer() {
-                console.log("loadplayer");
                 player = new YT.Player("player", {
                     height: document.getElementById("player").clientHeight,
                     width: document.getElementById("player").clientWidth,
@@ -115,14 +111,10 @@
             }
 
             document.addEventListener("DOMContentLoaded", async () => {
-                console.log("0");
                 await CefSharp.RemoveObjectFromCache("youtubeJSBound");
                 await CefSharp.DeleteBoundObject("youtubeJSBound");
-                console.log("a");
                 await CefSharp.BindObjectAsync("youtubeJSBound");
-                console.log("b");
                 youtubeJSBound.onPlayerLoaded();
-                console.log("c");
             });
         </script>
     </body>
