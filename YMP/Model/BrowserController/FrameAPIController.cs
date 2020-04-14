@@ -28,7 +28,6 @@ namespace YMP.Model
 
         public void onPlayerLoaded()
         {
-            Console.WriteLine($"FAPI init('{initMusic.YoutubeID}')");
             OnLoaded();
             js($"init('{initMusic.YoutubeID}')");
         }

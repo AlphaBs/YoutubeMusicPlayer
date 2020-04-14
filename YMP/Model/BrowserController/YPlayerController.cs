@@ -37,7 +37,6 @@ namespace YMP.Model
 
         public void onPlayerLoaded()
         {
-            Console.WriteLine($"YP init('{initMusic.YoutubeID}')");
             OnLoaded();
             js($"init('{initMusic.YoutubeID}')");
         }
