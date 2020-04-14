@@ -18,7 +18,7 @@ cef.redist.x86, CefSharp.Common, CefSharp.WinForms
 
 ## Build
 1. Install all dependencies. Restore nuget packages. but you have to remove and install CEFSharp nuget packages manually.
-2. Open project and open YMP/Youtube/YoutubeAPI.cs file, and input your [Youtube Data API Key](https://developers.google.com/youtube/v3) to `Key` field.
+2. Open project and open YMP/Youtube/YoutubeAPI.cs file, and input your [Youtube Data API Key](https://developers.google.com/youtube/v3) into `Key` field.
 2. Build Release/x86  
 3. Run YNP/bin/x86/Release/buildscript.bat  
 4. /bin/x86/Release/YMP_redist  
