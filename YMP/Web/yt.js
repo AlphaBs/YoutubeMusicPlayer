@@ -1,4 +1,4 @@
-var patDecrypationJsFile = /jsbin\\\/(player(_ias)?-(.+?).js)/;
+var patDecrypationJsFile = /\/s\/player\/([a-zA-Z0-9]+)\/player_ias([a-zA-Z0-9_./]+)\.js/
 var pathSignatureDecFunction = /\b([\w$]{2})\s*=\s*function\((\w+)\)\{\s*\2=\s*\2\.split\(\"\"\)\s*;/;
 
 let nodeHttpReq = async function (url) {
@@ -65,7 +65,6 @@ async function getVideoInfo(id) {
     var value = getValueFromQuery(response, "player_response");
     var jobj = decodeURIComponent(value).replace('\\u0026', '&');
     var videoInfo = JSON.parse(jobj);
-    console.log(videoInfo);
     return await parseVideoStreams(id, videoInfo);
 }
 
@@ -178,12 +177,10 @@ async function decipher(id, encs) {
     var response = await httpReq(url);
     var matchs = patDecrypationJsFile.exec(response);
 
-    var jsName = matchs[0].replace(/\\\//gi, "/");
-    if (matchs.length > 1) {
-        jsName.replace(matchs[1], "");
-    }
-
-    var jsUrl = "https://s.ytimg.com/yts/" + jsName;
+    console.log(matchs);
+    var jsPath = matchs[0];
+    var jsUrl = "https://youtube.com" + jsPath;
+    console.log(jsUrl);
 
     if (currDecipherJsUrl != jsUrl) {
         currDecipherJsUrl = jsUrl;
