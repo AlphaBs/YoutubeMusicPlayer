@@ -7,11 +7,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using log4net;
 
 namespace YMP.Util
 {
     public static class WebImage
     {
+        private static ILog log = LogManager.GetLogger("WebImage");
+
         public static readonly string CachePath = YMPInfo.CachePath;
 
         public static async Task<BitmapImage> GetImage(string url)
@@ -21,6 +24,8 @@ namespace YMP.Util
                 var cacheFile = GetCachePath(url);
                 if (!File.Exists(cacheFile))
                 {
+                    log.Info("Download Cache : " + url);
+
                     using (var wc = new WebClient())
                     {
                         await wc.DownloadFileTaskAsync(url, cacheFile);
@@ -31,7 +36,8 @@ namespace YMP.Util
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Info("GetImage Exception");
+                log.Info(ex);
                 return new BitmapImage();
             }
         }
@@ -47,6 +53,8 @@ namespace YMP.Util
 
         public static long GetCacheSize()
         {
+            log.Info("GetCacheSize");
+
             var dir = new DirectoryInfo(CachePath);
 
             if (!dir.Exists)
@@ -58,11 +66,14 @@ namespace YMP.Util
                 sum += item.Length;
             }
 
+            log.Info("Cache Size : " + sum);
             return sum;
         }
 
         public static void ClearCache()
         {
+            log.Info("ClearCache");
+
             var dir = new DirectoryInfo(CachePath);
 
             if (!dir.Exists)
@@ -76,7 +87,7 @@ namespace YMP.Util
                 }
                 catch(Exception e)
                 {
-
+                    log.Info(e);
                 }
             }
         }

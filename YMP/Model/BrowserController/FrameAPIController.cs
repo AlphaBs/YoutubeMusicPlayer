@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 
 namespace YMP.Model
 {
     public class FrameAPIController : BrowserController
     {
+        private static ILog log = LogManager.GetLogger("FrameAPIController");
+
         public FrameAPIController(ChromiumWebBrowser browser)
         {
             base.Browser = browser;
@@ -22,6 +25,7 @@ namespace YMP.Model
             };
 
             Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
+            log.Info("Browser Loaded");
         }
 
         public void onPlayerLoaded()

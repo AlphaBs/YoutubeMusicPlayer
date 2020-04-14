@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using CefSharp;
 using CefSharp.WinForms;
+using log4net;
 
 namespace YMP.Model
 {
     public class YPlayerController : BrowserController
     {
+        private static ILog log = LogManager.GetLogger("YPlayerController");
+
         public YPlayerController(ChromiumWebBrowser browser)
         {
             base.Browser = browser;
@@ -24,7 +27,7 @@ namespace YMP.Model
             browser.LoadingStateChanged += Browser_LoadingStateChanged;
 
             Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "yplayer.html"));
-            
+            log.Info("Browser Loaded");
         }
 
         private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
@@ -81,7 +84,6 @@ namespace YMP.Model
 
         public override void SetVideoInfo(string thumb, string title, string subtitle)
         {
-            Console.WriteLine(title);
             js($"setVideoInfo(\"{escape(thumb)}\", \"{escape(title)}\", \"{escape(subtitle)}\")");
         }
 

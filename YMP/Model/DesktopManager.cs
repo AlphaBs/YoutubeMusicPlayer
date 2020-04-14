@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using YMP.Util;
+using log4net;
 
 /*
  * This code is from Code Project (https://www.codeproject.com/Articles/856020/Draw-Behind-Desktop-Icons-in-Windows-plus)
@@ -13,8 +14,11 @@ namespace YMP.Model
 {
     public class DesktopManager
     {
+        private static ILog log = LogManager.GetLogger("DesktopManager");
+
         public static Form CreateDesktopForm(Control child, int scrInx)
         {
+            log.Info("Creating DesktopForm");
             var scr = Screen.AllScreens[scrInx].Bounds;
 
             var f = new Form()
@@ -31,11 +35,14 @@ namespace YMP.Model
             f.Controls.Add(child);
             f.Show();
 
+            log.Info("DesktopForm Created in " + scr);
             return f;
         }
 
         public static bool SetDesktopChildForm(Form f)
         {
+            log.Info("SetDesktopChildForm");
+
             var handle = f.Handle;
             var progman = NativeMethods.FindWindow("Progman", null);
 

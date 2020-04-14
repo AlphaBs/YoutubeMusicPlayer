@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 
 namespace YMP.Model
 {
     public class PlayList
     {
+        private static ILog log = LogManager.GetLogger("PlayList");
+
         public PlayList(string name, string type, Music[] musics, int count, PlayListMetadata md)
         {
             this.Name = name;
@@ -47,10 +50,12 @@ namespace YMP.Model
             CurrentMusicIndex = index;
             while (index > LoadedMusicIndex)
             {
+                log.Info($"index out of LoadedMusicIndex : {index}/{LoadedMusicIndex}");
                 if (!LoadNextMusics())
                     return null;
             }
 
+            log.Info("GetMusic : " + index);
             return Musics[index];
         }
 
@@ -115,6 +120,7 @@ namespace YMP.Model
             if (NextLoadFunc == null)
                 return false;
 
+            log.Info("Calling NextLoadFunc");
             NextLoadFunc(this);
             return true;
         }

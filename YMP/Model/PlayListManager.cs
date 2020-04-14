@@ -5,17 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using log4net;
 
 namespace YMP.Model
 {
     public class PlayListManager
     {
+        private static ILog log = LogManager.GetLogger("PlayListManager");
+
         public PlayList CurrentPlayList { get; set; }
         public PlayList RecentPlayList { get; private set; }
         public List<PlayList> PlayLists { get; private set; }
 
         public List<PlayList> LoadAllPlayLists()
         {
+            log.Info("LoadAllPlayLists");
+
             var files = new DirectoryInfo(YMPInfo.PlaylistPath).GetFiles();
             PlayLists = new List<PlayList>(files.Length);
 
@@ -33,11 +38,12 @@ namespace YMP.Model
                         RecentPlayList = obj;
 
                     PlayLists.Add(obj);
+                    log.Info("Loaded " + item.FullName);
                 }
                 catch (JsonSerializationException jex)
                 {
-                    // TODO : handle exception
-                    Console.WriteLine(jex.ToString());
+                    log.Info("Load PlayList : JsonSerializationException");
+                    log.Info(jex);
                 }
             }
 
@@ -46,6 +52,8 @@ namespace YMP.Model
 
         public void SavePlayList(PlayList list)
         {
+            log.Info("Saving PlayList : " + list.Name);
+
             var path = Path.Combine(YMPInfo.PlaylistPath, list.Name);
             var content = JsonConvert.SerializeObject(list);
 
@@ -54,6 +62,8 @@ namespace YMP.Model
 
         public void SaveAllPlayLists()
         {
+            log.Info("SaveAllPlayLists");
+
             foreach (var item in PlayLists)
             {
                 SavePlayList(item);

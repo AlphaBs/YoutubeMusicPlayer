@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using YMP.Model;
 using YMP.Util;
+using log4net;
 
 namespace YMP.Youtube
 {
     public class YoutubeAPI
     {
+        private static ILog log = LogManager.GetLogger("YoutubeAPI");
+
         // Please input your YouTube Data API KEY
         private static readonly string Key = YoutubeDataAPI.KEY;
         public const string YoutubeVideoKind = "youtube#video";
@@ -20,6 +23,8 @@ namespace YMP.Youtube
 
         public YoutubeAPI()
         {
+            log.Info("Starting Service");
+
             Service = new YouTubeService(new BaseClientService.Initializer()
             {
                 ApiKey = Key
@@ -31,6 +36,8 @@ namespace YMP.Youtube
 
         public Tuple<string[], string[]> Search(string query, ref string pagetoken)
         {
+            log.Info("Searching");
+
             var q = Service.Search.List("id");
             q.MaxResults = MaxResult;
             q.PageToken = pagetoken;
@@ -56,6 +63,8 @@ namespace YMP.Youtube
 
         public Music[] Videos(string[] ids)
         {
+            log.Info("Videos");
+
             if (ids.Length == 0)
                 return new Music[0];
 
@@ -86,6 +95,8 @@ namespace YMP.Youtube
 
         public PlayListMetadata[] Playlists(string[] ids)
         {
+            log.Info("Playlists");
+
             if (ids.Length == 0)
                 return new PlayListMetadata[0];
 
@@ -113,6 +124,8 @@ namespace YMP.Youtube
 
         public Music[] PlaylistItem(string playlistid, ref string pagetoken)
         {
+            log.Info("PlaylistItem");
+
             var r = Service.PlaylistItems.List("snippet");
             r.PlaylistId = playlistid;
             r.PageToken = pagetoken;

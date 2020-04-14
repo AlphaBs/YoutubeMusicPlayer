@@ -8,11 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
+using log4net;
 
 namespace YMP.Model
 {
     public class YoutubeBrowser
     {
+        private static ILog log = LogManager.GetLogger("YoutubeBrowser");
+
         public ChromiumWebBrowser Browser { get; private set; }
         public BrowserControllerKind ControllerName { get; private set; }
         public BrowserController Controller { get; private set; }
@@ -31,7 +34,7 @@ namespace YMP.Model
             };
 
             ChangeController(browser);
-            Console.WriteLine(Browser.Handle);
+            log.Info("ChromiumWebBrowser created : " + Browser.Handle);
             return Browser;
         }
 
@@ -39,6 +42,8 @@ namespace YMP.Model
         {
             if (Controller.State == PlayerState.Ended)
             {
+                log.Info("PlayerState.Ended");
+
                 if (Repeat)
                     Controller.SeekTo(0);
                 else if (YMPCore.PlayList.CurrentPlayList != null)
@@ -50,8 +55,8 @@ namespace YMP.Model
 
         public void OnError(object sender, int data)
         {
-            Console.WriteLine("err {0}", data);
             errorCount++;
+            log.Info("Browser OnError : " + data + ", errorCount : " + errorCount);
 
             if (errorCount < 2)
             {
@@ -61,6 +66,8 @@ namespace YMP.Model
 
         public void PlayMusic(Music m)
         {
+            log.Info("Playing " + m.Title);
+
             errorCount = 0;
 
             Controller.LoadVideo(m.YoutubeID);
@@ -71,6 +78,8 @@ namespace YMP.Model
 
         public void ChangeController(BrowserControllerKind kind)
         {
+            log.Info("Changing Controller :" + kind.ToString());
+
             switch (kind)
             {
                 case BrowserControllerKind.FrameAPI:

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using YMP.Model;
 using YMP.Util;
-using YMP.View;
+using log4net;
 
 namespace YMP
 {
@@ -20,6 +20,8 @@ namespace YMP
         public static Mutex CurrentMutex;
         const string mutexId = "AE805CDF-D5FA-49F4-B679-80E70183284C";
 
+        private static ILog log = LogManager.GetLogger("App");
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             bool isSuccess;
@@ -29,6 +31,8 @@ namespace YMP
                 MessageBox.Show("Youtube Music Player 가 이미 실행중입니다.");
                 Environment.Exit(0);
             }
+
+            log.Info("Start YMP " + YMPInfo.Version);
 
             if (!e.Args.Contains("noDependencyCheck"))
             {
