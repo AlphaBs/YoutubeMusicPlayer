@@ -87,7 +87,6 @@ namespace YMP.Model
         {
             IsBrowserLoadingDone = true;
             this.MainFrame = Browser.GetMainFrame();
-            Browser.ShowDevTools();
         }
 
         private bool jsAvailable()

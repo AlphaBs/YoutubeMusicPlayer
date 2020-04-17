@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
+using CefSharp;
 
 namespace YMP.Model
 {
@@ -20,10 +21,17 @@ namespace YMP.Model
             
             Browser.JavascriptObjectRepository.UnRegisterAll();
             Browser.JavascriptObjectRepository.Register("youtubeJSBound", this, isAsync: true);
+            browser.LoadingStateChanged += Browser_LoadingStateChanged;
 
             initMusic = music;
             Browser.Load(System.IO.Path.Combine(Environment.CurrentDirectory, "Web", "index.html"));
             log.Info("Browser Loaded");
+        }
+
+        private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        {
+            if (YMPInfo.Debug && !e.IsLoading)
+                Browser.ShowDevTools();
         }
 
         public void onPlayerLoaded()

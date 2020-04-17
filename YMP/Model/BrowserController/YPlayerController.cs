@@ -31,7 +31,7 @@ namespace YMP.Model
 
         private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
-            if (!e.IsLoading)
+            if (YMPInfo.Debug && !e.IsLoading)
                 Browser.ShowDevTools();
         }
 

@@ -28,6 +28,9 @@ namespace YMP
             return fullpath;
         }
 
+        // Debug
+        public static bool Debug = false;
+
         // This is nothing really woa f
         public static bool MBungMode = false;
 
