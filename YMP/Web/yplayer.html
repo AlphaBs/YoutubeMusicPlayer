@@ -210,7 +210,7 @@
             }
 
             document.addEventListener("DOMContentLoaded", async () => {
-                await CefSharp.RemoveObjectFromCache("contoller");
+                await CefSharp.RemoveObjectFromCache("controller");
                 await CefSharp.DeleteBoundObject("controller");
                 await CefSharp.BindObjectAsync("controller");
                 controller.onPlayerLoaded();
