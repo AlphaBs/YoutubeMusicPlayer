@@ -29,7 +29,7 @@ namespace YMP
         }
 
         // Debug
-        public static bool Debug = false;
+        public static bool Debug = true;
 
         // This is nothing really woa f
         public static bool MBungMode = false;

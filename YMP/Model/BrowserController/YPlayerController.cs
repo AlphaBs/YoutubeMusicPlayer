@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CefSharp;
+﻿using CefSharp;
 using CefSharp.WinForms;
 using log4net;
+using System;
+using System.Threading.Tasks;
 
 namespace YMP.Model
 {

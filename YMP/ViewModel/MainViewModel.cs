@@ -60,8 +60,6 @@ namespace YMP.ViewModel
         DispatcherTimer timer;
         TrayIcon tray;
 
-        bool miniShown = false;
-
         FrameContent _frameContent = FrameContent.Blank;
         FrameContent PreviousContent = FrameContent.Blank;
         public FrameContent CurrentContent
@@ -392,8 +390,6 @@ namespace YMP.ViewModel
             playerPage.Dispose();
             tray.Close();
             miniWindow.Close();
-
-            YMPCore.Stop();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
