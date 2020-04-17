@@ -67,6 +67,7 @@ namespace YMP.Model
             log.Info("Stopping YMP");
 
             Running = false;
+            Main.CloseWindow();
             PlayList.SaveAllPlayLists();
             Setting.SaveSetting();
 
@@ -75,6 +76,8 @@ namespace YMP.Model
             log.Info("Bye");
             Environment.Exit(0);
         }
+
+        #region n
 
         // IZ*ONE FIESTA IS LEGEND
         // https://www.youtube.com/watch?v=eDEFolvLn0A
@@ -90,5 +93,7 @@ namespace YMP.Model
                 HighResThumbnail = "https://i.ytimg.com/vi/eDEFolvLn0A/hqdefault.jpg"
             };
         }
+
+        #endregion
     }
 }

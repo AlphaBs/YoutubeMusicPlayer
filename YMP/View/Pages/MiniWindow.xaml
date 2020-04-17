@@ -60,7 +60,7 @@
             <materialDesign:PackIcon Kind="{Binding PlayPauseButtonIconKind}" Width="30" Height="30" Margin="0" Padding="0" Foreground="White"/>
         </Button>
 
-        <Label x:Name="lbTitle" FontSize="14" Foreground="White" Content="{Binding Title}" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,35,0,0"/>
+        <Label x:Name="lbTitle" FontSize="14" Foreground="White" Content="{Binding Title}" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,33,0,0"/>
 
         <ProgressBar x:Name="slider" Value="{Binding CurrentTimeInt}" Maximum="{Binding DurationInt}" Grid.Column="1" Margin="20,0" Background="#FF445062" BorderBrush="#00000000" Height="5" Foreground="#FFD50000"/>
 

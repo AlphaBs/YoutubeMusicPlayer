@@ -73,5 +73,11 @@ namespace YMP.View
             e.Cancel = true;
             this.Hide();
         }
+
+        public void CloseWindow()
+        {
+            viewModel.ClosingWindow(null);
+            this.Close();
+        }
     }
 }
