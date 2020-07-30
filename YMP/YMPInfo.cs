@@ -36,7 +36,7 @@ namespace YMP
 
         public readonly static string
             ProgramName     = "YoutubeMusicPlayer",
-            Version         = "2.0-b1",
+            Version         = "2.0-b2",
 
             WebFrontendPath = initFile("Web\\index.html"),
             PlaylistPath    = initDirc("playlist"),
