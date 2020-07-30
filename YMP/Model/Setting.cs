@@ -56,5 +56,7 @@ namespace YMP.Model
         public bool AutoSwitchPlayer { get; set; } = true;
         [JsonProperty]
         public int DefaultBrowser { get; set; } = (int) BrowserControllerKind.FrameAPI;
+
+        public BrowserControllerKind DefaultBrowserKind { get => (BrowserControllerKind)DefaultBrowser; }
     }
 }

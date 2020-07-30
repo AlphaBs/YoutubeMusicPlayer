@@ -88,7 +88,11 @@ namespace YMP.Model
 
             errorCount = 0;
 
-            Controller.LoadVideo(m.YoutubeID);
+            if (ControllerName != YMPCore.Setting.DefaultBrowserKind)
+                ChangeController(YMPCore.Setting.DefaultBrowserKind, m);
+            else
+                Controller.LoadVideo(m.YoutubeID);
+
             Controller.SetVideoInfo(m.HighResThumbnail, m.Title, m.Artists);
             Controller.Play();
             CurrentMusic = m;

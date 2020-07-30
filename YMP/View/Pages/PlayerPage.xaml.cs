@@ -25,7 +25,7 @@ namespace YMP.View.Pages
         public PlayerPage()
         {
             InitializeComponent();
-            var browser = (BrowserControllerKind) YMPCore.Setting.DefaultBrowser;
+            var browser = YMPCore.Setting.DefaultBrowserKind;
             this.cefBrowser.AttachChild(YMPCore.Browser.InitializeChromiumBrowser(browser));
 
             SetBtnRepeatIconKind();

@@ -79,7 +79,6 @@ namespace YMP.Model
 
         #region n
 
-        // IZ*ONE FIESTA IS LEGEND
         // https://www.youtube.com/watch?v=eDEFolvLn0A
 
         public static Music GetLegendSong()
